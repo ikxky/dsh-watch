@@ -2,6 +2,8 @@
 
 基线：**v0.2.1-alpha.2**／`d743267388641bc76f17c45ce8b4c231aed1d32c`，截至 2026-10-12。下面的产品能力来自该提交的官方文档；标注“源码核实”的条目还检查了实现。所有性能、交互、安全和可靠性结论均未经本项目运行验证。证据分级及长期机制见 [TRACKING](TRACKING.md)。
 
+本页保持当前版本快照。历史 tag 的能力、默认值和迁移变化见 [EVOLUTION](EVOLUTION.md)：插件内核早期已存在；Session 格式、模型协议、执行后端及日志外发在后续发布中发生过实质变化，不能把本页能力倒推给所有历史版本。
+
 ## 当前判断
 
 dsh 是可组合的 Agent 运行框架及本地交互产品，核心特色是连 agent loop、模型、工具、持久化和界面都可通过 Cordis 插件组装。对企业平台，它更适合作为执行内核与架构模式的研究对象；当前证据不足以把它视为完整的企业身份、租户、成本和合规平台。官方仍将其标为开发者预览，明确预告兼容性变化，并声明尚未安全审计。[README](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/README.zh.md)、[架构](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/architecture.zh.md)、[SAFETY](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/SAFETY.zh.md)
