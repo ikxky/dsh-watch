@@ -1,125 +1,104 @@
-# DeepSeek Harness 当前全景
+# dsh 适合承担什么工作
 
-基线：**v0.2.1-alpha.2**／`d743267388641bc76f17c45ce8b4c231aed1d32c`，截至 2026-10-12。下面的产品能力来自该提交的官方文档；标注“源码核实”的条目还检查了实现。所有性能、交互、安全和可靠性结论均未经本项目运行验证。证据分级及长期机制见 [TRACKING](TRACKING.md)。
+**dsh 是一个围绕工作区执行任务的 Agent 工作台，并提供可嵌入其他产品的运行框架。** 用户可以交代任务、提供文件、先审计划、观察工具执行，再检查助手交出的结果。它有价值的产品组合是把这些环节放在连续会话里，并允许按任务增加工具和子代理。[官方说明][readme]、[使用指南][guide]
 
-本页保持当前版本快照。历史 tag 的能力、默认值和迁移变化见 [EVOLUTION](EVOLUTION.md)：插件内核早期已存在；Session 格式、模型协议、执行后端及日志外发在后续发布中发生过实质变化，不能把本页能力倒推给所有历史版本。
+当前更适合作为企业 Agent 平台和个人助理的研究对象。已有机制有助于设计委派、监督和续接体验，但组织身份、多人授权、结果验收与总费用控制仍需分别确认或由上层产品承担。官方将本版本列为开发者预览，声明未经安全审计；本项目目前没有生产运行时采用结论。[安全声明][safety]
 
-2026-10-13 补充：逐项支持状态、证据程度与待核问题统一维护在 [CAPABILITY-MAP](CAPABILITY-MAP.md)；默认插件、官方可选与第三方的分类及发布包差异见 [PLUGINS](PLUGINS.md)。npm 包存在、配置挂载和实际具备外部服务能力分别确认。
+本页是一份选型概览，详细使用边界在[能力地图](CAPABILITY-MAP.md)，扩展选择在[插件指南](PLUGINS.md)。依据为 **v0.2.1-alpha.2**，固定提交 `d743267388641bc76f17c45ce8b4c231aed1d32c`；最近资料核查 **2026-10-13**。结论来自官方文档、源码与发行包静态分析，没有安装或运行 dsh，也没有调用模型。下列场景是基于已有能力的适用性推断，不是成功案例。
 
-## 当前判断
+## 哪些场景值得优先研究
 
-dsh 是可组合的 Agent 运行框架及本地交互产品，核心特色是连 agent loop、模型、工具、持久化和界面都可通过 Cordis 插件组装。对企业平台，它更适合作为执行内核与架构模式的研究对象；当前证据不足以把它视为完整的企业身份、租户、成本和合规平台。官方仍将其标为开发者预览，明确预告兼容性变化，并声明尚未安全审计。[README](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/README.zh.md)、[架构](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/architecture.zh.md)、[SAFETY](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/SAFETY.zh.md)
+**围绕一组文件完成有边界的工作。** 例如，请助手阅读工作区材料、形成分析或修改文件，并让用户检查过程与结果。前提是文件格式有对应读取能力、工作范围与权限明确。当前成果卡片指向工作区源文件；远程下载、冻结交付版本和长期保留不能默认承诺。[文件与资源](CAPABILITY-MAP.md#resources)、[成果交付](CAPABILITY-MAP.md#delivery)
 
-| 结论 | 本轮适用范围 |
-|---|---|
-| 采用 | 暂无运行时采用项；没有完成企业场景验证 |
-| 验证 | SDK 完成语义、取消与恢复、日志外发控制、模型路由兼容、沙箱实际能力 |
-| 借鉴 | 持久事件日志派生上下文、能力服务替换、独占与并行工具调度、显式任务状态 |
-| 观察 | 实验性 Team、Python PTC、Worktrees、Auto review、兼容层与版本迁移 |
-| 跳过 | 本轮不投入字体、语音输入等与企业平台核心判断关联较低的体验细节 |
+**需要边做边讨论的多步骤任务。** 用户可以先讨论计划，执行中补充约束，必要时取消，并在之后回到会话。长期目标能继续推进，压缩能帮助对话延长，但摘要不保证无损，恢复也不会自动重新授权持续推进。适合研究人如何保持控制；还不能据此承诺无人值守长期工作的成功率。[进度与控制](CAPABILITY-MAP.md#control)、[工作续接](CAPABILITY-MAP.md#continuity)
 
-## 1. 产品定位、交互与部署
+**为已有产品增加局部执行能力。** 程序接口可以发起任务、订阅事件并等待受管理子任务。接入方仍需要提供业务入口、用户身份、结果验收和异常处理。当前未确认官方聊天软件收件入口，也不能把程序返回值直接展示为“业务已完成”。[任务入口](CAPABILITY-MAP.md#start)、[完成判断](CAPABILITY-MAP.md#delivery)
 
-官方提供 Web、Headless、SDK、SDK Minimal 和 ACP profile，Desktop 以 Electron 携带匹配的 dsh 运行时。Web 是工作区、会话、工具执行、文件产物与设置的交互入口；Headless 适合一次性程序调用；TypeScript 与 Python SDK 用 stdio JSON-RPC 驱动独立运行时；ACP 是自动化集成入口。部署姿态和是否有人交互由 profile 决定，不能将某一 Web 功能自动推广到 SDK 或子代理。[架构中的 profile 与 Desktop](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/architecture.zh.md)、[Web 指南](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/user/guide/index.zh.md)、[Python SDK](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/python/sdk/README.zh.md)
+## 一项工作在这里怎样展开
 
-Web 默认监听本机回环地址。当前版本支持指定 IPv4/IPv6 绑定、原生 TLS 和反向代理外部 URL。启动 token 与签名 cookie 承担浏览器认证；`--public-url` 只是公告地址，`--trusted-host` 是 authority 接纳，二者都不能替代认证或可信网络。证书文件只在启动时读取，不负责签发和续期。**推断：**企业远程服务化仍需单独设计入口访问控制、运行环境和运维职责；原生 HTTPS 并不意味着已交付企业 SSO/RBAC。[外部部署指南](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/user/guide/public-deployments.zh.md)
+**从交代需求到接受结果，用户需要参与哪些环节？** 一个可用的产品流程可沿以下顺序设计。它是对当前机制的归纳，不表示本项目已端到端验证。
 
-本轮在固定版本的身份包、用户指南和包目录中未找到可确认的企业多租户、SSO 或组织级 RBAC 产品契约。这里是检索范围内的证据缺口，不是证明任何扩展均无法实现。企业平台的适用性只讨论需求层面：如考虑接入，应让业务用户身份与权限由上层平台明确传入，不能从 dsh 的匿名安装 ID 推导。
+1. **交代任务和工作范围。** 选择工作区，写清预期结果，附上所需材料。外部工具和模型需要预先配置；上传成功不等于内容已被理解。
+2. **先看计划，再放行需要权限的动作。** 计划有助于讨论方法，权限审批决定特定动作能否继续。计划模式的提示词不能代替文件权限；入口不同，默认授权也可能不同。
+3. **跟进执行并处理变化。** 用户查看过程、补充信息或取消；助手可使用工具和子代理。取消与资源释放可能先后发生，外部动作结果未知时需要核对后再决定重试。
+4. **查看交付物并验收。** 检查实际文件和业务标准，区分主助手回复结束、子任务结束与验收通过。需要留下证据时，保存任务记录，并另行安排文件版本与保留。
 
-## 2. 执行循环、规划、工具、子代理与长任务
+流程中最值得借鉴的，是把计划、执行记录和人工介入放在同一个连续任务里。最需要验证的，是用户看到的状态能否准确对应真实结果，尤其是取消、子任务和外部系统操作。[逐项能力与证据](CAPABILITY-MAP.md)
 
-下图是对固定版本架构的研究归纳，不是独立运行系统：
+## 原生提供什么，上层产品还要负责什么
 
-```mermaid
-flowchart TD
-    A[Web / Desktop / Headless / SDK / ACP] --> B[Profile 与插件组合]
-    B --> C[Agent inbox 与 turn / step 循环]
-    C --> D[从 Session 日志派生请求上下文]
-    D --> E[模型适配器]
-    E --> F[工具调度与审批 / 沙箱策略]
-    F --> G[文件 / Shell / PTC / MCP / 子代理]
-    G --> H[结果与状态写入 Session]
-    H --> D
-    H --> I[界面 / SDK 通知 / 查询与观测]
-```
+**选择 dsh 作为执行基础后，哪些工作仍属于产品团队？** 原生机制主要围绕一次或一系列会话：交互入口、模型与工具执行、会话记录、计划、部分审批、子代理、续接和插件组合。具体能否使用，还要看入口、会话模式、操作系统及配置；原生可组合不代表全部默认开启。[插件选择与条件](PLUGINS.md)
 
-官方把一次模型请求及其工具执行定义为 step，若干 step 构成 turn。输入先进入持久 inbox，经 pre-step 和 request 扩展点后才准入模型历史。源码中，工具调度读取 `maxParallelToolCalls`，并行安全调用使用有界池，独占调用形成屏障；默认并发上限是 10。并发分类由工具声明和执行策略决定，不能据此假定任意两个写工具无冲突。[架构轮次流程](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/architecture.zh.md#turn-flow)、[循环实现说明](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/core/agent-loop/README.zh.md)、[调度源码](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/core/agent-loop/src/tool-calls.ts)
+上层平台需要明确业务责任：谁发起并拥有任务，哪些资料可读、哪些动作可做，什么叫成功，失败由谁接手，成果保存哪个版本，以及整项工作允许花多少钱。当前资料不足以确认 dsh 已提供完整的组织登录、角色与租户授权、Agent 上下线流程或业务验收指标。将这些能力放在外部是可行的产品分工判断，不是已验证的集成方案，也不应据此判定 harness 本身失败。[团队服务边界](CAPABILITY-MAP.md#operations)
 
-| 能力 | 当前语义与边界 | 企业相关判断 |
-|---|---|---|
-| 规划 | `/plan` 与 `exit_plan_mode` 管理计划与评审；计划模式主要是提示词约束，本身不禁止写操作 | **借鉴**计划交互；实际执行权限需沙箱和审批共同约束 |
-| 工具 | 原生调用与 PTC（程序化工具调用）两种展示；本版移除 `both` | **验证**工具 schema、日志与 API 迁移 |
-| 子代理 | 统一 activation，支持新建、fork、可继续本地子会话及外部后端；能力字段决定是否支持模型、persona、工具过滤等覆盖 | **借鉴**统一接口；跨后端能力不能按同一保证处理 |
-| 并行协作 | 实验性 Team 有 Lead、teammate、任务板 CAS、依赖和直接 inbox 消息 | **观察**；任务路径重叠只是警告，无自动任务 owner 回收或跨进程协调 |
-| 长目标 | Goal 在同会话空闲后推进下一轮，有 round 上限与 blocker；resume/fork 后不会自动重新启用续行 | **借鉴**显式恢复授权；round 限制不等于时间或货币预算 |
-| 后台工作 | jobs 与工作流可持续运行；轮次结束、根代理 idle 与全任务完成是不同状态 | **验证**业务状态机、完成通知和收尾顺序 |
+多 Agent 的 Team 也要与多人业务协作区分。它提供实验性的任务板和成员消息，并不自动赋予多人共享、审批和交接的组织契约。外部记忆与业务连接器同理：它们增加访问能力，数据权限、来源、保留和删除仍需要明确的责任方。[协作](CAPABILITY-MAP.md#collaboration)、[外部能力](PLUGINS.md)
 
-来源：[Plan 约束](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/plan/plan-mode/README.zh.md)、[Tools 类型](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/core/tools/src/types.ts)、[Subagent](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/subsystems/subagent.zh.md)、[Team](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/experimental/agent-team/README.zh.md)、[Goal](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/goal/goal-round-driver/README.zh.md)、[Jobs](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/jobs/README.zh.md)。
+<a id="decision"></a>
 
-**源码核实：**SDK `session/wait` 会等待根 Agent、受管理后代和后代触发的后续活动，并复核 idle 状态；但 `HarnessSession.run()` 仍在根会话首次 idle 后返回，其 `finalResponse` 是该活动区间最后的根助手文本，不保证因果上只属于本次 prompt。对企业平台的异步任务回执而言，必须先定义“已接收、根轮次结束、子树完成、业务成功”四者的含义。[服务端 wait](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/sdk/server/src/server.ts#L214)、[客户端 run](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/sdk/client/src/api.ts#L187)、[SDK 契约](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/sdk/client/README.zh.md)
+## 当前如何做采用判断
 
-取消是协作式；源码与文档保留取消原因、失败 attempt、未启动和结果未知的工具状态。结果未知的副作用不能盲目重放。当前 release 修复了传输不响应 abort 时空闲超时仍挂起的问题，但超时返回与底层资源完全释放不是同一保证。持久会话恢复也不意味着进程、外部事务或后台作业已 exactly-once 恢复。根上下文关闭时最终 `turn/end` 可能未持久化，这是该版本官方记录的限制。[失败与取消](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/core/agent-loop/README.zh.md)、[超时修复](https://github.com/deepseek-ai/deepseek-harness/commit/dbb150ff0e589ec5b34a261c201a853affe71a29)
+**现在可以借鉴什么，哪些承诺需要先拿到证据？** 本轮判断如下；没有实测支撑的部分保留为验证目标。
 
-## 3. Context 压缩与 memory 边界
+- **采用：** 暂无生产运行时采用项。尚未完成目标业务、权限或可靠性验证。
+- **借鉴：** 计划与审阅、执行过程回看、显式恢复长期目标、区分主任务与子任务状态，以及按任务组合能力。
+- **验证：** 完成与验收如何关联，取消和未知副作用怎样处理，远程文件如何交付，各入口权限是否符合用户预期，以及模型兼容和数据外发控制。
+- **观察：** 实验性 Team、自动评审、工作树及兼容桥接能否形成稳定的任务体验，发行内容与历史迁移是否可预测。
+- **跳过：** 本轮不投入字体、语音识别效果等与核心接入判断关联较低的细节，也不开展部署或模型试用。
 
-Session 是追加事件日志，模型上下文是其投影；工具、消息、压缩与替换保留可追溯记录。JSONL 持久化支持格式迁移，当前已发布逻辑格式是 v4。写打开历史格式时发布新的版本化 generation，保留原代际；不能从“保留旧文件”推导通用降级支持。硬中断若发生在流 settlement 之前，瞬态流 chunk 不一定形成持久 attempt。[架构日志](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/architecture.zh.md)、[格式状态](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/session-format-status.zh.md)
+接入前尤其需要看清三件事。第一，文件沙箱和工具审批没有构成完整的组织隔离；精简程序入口甚至与基础入口使用不同权限默认值。第二，默认会话日志、显式反馈、包清单与 Desktop 产品交互采集是不同的数据通道，不能用一个遥测开关推断全部关闭。第三，用量记录、轮数和单次输出限制，不等于覆盖主任务、子代理、压缩、重试等费用的总预算。证据及后续问题见[关键发现](FINDINGS.md)、[插件数据通道](PLUGINS.md#data-channels)。
 
-自动压缩先可选修剪超大工具结果，再用额外模型请求摘要旧的平衡历史区间，保留近期消息。默认阈值考虑上下文窗口、输出预算和额外余量；小上下文模型需要配置相应余量，否则可能在首次使用时拒绝配置。压缩不能缩小系统提示词、工具目录或不可分的超大调用，不保证语义无损，也不等于减少所有后续费用。修剪无需模型调用，摘要则有额外调用和缓存影响。[Compaction](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/compaction/compaction-basic/README.zh.md)
+尚未知的是实际任务成功率、取消和崩溃恢复表现、吞吐时延、目标模型兼容程度，以及按业务任务归集的真实费用。2026-10-12 的专项检查未见已发布安全公告，这也不能抵消未经安全审计的声明；检查范围见[跟踪记录](TRACKING.md)。
 
-长期记忆要分三层理解：
+## 技术审阅时再展开
 
-- **会话内续接：**日志、压缩摘要和恢复支持同一会话持续工作。
-- **跨会话检索：**会话查询／搜索能力取决于额外组合；不能从保存日志推导自动回忆全部历史。
-- **外部记忆：**官方提供 Memorix、MCP Reference Memory、Engram 的默认关闭参考配置；服务器安装、数据、身份、embedding 和迁移由外部提供方负责。列入示例不代表 DeepSeek 的背书或支持承诺。
+以下保留影响产品承诺的实现依据；当前条目状态仍以[能力地图](CAPABILITY-MAP.md)为准。
 
-来源：[会话查询](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/session-query/README.zh.md)、[第三方记忆指南](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/user/guide/mcp-memory.zh.md)。**推断：**企业平台的业务知识应区分会话工作状态与长期事实；权限过滤、引用出处、冲突、保留和删除不能交给压缩摘要隐式承担。
+<details>
+<summary>执行、持久化、集成、权限和数据通道的关键依据</summary>
 
-## 4. 插件、Skills、MCP、模型、IM 与 SDK
+**执行与完成。** 一次模型请求及其工具执行构成 step，若干 step 构成 turn；输入经持久 inbox 准入。源码对可并行工具使用有界池，默认上限10，独占工具形成屏障；不能据此假定任意写操作互不冲突。SDK `session/wait` 复核根与受管理后代的空闲状态，`HarnessSession.run()` 仍在根首次 idle 后返回；最后助手文本未必只因果归属于本次 prompt。取消是协作式，超时返回不保证资源完全释放，根上下文关闭时最终 `turn/end` 可能未持久化。[架构][architecture]、[工具调度][tool-calls]、[循环契约][loop]、[wait 实现][wait]、[run 实现][run]、[超时修复](https://github.com/deepseek-ai/deepseek-harness/commit/dbb150ff0e589ec5b34a261c201a853affe71a29)
 
-当前随附可选组合有11项，默认模板均未选择；Codex／Claude Code 子代理另属官方按需安装。Web 会关闭部分基础工具，再由 preset 挂载；启用某些全局可选工具又会影响包括 minimal 在内的会话。插件功能范围因此必须携带 profile、preset 和配置条件。[分类与固定配置](PLUGINS.md)
+**会话与恢复。** 追加事件日志是持久事实，模型上下文由其派生；逻辑格式当前为 v4。写入旧格式时生成新代际并保留旧代际，不代表通用降级；硬中断前的流片段也可能尚未结算持久化。恢复区分未启动与结果未知，不能代替外部事务对账。[格式状态][format]、[循环与故障][loop]
 
-插件通过服务、事件与生命周期副作用组合；profile 和 bundle 的层叠配置影响实际能力集合。Host 插件在宿主进程执行，不受工作区沙箱约束；插件管理的 profile 变更可能影响多个会话。源码中存在开关、加载失败处理和版本配套机制，不等于已经建立第三方插件信任或审计体系。[架构](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/architecture.zh.md)、[插件管理](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/boot/plugin-manager/README.zh.md)
+**长工作与资源。** Goal 恢复或分叉后不自动续行，轮数不等于金额或时长预算。压缩可先修剪超大工具结果，再额外调用模型摘要；无法缩小所有系统提示词、工具目录或不可分单元，也不保证语义无损。[长期目标][goal]、[压缩][compaction]、[重试][retry]
 
-| 接入面 | 已有证据 | 边界与建议 |
-|---|---|---|
-| Skills／AGENTS.md | 文件系统扫描项目、自定义与用户根；目录摘要和正文按需加载；本版支持共享 agents 指令目录 | **借鉴**发现与加载分离；指令不是安全权限凭证 |
-| MCP | stdio、Streamable HTTP，工具与资源发现，分页、更新、取消及有限退避重连 | **验证**认证、超时、重连、恶意服务器指令；MCP prompt 模板不支持 |
-| 模型 | DeepSeek 适配器及 pi-ai 多提供方／自托管网关，模型能力影响系统提示词与动态工具处理 | **验证**具体端点协议；不能把目录列出理解成所有功能完全兼容 |
-| TypeScript／Python SDK | 独立运行时、JSON-RPC、事件订阅、会话工作目录 API | **验证**精确版本与自定义 runtime，尤其 session/wait |
-| Claude Code／Codex | 按需官方组合包与外部子代理后端；另有实验性 Claude Code Mods 兼容层 | **观察**；兼容层并未承诺完整实用兼容 |
-| IM | 固定版本目录与用户指南中未找到可确认的飞书、Slack、微信、Telegram 等官方消息机器人接入契约 | **未知**；社区链接、图标与飞书反馈表单不是 IM 运行入口 |
-| Webhook | 实验性 GitHub 签名入口和通用规则 runtime，202 只表示通过验证并在内存分发 | **观察**；不等于规则成功或持久队列已接收 |
+**扩展与入口。** Cordis 插件组合可替换执行循环、模型、工具、持久化和界面；Host 插件在宿主进程中执行。Web、Headless、SDK、SDK Minimal 和 ACP 的工具与交互不同，Desktop 携带匹配运行时。Skills 扫描项目、自定义和用户目录，摘要与正文按需加载；指令不是权限凭证。TypeScript 与 Python SDK 驱动独立运行时，协议、包与运行时版本需要一起核验。[架构][architecture]、[插件管理][plugin-manager]、[Skills][skills]、[Python SDK][python-sdk]
 
-来源：[Skills](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/skill/skill-filesystem/README.zh.md)、[MCP](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/mcp/mcp-client/README.zh.md)、[pi-ai](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/llm/llm-pi-ai/README.zh.md)、[SDK](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/sdk/client/README.zh.md)、[上版兼容层声明](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.1)、[GitHub webhook](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/experimental/webhook-github/README.zh.md)。IM 为限定范围检索所得，未声称不存在任何社区插件。
+**远程与隔离。** Web 默认监听回环地址，可配置 IPv4／IPv6、原生 TLS 和代理外部地址。启动 token 与签名 cookie 承担浏览器认证；公告地址、Host 接纳与身份认证各自独立。证书启动时读取，签发续期由运行方负责。文件沙箱按平台采用 bwrap／Landlock、Seatbelt 或 Windows ACL runner，不可用时失败，也有 partial 能力差异；它与 Python 文件策略均不应被解释为完整网络或多租户隔离。同一系统用户运行的工具仍可能接触本地凭据。[远程指南][public-deploy]、[连接鉴权][connection]、[沙箱][sandbox]、[Python 文件策略][python-policy]、[本地凭据][credentials]
 
-## 5. 身份、权限、审批、沙箱与审计
+**审批与观测。** Auto review 默认关闭，可额外调用模型后以 Full access 执行；可能误判，不覆盖程序化工具全部直接 Node 效果，也不持久化全部审查细节。日志重建应使用持久 `session/event`，`agent/*` 主要用于实时协调；事件可回放不自动具有防篡改、组织审计权限或保留策略。[自动评审][auto-review]、[生命周期][lifecycle]、[统计][stats]
 
-**入口例外：**`sdk-minimal` 使用独立组合，文件策略默认 `danger-full-access`，不继承 base 的 `workspace-write + ask` 默认值；其 tag 配置与本轮静态核验的 npm 配置一致。少工具模式不能当作较低权限的同义词。[固定配置](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/bundle/sdk-minimal/cordis.patch.yml)、[发布包核验](PLUGINS.md)
+**出站与升级。** 基础组合中的 Session Log 默认启用，请求字段可增量携带完整规范事件；反馈 OTel 默认在显式反馈后释放日志前缀，另有包清单与 Desktop 交互采集。其目标、保留与自定义端点行为仍需分别验证。当前 pi-ai 依赖从0.87.1到1.0.2；预稳定接口、会话格式与插件发行内容要分别跟踪。抽查归档不能替代完整供应链或漏洞审计，本项目未扫描 CVE。[会话日志][session-log]、[默认配置源码][log-source]、[反馈遥测][otel]、[包清单][inventory]、[依赖锁定][lock]、[发行内容](PLUGINS.md#发行包核验与版本纪律)
 
-源码中的基础组合把新会话默认配置为 `workspace-write + ask`，另有 read-only 和 Full access 等预设。身份层需要区分模型提供方登录、Web 启动认证、匿名安装标识及真正的业务用户授权。匿名 ID 用于同一 Harness home 的关联，不是企业用户身份。[基础配置](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/bundle/base/cordis.patch.yml#L233)、[权限预设](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/interaction/permission-presets/README.zh.md)、[匿名 ID](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/identity/anonymous-user-id/README.zh.md)
+</details>
 
-本地沙箱按平台选择 Linux bwrap／Landlock、macOS Seatbelt 或 Windows ACL runner。不可用时明确失败；部分平台／ABI 会报告 `partial`。其文件策略并不提供完整网络隔离或多租户保证；允许读取的文件及已获授权的资源仍可能暴露。凭据本地文件的 OS 权限不能向同一 OS 用户运行的 Agent 工具进程隔离机密。[本地沙箱](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/sandbox/sandbox-local/README.zh.md)、[Python 文件策略范围](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/experimental/ptc-runtime-python/README.zh.md)、[本地凭据](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/credentials/credentials-local/README.zh.md)
+下一步阅读：[沿用户任务查看36项能力](CAPABILITY-MAP.md) → [选择需要的扩展](PLUGINS.md) → [查看影响判断的关键发现](FINDINGS.md)。历史变化见 [EVOLUTION](EVOLUTION.md)，当前版本的具体增量见 [v0.2.1-alpha.2](releases/v0.2.1-alpha.2.md)。
 
-实验性 Auto review 默认关闭，用当前模型审查工具后可能以 Full access 执行。它有额外调用成本，可能误判，不覆盖 PTC 程序所有直接 Node 效果；审查风险、prompt、reasoning 和原始响应不全部持久化。因此它是可研究的审批体验，不能直接充当企业确定性策略引擎或完整审计证据。[Auto review](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/experimental/auto-review/README.zh.md)
-
-**推断：**企业接入需在 dsh 之外明确租户隔离、凭据代理、网络出站、审批身份与日志保留。事件可回放有助于排障，却不自动具备防篡改、审计访问控制、保留期或外部副作用证明。当前官方安全声明仍是决定采用姿态的首要依据；公开 advisories 暂无条目不改变它。[SAFETY](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/SAFETY.zh.md)、[安全公告](https://github.com/deepseek-ai/deepseek-harness/security/advisories)
-
-## 6. 日志、Trace、异常、升级、依赖与成本
-
-Trajectory、Session 事件、开发者工具和统计投影提供执行观察依据。使用 SDK 重建记录应消费 `session/event`；`agent/*` 主要是实时协调信号。当前版本修正了若干请求、压缩和后台工作状态显示，说明用户界面状态必须与运行时终态分开检查。[生命周期](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/agent-lifecycle.zh.md)、[统计](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/session/session-stats/README.zh.md)、[版本增量](releases/v0.2.1-alpha.2.md)
-
-数据外发有独立通道：默认的 `session-log-deepseek` 请求字段可增量携带完整规范事件；OTel 会话上报默认基于显式反馈释放日志前缀；另有插件包清单元数据。**源码核实：**基础 bundle 挂载 Session Log 插件，其 schema 的 `enabled` 默认为 true；不是关掉一个“遥测”开关就能推导全部外发关闭。外发目标、数据保留及自定义端点行为仍需逐项验证。[Session Log](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/session/session-log-deepseek/README.zh.md)、[配置源码](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/session/session-log-deepseek/src/index.ts#L38)、[OTel](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/session/session-telemetry-otel/README.zh.md)、[包清单](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/llm/plugin-package-inventory-deepseek/README.zh.md)
-
-| 运维面 | 当前证据及适用边界 |
-|---|---|
-| 异常升级 | 结构化工具结果区分未启动、结果未知、拒绝和取消；持久化失败或未表示的运行异常应显式失败，不当作业务成功 |
-| 升级 | 预稳定 API 存在破坏变更；Session 数据格式独立版本化。插件、SDK、runtime 与历史会话都要列入版本检查 |
-| 依赖 | 本版 pi-ai 从 0.87.1 到 1.0.2，另有协议、运行工具、图片和渲染依赖变更；本项目未扫描 CVE 或验证发行包供应链 |
-| 成本 | 主循环多步、子代理、摘要、标题、重试和 Auto review 都可能增加请求；token 统计和单次输出上限不构成全任务货币预算 |
-| 运维未知 | 缺少本项目实测吞吐、时延、长任务成功率、崩溃恢复指标及按业务任务归集的真实费用 |
-
-来源：[循环故障语义](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/core/agent-loop/README.zh.md)、[LLM 重试](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/llm/llm-retry/README.zh.md)、[依赖锁文件](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/pnpm-lock.yaml)、[Goal 资源预算限制](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/goal/goal-round-driver/README.zh.md)。
-
-对企业平台，当前最有价值的下一步是形成可独立验证的接入要求：任务完成判据、外部动作不明时的处理、每个出站通道的控制、知识与会话状态分层，以及明确的预算所有者。此判断基于公开资料，不涉及特定产品的私密实现。
-
-补充的插件核查确认，Desktop 产品交互埋点与反馈遥测是独立通道，普通 Web 不装配该产品通道；默认启用、可配置关闭及已排队事件的行为见 [PLUGINS](PLUGINS.md)。另外，文件卡片的 Host 打开、会话 ZIP 下载和鉴权文件读取是不同能力；逐项证据与限制见 [CAP-FILE-02～06](CAPABILITY-MAP.md#工作区与文件交付)。
+[readme]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/README.zh.md
+[guide]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/user/guide/index.zh.md
+[safety]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/SAFETY.zh.md
+[architecture]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/architecture.zh.md
+[tool-calls]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/core/agent-loop/src/tool-calls.ts
+[loop]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/core/agent-loop/README.zh.md
+[wait]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/sdk/server/src/server.ts
+[run]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/sdk/client/src/api.ts
+[format]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/session-format-status.zh.md
+[goal]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/goal/goal-round-driver/README.zh.md
+[compaction]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/compaction/compaction-basic/README.zh.md
+[retry]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/llm/llm-retry/README.zh.md
+[plugin-manager]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/boot/plugin-manager/README.zh.md
+[skills]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/skill/skill-filesystem/README.zh.md
+[python-sdk]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/python/sdk/README.zh.md
+[public-deploy]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/user/guide/public-deployments.zh.md
+[connection]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/client/connection/README.zh.md
+[sandbox]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/sandbox/sandbox-local/README.zh.md
+[python-policy]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/experimental/ptc-runtime-python/README.zh.md
+[credentials]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/credentials/credentials-local/README.zh.md
+[auto-review]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/experimental/auto-review/README.zh.md
+[lifecycle]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/agent-lifecycle.zh.md
+[stats]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/session/session-stats/README.zh.md
+[session-log]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/session/session-log-deepseek/README.zh.md
+[log-source]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/session/session-log-deepseek/src/index.ts
+[otel]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/session/session-telemetry-otel/README.zh.md
+[inventory]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/llm/plugin-package-inventory-deepseek/README.zh.md
+[lock]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/pnpm-lock.yaml
