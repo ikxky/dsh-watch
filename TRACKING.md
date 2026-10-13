@@ -12,6 +12,8 @@
 - `TRACKING.md`
 - `OVERVIEW.md`
 - `EVOLUTION.md`
+- `PLUGINS.md`
+- `CAPABILITY-MAP.md`
 - `FINDINGS.md`
 - `releases/*.md`
 
@@ -34,7 +36,7 @@
 
 主入口为 [产品页](https://www.deepseek.com/en/harness/)，其指向 [官方仓库](https://github.com/deepseek-ai/deepseek-harness)；安装包标识为 `@deepseek-ai/dsh`。以 [Releases 集合 API](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100) 和 [网页列表](https://github.com/deepseek-ai/deepseek-harness/releases) 发现发布，包含 prerelease，不以 `/releases/latest` 代替。
 
-每项版本结论绑定 tag 对应的完整 commit。正文源码链接固定到 commit；线上文档站和 master 仅作发现入口，不代表已发布版本保证。比较对象是前一个已发布 release 的 tag，不是任意前一 git tag。release 标题和正文可被修改，即使 release 标为 immutable，仍需检查正文指纹。
+每项版本结论绑定 tag 对应的完整 commit。插件还核对 manifest、profile／bundle／preset 的默认加载配置、插件 schema 与相关实现；能取得的精确 npm 发行归档用于静态核验，不执行安装脚本。正文源码链接固定到 commit；线上文档站和 master 仅作发现入口，不代表已发布版本保证。比较对象是前一个已发布 release 的 tag，不是任意前一 git tag。release 标题和正文可被修改，即使 release 标为 immutable，仍需检查正文指纹。
 
 当前公开仓库 metadata 为 `has_issues=false`、`has_discussions=true`；官方 README 指向 [Discussions](https://github.com/deepseek-ai/deepseek-harness/discussions) 接收反馈。合并提交中的 PR 编号不能直接当作可访问的官方 PR：本轮访问官方 `pulls/4394` 返回 404，因此引用实际可核的 commit，不猜测其来源仓库。以后新增 issue/PR 跟踪条目前先验证 URL、标题、状态及与已发布版本的关系。[仓库 metadata](https://api.github.com/repos/deepseek-ai/deepseek-harness)、[版本 README](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/README.zh.md)
 
@@ -91,16 +93,26 @@
 
 tag 核验应解析到 commit（例如 `tag^{commit}`），不能把 annotated tag 对象的 SHA 当作源码 commit。当前 alpha.2 的 peeled commit 为 `d743267388641bc76f17c45ce8b4c231aed1d32c`；对象种类不同本身不是 tag 漂移证据。
 
+## 插件与能力地图的维护范围
+
+插件是每次版本研究的必查内容，不能以主 release 未提及或插件名称未变而跳过。当前默认组成与供应分类只在 [PLUGINS](PLUGINS.md) 维护；逐项能力状态只在 [CAPABILITY-MAP](CAPABILITY-MAP.md) 维护。OVERVIEW 解释产品，EVOLUTION 解释趋势，release 文档解释相邻版本变化，避免复制多份完整清单。
+
+每次检查按所影响的 profile／preset 记录：插件增删、实现或包版本变化、tools／commands／hooks 与接口、权限／配置默认值、依赖和破坏性迁移、实际场景影响。区分随包提供、默认挂载、需配置才生效、官方按需可选与第三方；同时保留 OS、凭据和用户覆盖条件。包与主版本同步时按真实 tag／commit／manifest 记录，不虚构独立插件 release。
+
+对变化包查精确版本 registry 元数据、tarball 与 integrity；可静态解包读取 manifest／配置，但不安装、运行、调用模型或把完整依赖闭包等同少量抽查。tag 与归档不一致、历史包不可取时并列记录，不能自行选择一方改写为已证实运行行为。当前样本、差异及证据缺口集中在 PLUGINS。
+
+能力地图使用稳定 ID、实现归属、支持状态、验证程度、版本／条件、限制、固定来源、核查日和下一步问题。无证据写“待确认”，官方明确排除才写范围受限的“不支持”；存在上游测试不写“我们实测”。不采用成熟度总分，不因企业外置功能未覆盖就判 harness 失败。有变化只更新受影响条目；无变化不为刷新日期重写全图。
+
 ## 最近检查
 
-- 检查日期：2026-10-12 UTC。
-- 结果：当前最新仍为 alpha.2；在已有基线之上完成历史补充，新增五个历史专题及 EVOLUTION。新增文档不代表上游又发布了新版本。
-- 已检查：Releases API 全部26条及空的下一页、各条 prerelease／draft／发布时间／正文、全部 tag 的 peeled commit、各 tag 的 Session 格式常量和 Session Log 默认值、代表节点的关键文档与源码。安全公告页已在同日基线检查中查看，本轮未新增运行或漏洞扫描。
-- [安全公告页](https://github.com/deepseek-ai/deepseek-harness/security/advisories)：检查时未显示已发布公告；这不能证明无漏洞或无风险。未进行依赖漏洞扫描、二进制验证或安全审计。
-- 运行验证：未进行。源码中存在的测试及上游提交自报测试结果不计作本项目通过的测试。
-- 来源限制：官方 PR 入口样本返回 404；当前没有已验证、已登记的 issue/PR URL，开放讨论尚未逐条评估。关键事项通过 FINDINGS 中的 commit／文档引用跟踪。
-- 交付范围：入口、规则、当前全景、演进、发现五份主文档及六份版本文档，共11份 Markdown；实际提交身份以仓库 Git 历史为准。
-- 本轮结果：[演进与完整发布索引](EVOLUTION.md)、[全景](OVERVIEW.md)、[关键发现](FINDINGS.md)、[当前版本增量](releases/v0.2.1-alpha.2.md)。
+- 检查日期：2026-10-13 UTC。
+- 结果：Releases API 仍返回26条，最新仍为 v0.2.1-alpha.2；完成六个专题版本的插件补查及36项能力地图，不代表上游新增发布。
+- 插件覆盖：六个代表 tag 的 CLI／bundle manifest、默认配置、相邻比较与关键实现；静态取得21个 npm 归档并核 SHA-512，52份 YAML 中48份与 tag 一致，4份有同一 Plan 提示词文字差异。v0.1.3-alpha.1 四个包样本不可得，保留 tag 证据并标记归档核验缺口。
+- 能力证据：仅文档19项、已读源码12项、已有上游测试但未运行5项、我们实测0项；状态分布见能力地图，不作为评分。
+- 安全公告及官方 PR 可访问性沿用2026-10-12的专项检查记录：当时未见已发布 advisories，PR 样本404；本轮未复查全部公告／讨论。没有公告不能证明无风险。
+- 运行验证：未进行。静态下载归档、计算摘要和阅读测试断言不计作 dsh 运行测试、安全审计或发行物完整供应链验证。
+- 交付范围：七份主文档与六份版本分析，共13份 Markdown；新增 PLUGINS 和 CAPABILITY-MAP，既有专题仅补插件必要条目。
+- 本轮结果：[插件组成与发行证据](PLUGINS.md)、[能力地图](CAPABILITY-MAP.md)、[历史演进](EVOLUTION.md)、[关键发现](FINDINGS.md)。
 
 检查失败、认证中断或来源不可达时，状态写“检查不完整”并保留上次成功基线；不能写成“无变化”。
 
@@ -115,14 +127,14 @@ tag 核验应解析到 commit（例如 `tag^{commit}`），不能把 annotated t
 1. 读取本文件和最近版本结论，确认操作目标仍是 ikxky/dsh-watch。
 2. 查询完整 release 列表（含预发布，分页直至覆盖已登记基线），识别新增、撤回或改名条目；核 tag→commit、发布时间、prerelease、正文修改和 fingerprint。对本表已登记发布复查正文；区分正文修订、tag 移动与新增 release，不能把 annotated tag 对象与 commit 的差异误报为移动。
 3. 检查安全公告、SAFETY 改动和已登记 upstream refs；对真实可访问的 issue/PR 记录其状态、更新时间及相关提交。master 新内容只标为未发布信号。
-4. 有实质变化时，按六维定向阅读 release、固定源码及差异，新增 `releases/<version>.md`，同步当前 OVERVIEW、FINDINGS 和 TRACKING；若改变长期趋势、默认值、兼容边界或历史归属，再更新 EVOLUTION。候选版的累计摘要不能当作当次首次引入的证据。现有 release 正文修订则更新对应文档和指纹，不制造新版本名。
+4. 有实质变化时，按六维阅读 release、固定源码、插件默认组合及发行物差异，新增 `releases/<version>.md`，同步 OVERVIEW、FINDINGS、TRACKING 和受影响的 PLUGINS 条目；改变长期趋势、默认值、兼容边界或历史归属时更新 EVOLUTION。对照 CAPABILITY-MAP 的稳定 ID 更新状态、条件、证据日期与下一步问题，独立新能力才增 ID。候选版累计摘要不能当作当次首次引入。旧 release 正文修订更新原文档和指纹，不制造新版本名。
 5. 只按白名单提交这一个公开研究仓库；提交前检查 diff、引用、凭据和来源边界；push 后回读远端 commit 与文件。失败时不得宣称发布完成。
 6. 向用户报告改变判断的事项，优先报告安全、重大兼容、默认外发和执行可靠性变化；附来源与文档链接。一般 UI 微调只有改变本项目结论时才报告。
 
-“无实质变化”指没有新发布、重大正文修订、相关安全变化或已登记事项的实质状态变化。此时只更新本文件的检查时间、覆盖范围与结果，允许提交这项状态更新；不新增 release 报告，不发送例行空通知。来源不可达等导致机制失效的事项属于运行异常，应简短报告，不按静默成功处理。
+“无实质变化”指没有新发布、重大正文修订、相关安全变化、插件／发行物／能力契约变化或已登记事项的实质状态变化。此时只更新本文件的检查时间、覆盖范围与结果，允许提交这项状态更新；不新增 release 报告，不发送例行空通知。来源不可达等导致机制失效的事项属于运行异常，应简短报告，不按静默成功处理。
 
 ## 下一步
 
 1. 首次每周自动检查计划于 2026-10-19 执行，届时更新检查状态；无实质变化保持通知静默。
-2. 优先核验 F-01 日志外发配置、F-02 完成与恢复语义、F-03 Team 升级语义，并关注日志格式、协议和插件兼容承诺。历史趋势以 EVOLUTION 为入口，避免每次复制全量全景；当前仅进行公开资料与源码研究。
+2. 下一批优先补插件发行一致性、文件交付分层、任务恢复／完成及入口权限差异；具体问题按 CAPABILITY-MAP 的 ID 跟踪，并关联 F-01～F-06。当前仅进行公开资料与源码研究。
 3. 如另行开展运行验证，在隔离环境使用非敏感样本，单独记录平台、精确版本、配置、输入和失败证据；不把源码测试的存在写成本项目测试通过。

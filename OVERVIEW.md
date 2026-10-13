@@ -4,6 +4,8 @@
 
 本页保持当前版本快照。历史 tag 的能力、默认值和迁移变化见 [EVOLUTION](EVOLUTION.md)：插件内核早期已存在；Session 格式、模型协议、执行后端及日志外发在后续发布中发生过实质变化，不能把本页能力倒推给所有历史版本。
 
+2026-10-13 补充：逐项支持状态、证据程度与待核问题统一维护在 [CAPABILITY-MAP](CAPABILITY-MAP.md)；默认插件、官方可选与第三方的分类及发布包差异见 [PLUGINS](PLUGINS.md)。npm 包存在、配置挂载和实际具备外部服务能力分别确认。
+
 ## 当前判断
 
 dsh 是可组合的 Agent 运行框架及本地交互产品，核心特色是连 agent loop、模型、工具、持久化和界面都可通过 Cordis 插件组装。对企业平台，它更适合作为执行内核与架构模式的研究对象；当前证据不足以把它视为完整的企业身份、租户、成本和合规平台。官方仍将其标为开发者预览，明确预告兼容性变化，并声明尚未安全审计。[README](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/README.zh.md)、[架构](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/architecture.zh.md)、[SAFETY](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/SAFETY.zh.md)
@@ -74,6 +76,8 @@ Session 是追加事件日志，模型上下文是其投影；工具、消息、
 
 ## 4. 插件、Skills、MCP、模型、IM 与 SDK
 
+当前随附可选组合有11项，默认模板均未选择；Codex／Claude Code 子代理另属官方按需安装。Web 会关闭部分基础工具，再由 preset 挂载；启用某些全局可选工具又会影响包括 minimal 在内的会话。插件功能范围因此必须携带 profile、preset 和配置条件。[分类与固定配置](PLUGINS.md)
+
 插件通过服务、事件与生命周期副作用组合；profile 和 bundle 的层叠配置影响实际能力集合。Host 插件在宿主进程执行，不受工作区沙箱约束；插件管理的 profile 变更可能影响多个会话。源码中存在开关、加载失败处理和版本配套机制，不等于已经建立第三方插件信任或审计体系。[架构](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/architecture.zh.md)、[插件管理](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/boot/plugin-manager/README.zh.md)
 
 | 接入面 | 已有证据 | 边界与建议 |
@@ -89,6 +93,8 @@ Session 是追加事件日志，模型上下文是其投影；工具、消息、
 来源：[Skills](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/skill/skill-filesystem/README.zh.md)、[MCP](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/mcp/mcp-client/README.zh.md)、[pi-ai](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/llm/llm-pi-ai/README.zh.md)、[SDK](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/sdk/client/README.zh.md)、[上版兼容层声明](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.1)、[GitHub webhook](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/experimental/webhook-github/README.zh.md)。IM 为限定范围检索所得，未声称不存在任何社区插件。
 
 ## 5. 身份、权限、审批、沙箱与审计
+
+**入口例外：**`sdk-minimal` 使用独立组合，文件策略默认 `danger-full-access`，不继承 base 的 `workspace-write + ask` 默认值；其 tag 配置与本轮静态核验的 npm 配置一致。少工具模式不能当作较低权限的同义词。[固定配置](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/bundle/sdk-minimal/cordis.patch.yml)、[发布包核验](PLUGINS.md)
 
 源码中的基础组合把新会话默认配置为 `workspace-write + ask`，另有 read-only 和 Full access 等预设。身份层需要区分模型提供方登录、Web 启动认证、匿名安装标识及真正的业务用户授权。匿名 ID 用于同一 Harness home 的关联，不是企业用户身份。[基础配置](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/bundle/base/cordis.patch.yml#L233)、[权限预设](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/interaction/permission-presets/README.zh.md)、[匿名 ID](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/identity/anonymous-user-id/README.zh.md)
 
@@ -115,3 +121,5 @@ Trajectory、Session 事件、开发者工具和统计投影提供执行观察�
 来源：[循环故障语义](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/core/agent-loop/README.zh.md)、[LLM 重试](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/llm/llm-retry/README.zh.md)、[依赖锁文件](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/pnpm-lock.yaml)、[Goal 资源预算限制](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/goal/goal-round-driver/README.zh.md)。
 
 对企业平台，当前最有价值的下一步是形成可独立验证的接入要求：任务完成判据、外部动作不明时的处理、每个出站通道的控制、知识与会话状态分层，以及明确的预算所有者。此判断基于公开资料，不涉及特定产品的私密实现。
+
+补充的插件核查确认，Desktop 产品交互埋点与反馈遥测是独立通道，普通 Web 不装配该产品通道；默认启用、可配置关闭及已排队事件的行为见 [PLUGINS](PLUGINS.md)。另外，文件卡片的 Host 打开、会话 ZIP 下载和鉴权文件读取是不同能力；逐项证据与限制见 [CAP-FILE-02～06](CAPABILITY-MAP.md#工作区与文件交付)。
