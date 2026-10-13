@@ -60,8 +60,7 @@ Team 可用于研究任务板、依赖和助手间消息，让一个主助手组
 
 <a id="当前默认组成与重要例外"></a>
 
-<details>
-<summary>当前组成：入口差异、随附关闭清单与按需安装</summary>
+### 当前组成：入口差异、随附关闭清单与按需安装
 
 **常用 Web。** standard 是默认会话模式，提供文件／Shell、Skills、计划、长期目标、压缩、子代理、工作流、文件卡片和提醒。程序化工具调用模式（PTC）改变工具呈现，并关闭该模式的 workflow；创造模式开放插件管理工具。minimal 主要提供持久 Shell，但宿主与全局扩展仍可增加工具。依据：[standard][standard]、[PTC][ptc]、[创造模式][creator]、[minimal][minimal]。
 
@@ -75,10 +74,7 @@ Team 可用于研究任务板、依赖和助手间消息，让一个主助手组
 
 **如何得出默认值。** 复核顺序为 profile → 有序 bundle → 配置补丁 → 会话 preset／条件／用户覆盖 → 插件 schema 与实现。Web 会先关闭部分基础工具，再按会话模式加载；补丁对目标行的 `config` 整体替换，不能假定深层合并。随包包括由生产依赖带来的组件，并非所有内容都位于 CLI 的归档中。依据：[profile][profile]、[基础配置][base]、[Web manifest][web-manifest]、[Web 配置][web]。
 
-</details>
-
-<details>
-<summary>历史变化：六个版本怎样改变用户可见能力与集成条件</summary>
+### 历史变化：六个版本怎样改变用户可见能力与集成条件
 
 以下使用对应专题的上一已发布版本作为比较基准；最早的 rc.7 只建立当时基线。没有变化的插件名称也可能包含重要实现变更。
 
@@ -91,14 +87,11 @@ Team 可用于研究任务板、依赖和助手间消息，让一个主助手组
 
 更早的会话存储、协议与生命周期变化见 [EVOLUTION](EVOLUTION.md)。
 
-</details>
-
 ## 发行包核验与版本纪律
 
 当前有两处证据限制影响版本判断：alpha.2 的源码与 npm 发行包存在计划提示词文字差异；v0.1.3-alpha.1 的四个精确包样本不可取得。它们要求我们注明依据来自哪里，尚不能据此认定权限漏洞或撤包原因。
 
-<details>
-<summary>抽样范围、元数据、文字差异与校验摘要</summary>
+### 抽样范围、元数据、文字差异与校验摘要
 
 对上述6个版本各查 `@deepseek-ai/dsh`、`dsh-base`、`dsh-web-app`、`dsh-app-boot`，另核当前 `dsh-sdk-minimal`。成功静态下载 **21个 tgz**，逐一匹配 registry 的 SHA-512 integrity；比对归档中 **52份 YAML**（含说明元数据），48份与对应 tag 字节一致，4份有下述提示词差异。没有安装依赖、执行生命周期脚本或验证整个依赖闭包、Desktop 二进制与 Python wheel。
 
@@ -124,9 +117,6 @@ Team 可用于研究任务板、依赖和助手间消息，让一个主助手组
 - **[dsh-web-app tgz](https://registry.npmjs.org/@deepseek-ai/dsh-web-app/-/dsh-web-app-0.2.1-alpha.2.tgz)：** 本轮验证通过的 integrity：`sha512-KJFOxsb9eaNW2DNzLwLbUMKonAHUGVpQlLggr5nLNDeUo4TEjyBM+fzIu2qTw78QzpM+cYNAXyNPtYvqutt83w==`
 
 **版本记录：**样本包的 package version 与主版本相同，不据此编造独立插件发版史；组件代码以主 tag／commit 固定，包版本只按实际 manifest 记录。早期依赖范围说明仅固定 CLI 版本不足以确定安装后的全部代码；本项目未运行解析，未断言实际安装会选哪个版本。404也不能证明历史上从未发布、被撤回或撤回原因。
-
-
-</details>
 
 本轮仍未确认缺失历史包的原因、当前文字差异的构建来源、全部平台发行物的一致性、实际加载结果及第三方服务可用性。后续优先补公开资料和静态证据；本次产品化改写不改变任何支持状态，也不新增运行结论。
 

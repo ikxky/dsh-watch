@@ -49,12 +49,11 @@
 
 尚未知的是实际任务成功率、取消和崩溃恢复表现、吞吐时延、目标模型兼容程度，以及按业务任务归集的真实费用。2026-10-12 的专项检查未见已发布安全公告，这也不能抵消未经安全审计的声明；检查范围见[跟踪记录](TRACKING.md)。
 
-## 技术审阅时再展开
+## 技术审阅依据
 
 以下保留影响产品承诺的实现依据；当前条目状态仍以[能力地图](CAPABILITY-MAP.md)为准。
 
-<details>
-<summary>执行、持久化、集成、权限和数据通道的关键依据</summary>
+### 执行、持久化、集成、权限和数据通道的关键依据
 
 **执行与完成。** 一次模型请求及其工具执行构成 step，若干 step 构成 turn；输入经持久 inbox 准入。源码对可并行工具使用有界池，默认上限10，独占工具形成屏障；不能据此假定任意写操作互不冲突。SDK `session/wait` 复核根与受管理后代的空闲状态，`HarnessSession.run()` 仍在根首次 idle 后返回；最后助手文本未必只因果归属于本次 prompt。取消是协作式，超时返回不保证资源完全释放，根上下文关闭时最终 `turn/end` 可能未持久化。[架构][architecture]、[工具调度][tool-calls]、[循环契约][loop]、[wait 实现][wait]、[run 实现][run]、[超时修复](https://github.com/deepseek-ai/deepseek-harness/commit/dbb150ff0e589ec5b34a261c201a853affe71a29)
 
@@ -69,8 +68,6 @@
 **审批与观测。** Auto review 默认关闭，可额外调用模型后以 Full access 执行；可能误判，不覆盖程序化工具全部直接 Node 效果，也不持久化全部审查细节。日志重建应使用持久 `session/event`，`agent/*` 主要用于实时协调；事件可回放不自动具有防篡改、组织审计权限或保留策略。[自动评审][auto-review]、[生命周期][lifecycle]、[统计][stats]
 
 **出站与升级。** 基础组合中的 Session Log 默认启用，请求字段可增量携带完整规范事件；反馈 OTel 默认在显式反馈后释放日志前缀，另有包清单与 Desktop 交互采集。其目标、保留与自定义端点行为仍需分别验证。当前 pi-ai 依赖从0.87.1到1.0.2；预稳定接口、会话格式与插件发行内容要分别跟踪。抽查归档不能替代完整供应链或漏洞审计，本项目未扫描 CVE。[会话日志][session-log]、[默认配置源码][log-source]、[反馈遥测][otel]、[包清单][inventory]、[依赖锁定][lock]、[发行内容](PLUGINS.md#发行包核验与版本纪律)
-
-</details>
 
 下一步阅读：[沿用户任务查看36项能力](CAPABILITY-MAP.md) → [选择需要的扩展](PLUGINS.md) → [查看影响判断的关键发现](FINDINGS.md)。历史变化见 [EVOLUTION](EVOLUTION.md)，当前版本的具体增量见 [v0.2.1-alpha.2](releases/v0.2.1-alpha.2.md)。
 
