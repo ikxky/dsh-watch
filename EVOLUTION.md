@@ -1,6 +1,6 @@
 # DeepSeek Harness 发布演进
 
-截至 **2026-10-12**，官方 Releases 集合 API 第1页返回26条、第2页为空；26条均为 `draft=false`、`prerelease=true`。因此本文使用“官方已发布版本”，不把 RC 或 0.2 当作稳定版。当前可见最早发布为 **v0.1.0-rc.7（2026-08-17 UTC）**，最新为 **v0.2.1-alpha.2（2026-10-09 UTC）**。没有从 git tag 名称或 release compare 的起点推断更早公开发行。[完整 API](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=1)、[下一页](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=2)
+截至 **2026-10-19**，官方 Releases 集合 API 第1页返回31条、第2页为空；31条均为 `draft=false`、`prerelease=true`。因此本文使用“官方已发布版本”，不把 RC 或 0.2 当作稳定版。当前可见最早发布为 **v0.1.0-rc.7（2026-08-17 UTC）**，最新为 **v0.2.1-rc.2（2026-10-17 UTC）**。没有从 git tag 名称或 release compare 的起点推断更早公开发行。[完整 API](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=1)、[下一页](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=2)
 
 研究为官方 release、历史 tag 对应源码及文档的静态分析，没有安装、运行、模型调用或安全实测。**官方说明**不等于复现，**源码核实**只确认实现与配置，企业影响均为**推断**；缺少证据的能力保留为**未知**。当前使用姿态仍以借鉴、验证、观察为主。[当前基线](OVERVIEW.md)、[关键发现](FINDINGS.md)、[检查规则](TRACKING.md)
 
@@ -44,6 +44,11 @@
 | [v0.2.0-rc.2][v0.2.0-rc.2] | 2026-09-29 | `639ed0153972` | [专题](releases/v0.2.0-rc.2.md) | 桌面 CLI 管理、shell 环境、模型目录和审批诊断修复 |
 | [v0.2.1-alpha.1][v0.2.1-alpha.1] | 2026-10-03 | `5badb15009ae` | [专题](releases/v0.2.1-alpha.1.md) | 实验 Mods、开发者工具；自动化回归 Web；删除 invariant 导出 |
 | [v0.2.1-alpha.2][v0.2.1-alpha.2] | 2026-10-09 | `d74326738864` | [专题](releases/v0.2.1-alpha.2.md) | 子代理 activation、SDK wait、Team 直接投递、Python 文件策略与外部部署 |
+| [v0.2.1-alpha.3](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.3) | 2026-10-14 | `2fbf4359b82f` | [本周报告](releases/v0.2.1-rc.2.md) | 相对 alpha.2：凭据优先级、SDK resume、Minimal 图片与压缩；热替换、恢复和显示修复 |
+| [v0.2.1-alpha.4](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.4) | 2026-10-15 | `86a402200d95` | [本周报告](releases/v0.2.1-rc.2.md) | 相对 alpha.3：自定义插件索引、engines.dsh 优先规则、模型推理等级 UI |
+| [v0.2.1-alpha.5](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.5) | 2026-10-16 | `1517a4dbca0a` | [本周报告](releases/v0.2.1-rc.2.md) | 相对 alpha.4：技能菜单刷新、终端重试、PTC 指引与模型名称 Slot；以官方修复说明记录 |
+| [v0.2.1-rc.1](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-rc.1) | 2026-10-17 | `1600d8a1e140` | [本周报告](releases/v0.2.1-rc.2.md) | 相对 alpha.5：355个 package.json 版本字段更新；没有其他文件差异，正文为阶段汇总 |
+| [v0.2.1-rc.2](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-rc.2) | 2026-10-17 | `687f282e8625` | [本周报告](releases/v0.2.1-rc.2.md) | 相对 rc.1：DeepSeek-V4.1-Flash-1017 适配及 Search／Fetch API；定向检查配置、实现和归档 |
 
 
 候选版正文可能汇总多个 alpha 的变化。例如 v0.1.2-rc.1 和 v0.1.7-rc.1 含阶段汇总，不能据正文位置把已经存在的能力记为该 RC 首次引入。表中未见 v0.1.4，也不据此虚构缺失版本或解释未公开的发布决策。
@@ -68,14 +73,14 @@ Goal 的暂停、恢复、停止、队列和父子任务归属在多个发布中
 
 自动摘要、工具结果修剪和默认关闭的第三方 memory 示例在 rc.7 已存在。v0.1.7-alpha.1 调整主动压缩的输出预算与余量，目标是减少长输出后才压缩的情况；alpha.2 又把工具内联截断从字节配置改为估算 token 预算。这些仍是会话上下文管理，没有证据证明由此获得有权限、出处、删除与冲突治理的长期知识库。[早期压缩][early-compaction]、[早期 memory][early-memory]、[v0.1.7-alpha.1][v0.1.7-alpha.1]、[v0.1.7-alpha.2][v0.1.7-alpha.2]
 
-持久化的分界更清楚。逐个读取26个 tag 的 `SESSION_FORMAT_VERSION` 后得到：
+持久化的分界更清楚。截至2026-10-12逐个读取26个 tag 的 `SESSION_FORMAT_VERSION` 后得到：
 
 | 产品发布区间 | 写入格式 | 关键变化 |
 |---|---|---|
 | rc.7 至 v0.1.2-rc.1 | 0 | 持久 assistant chunk；早期 SQLite 后端随后删除 |
 | v0.1.3-alpha.1 至 alpha.2 | 2 | SessionHandle、单写锁、attempt settlement；旧代际保留并相邻迁移 |
 | v0.1.5-alpha.1 至 v0.1.6-alpha.2 | 3 | 系统提示词纳入历史，旧 PTC／预设引用迁移，官方明确不支持升级后降级读取 |
-| v0.1.7-alpha.1 至当前 | 4 | 迁移工具和历史 V3 兼容处理；0.2 未再次改变常量 |
+| v0.1.7-alpha.1 至 alpha.2（rc.2复核仍为4） | 4 | 迁移工具和历史 V3 兼容处理；0.2 未再次改变常量 |
 
 源码边界：[格式0][fmt0]、[格式2][fmt2]、[格式3][fmt3]、[格式4][fmt4]；迁移行为依据 [v0.1.3 专题](releases/v0.1.3-alpha.1.md)、[v0.1.5-alpha.1][v0.1.5-alpha.1]、[v0.1.7-alpha.1][v0.1.7-alpha.1]。迁移链有格式1的定义，但本次列表没有发现写格式1的已发布版本。v0.1.7-alpha.1 内的格式状态文档仍以较旧发布为证据，故“是否已发布”采用该 release 的事实加实际源码常量核定，不机械照搬文档登记。[当时格式状态页][format-status]
 
@@ -105,9 +110,17 @@ v0.1.6 的 Node PTC 接入文件策略和进程限制，而同版实验 Python P
 
 **推断／验证：**升级检查应覆盖默认出站、事件 payload、补传行为、模型目录和依赖组合；审计日志、产品诊断、反馈上报必须分开。没有运行数据可支持“新版本更便宜／更快／更可靠”的总体结论，摘要、子代理、评审与重试仍需统一费用归集。
 
+## 2026-10-19：凭据来源、插件契约与外部服务
+
+alpha.3 将已保存凭据置于环境之前，同时让 Headless 默认退出本地凭据存储；SDK 的显式 resume 补齐持久会话接入，但不恢复外部进程。alpha.4 增加 `engines.dsh` 优先兼容判断和默认关闭的自定义索引市场，随附关闭组合增至12项；发现、安装与运行分别有条件。rc.1 只是相邻版本字段更新，其跨版本摘要不重复计作新增。[凭据优先级](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/credentials/credentials-local/README.zh.md)、[SDK 恢复契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/README.zh.md)、[兼容判断源码](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/app-boot/src/plugin-compatibility.ts)、[rc.2 入口与可选清单](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/app-boot/src/profile.ts)
+
+rc.2 的新网页 API 将搜索与抓取扩展为可选的直接远端服务。默认提供者没有改变；启用后的用户问题片段、URL出站、目标状态不可见和无自动回退，则增加了数据治理与失败处理责任。这个变化不能被“无辅助模型token”概括为无成本，也不能被界面遮罩概括为脱敏出站。[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)、[本周报告](releases/v0.2.1-rc.2.md)
+
+**迁移判断：**优先检查凭据来源、插件版本声明／索引可信度、网页提供者选择及失败语义；只有使用相应入口与配置的集成受影响。仍无足够证据提升生产采用或实际可靠性等级。
+
 ## 迁移成本与持续观察
 
-插件核查补充了两个独立变化轴：早期抽样 npm 内部依赖使用版本范围，近期改为精确版本；当前随附关闭组合从上一版4项增至11项，但并非默认启用11项新能力。也有“加载行没变、实现有变”的情况，如 v0.1.3 的 Session API、v0.2.0-rc.2 的 pi-ai 依赖。当前 alpha.2 发行归档与 tag 的 Plan 文本差异、v0.1.3-alpha.1 包抽样不可得的限制，统一登记在 [插件发行证据](PLUGINS.md#发行包核验与版本纪律)，不倒推成架构重写或运行缺陷。
+插件核查补充了两个独立变化轴：早期抽样 npm 内部依赖使用版本范围，近期改为精确版本；alpha.2 随附关闭组合从上一版4项增至11项，但并非默认启用11项新能力。也有“加载行没变、实现有变”的情况，如 v0.1.3 的 Session API、v0.2.0-rc.2 的 pi-ai 依赖。历史 alpha.2 发行归档与 tag 的 Plan 文本差异、v0.1.3-alpha.1 包抽样不可得的限制，统一登记在 [插件发行证据](PLUGINS.md#发行包核验与版本纪律)，不倒推成架构重写或运行缺陷。
 
 以下成本等级是研究推断，取决于是否依赖相应接口，不是已测工时。
 

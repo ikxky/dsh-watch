@@ -6,7 +6,9 @@
 
 本页保留产品定位与选型概览。系统评测从[14维总览](CAPABILITY-MAP.md#评测维度总览)开始，按00–13逐维阅读定义、判断依据、当前表现和待验证事项，再到[36项能力证据索引](CAPABILITY-MAP.md#evidence-index)核对支持状态；扩展条件与演进仍在[插件指南](PLUGINS.md)。框架要求、已有能力和运行成熟度分别判断，未查明处保持待评。
 
-依据为 **v0.2.1-alpha.2**，固定提交 `d743267388641bc76f17c45ce8b4c231aed1d32c`；最近资料核查 **2026-10-13**。结论来自官方文档、源码与发行包静态分析，没有安装或运行 dsh，也没有调用模型。下列场景是基于已有能力的适用性推断，不是成功案例。
+研究推进至 **v0.2.1-rc.2**／`687f282e8625c6b8d11ff58211a90524be2e4317`，最近核查 **2026-10-19**。未受本周增量影响的既有分析保留 alpha.2 固定证据，新增条件以本周报告和下文为准。结论来自官方文档、源码与发行包静态分析，没有安装或运行 dsh，也没有调用模型。下列场景是基于已有能力的适用性推断，不是成功案例。
+
+本周的采用前检查新增三项：Web／Desktop 的已保存凭据优先，Headless 默认仅走环境／`.env`；第三方插件优先按 `engines.dsh` 判断兼容，自定义市场需启用并添加索引；新版 Search／Fetch 需主动选择，启用后搜索默认可附带截断的用户问题，抓取交由远端。SDK resume 和 Minimal 图片／压缩增加接入选择，但不证明外部进程恢复、可靠完成或生产安全。详见[本周相邻版本分析](releases/v0.2.1-rc.2.md)、[凭据优先级](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/credentials/credentials-local/README.zh.md)、[自定义市场](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/plugin-market/README.zh.md)、[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)。
 
 ## 哪些场景值得优先研究
 
@@ -49,7 +51,7 @@
 
 接入前尤其需要看清三件事。第一，文件沙箱和工具审批没有构成完整的组织隔离；精简程序入口甚至与基础入口使用不同权限默认值。第二，默认会话日志、显式反馈、包清单与 Desktop 产品交互采集是不同的数据通道，不能用一个遥测开关推断全部关闭。第三，用量记录、轮数和单次输出限制，不等于覆盖主任务、子代理、压缩、重试等费用的总预算。证据及后续问题见[关键发现](FINDINGS.md)、[插件数据通道](PLUGINS.md#data-channels)。
 
-尚未知的是实际任务成功率、取消和崩溃恢复表现、吞吐时延、目标模型兼容程度，以及按业务任务归集的真实费用。2026-10-12 的专项检查未见已发布安全公告，这也不能抵消未经安全审计的声明；检查范围见[跟踪记录](TRACKING.md)。
+尚未知的是实际任务成功率、取消和崩溃恢复表现、吞吐时延、目标模型兼容程度，以及按业务任务归集的真实费用。2026-10-19 的专项检查未见已发布安全公告，这也不能抵消未经安全审计的声明；检查范围见[跟踪记录](TRACKING.md)。
 
 ## 技术审阅依据
 
@@ -69,9 +71,9 @@
 
 **审批与观测。** Auto review 默认关闭，可额外调用模型后以 Full access 执行；可能误判，不覆盖程序化工具全部直接 Node 效果，也不持久化全部审查细节。日志重建应使用持久 `session/event`，`agent/*` 主要用于实时协调；事件可回放不自动具有防篡改、组织审计权限或保留策略。[自动评审][auto-review]、[生命周期][lifecycle]、[统计][stats]
 
-**出站与升级。** 基础组合中的 Session Log 默认启用，请求字段可增量携带完整规范事件；反馈 OTel 默认在显式反馈后释放日志前缀，另有包清单与 Desktop 交互采集。其目标、保留与自定义端点行为仍需分别验证。当前 pi-ai 依赖从0.87.1到1.0.2；预稳定接口、会话格式与插件发行内容要分别跟踪。抽查归档不能替代完整供应链或漏洞审计，本项目未扫描 CVE。[会话日志][session-log]、[默认配置源码][log-source]、[反馈遥测][otel]、[包清单][inventory]、[依赖锁定][lock]、[发行内容](PLUGINS.md#发行包核验与版本纪律)
+**出站与升级。** 基础组合中的 Session Log 默认启用，请求字段可增量携带完整规范事件；反馈 OTel 默认在显式反馈后释放日志前缀，另有包清单与 Desktop 交互采集。其目标、保留与自定义端点行为仍需分别验证。alpha.2 的 pi-ai 依赖从0.87.1到1.0.2；本周 rc.2 manifest 已为 `^1.1.0`，Azure 名称迁移见[本周报告](releases/v0.2.1-rc.2.md)；预稳定接口、会话格式与插件发行内容要分别跟踪。抽查归档不能替代完整供应链或漏洞审计，本项目未扫描 CVE。[会话日志][session-log]、[默认配置源码][log-source]、[反馈遥测][otel]、[包清单][inventory]、[依赖锁定][lock]、[发行内容](PLUGINS.md#发行包核验与版本纪律)
 
-下一步阅读：[14维评测总览与分析](CAPABILITY-MAP.md) → [36项能力证据索引](CAPABILITY-MAP.md#evidence-index) → [插件实现与版本依据](PLUGINS.md) → [关键发现](FINDINGS.md)。历史变化见 [EVOLUTION](EVOLUTION.md)，当前版本的具体增量见 [v0.2.1-alpha.2](releases/v0.2.1-alpha.2.md)。
+下一步阅读：[14维评测总览与分析](CAPABILITY-MAP.md) → [36项能力证据索引](CAPABILITY-MAP.md#evidence-index) → [插件实现与版本依据](PLUGINS.md) → [关键发现](FINDINGS.md)。历史变化见 [EVOLUTION](EVOLUTION.md)，当前版本的具体增量见 [v0.2.1-rc.2](releases/v0.2.1-rc.2.md)。
 
 [readme]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/README.zh.md
 [guide]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/user/guide/index.zh.md

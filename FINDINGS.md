@@ -1,6 +1,6 @@
 # 关键发现与机会
 
-当前范围：v0.2.1-alpha.2／`d743267388641bc76f17c45ce8b4c231aed1d32c`，2026-10-12 登记并补充历史证据。以下是公开资料与静态源码分析，不是已复现漏洞清单。没有本项目运行测试。背景能力见 [OVERVIEW](OVERVIEW.md)，版本变化见 [release 分析](releases/v0.2.1-alpha.2.md)，纵向证据见 [EVOLUTION](EVOLUTION.md)。历史已修复事项不作为当前缺陷登记。
+当前研究推进至 v0.2.1-rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`（2026-10-19）。既有 F-01～F-06 保留 alpha.2 固定证据和历史归属；本周补充如下。以下是公开资料与静态源码分析，不是已复现漏洞清单。没有本项目运行测试。背景能力见 [OVERVIEW](OVERVIEW.md)，版本变化见 [release 分析](releases/v0.2.1-rc.2.md)，纵向证据见 [EVOLUTION](EVOLUTION.md)。历史已修复事项不作为当前缺陷登记。
 
 ## F-01 · 默认 Session Log 外发需要独立治理
 
@@ -22,7 +22,7 @@
 
 **P1 · 借鉴／验证 · 已确认代码语义；不是新缺陷指控。**
 
-本版统一子代理 activation，工具可先返回 child ID；SDK 新增 `session/wait`，等待根 Agent、受管理后代及后代触发的根摘要工作。源码中的 wait 循环会在等待后代后复核根状态与日志序列。另一方面，`HarnessSession.run()` 仍以根首次 idle 结束活动区间；返回的最后助手文本不保证只由该 prompt 因果产生。
+alpha.2 统一子代理 activation，工具可先返回 child ID；SDK 新增 `session/wait`，等待根 Agent、受管理后代及后代触发的根摘要工作。源码中的 wait 循环会在等待后代后复核根状态与日志序列。另一方面，`HarnessSession.run()` 仍以根首次 idle 结束活动区间；返回的最后助手文本不保证只由该 prompt 因果产生。
 
 **历史补充：**暂停、恢复和队列边界在 v0.1.3、v0.1.5、v0.2.1-alpha.1 均有不同修复；0.2 还强调未知工具副作用的恢复处理。这支持持续观察生命周期边界，不足以证明同一缺陷反复回归。[演进证据](EVOLUTION.md)、[0.2 分析](releases/v0.2.0-rc.2.md)
 
@@ -36,7 +36,7 @@
 
 **P1 · 观察／验证 · alpha.1→alpha.2 兼容性变化已由 diff 确认。**
 
-本版移除 Team 独立 mailbox/outbox，改为直接调用目标 inbox／steer；发送成功只表示消息已接收，不表示模型已处理，也不额外等待同步持久化。原自动重试和显式重发去重不再提供；`maxPendingMessagesPerMember`、发送结果中的旧字段等需迁移。历史消息记录仍可读取，但不再按旧机制重新投递。
+alpha.2 移除 Team 独立 mailbox/outbox，改为直接调用目标 inbox／steer；发送成功只表示消息已接收，不表示模型已处理，也不额外等待同步持久化。原自动重试和显式重发去重不再提供；`maxPendingMessagesPerMember`、发送结果中的旧字段等需迁移。历史消息记录仍可读取，但不再按旧机制重新投递。
 
 **影响推断：**依赖旧 outbox 达成业务保证的消费者需重新指定重试、幂等和交付回执的所有者。不能把 Team 的任务 CAS、持久 roster 和消息处理统称为 exactly-once 工作流。共享任务板的路径重叠提示也不是文件锁。
 
@@ -48,7 +48,7 @@
 
 **P1 · 跳过当前生产采用；借鉴权限拆分 · 官方限制明确。**
 
-官方安全文件明确未审计、非生产就绪。本地沙箱可能报告 partial；文件写入策略不能覆盖所有读取、网络、宿主插件或同用户凭据访问。计划模式是文本约束；实验性 Auto review 获准后以 Full access 执行，不覆盖所有 PTC 直接效果，也不保存完整评审输入与输出。Python PTC 本版接入 Session 文件策略是进步，但仍是实验组件，且没有随附 profile 默认启用。
+官方安全文件明确未审计、非生产就绪。本地沙箱可能报告 partial；文件写入策略不能覆盖所有读取、网络、宿主插件或同用户凭据访问。计划模式是文本约束；实验性 Auto review 获准后以 Full access 执行，不覆盖所有 PTC 直接效果，也不保存完整评审输入与输出。Python PTC 在 alpha.2 接入 Session 文件策略是进步，但仍是实验组件，且没有随附 profile 默认启用。
 
 **历史补充：**官方曾报告 v0.1.1-rc.1 修复 Linux bwrap 路径绕过、v0.1.7-alpha.1 修复 Windows 授权目录外删除；这些是历史修复记录，不是本项目复现或当前未修漏洞。v0.1.6 的 Python PTC 当时仍明确没有文件沙箱，说明执行后端的版本边界不可混用。[历史来源与限定](EVOLUTION.md)、[当时 PTC 契约](releases/v0.1.6-alpha.1.md)
 
@@ -83,3 +83,13 @@
 2026-10-13 的归档抽查发现，alpha.2 的 base 与三个 Web preset 的 Plan 提示词首句与 tag 不同；registry integrity 核验通过。早期样本内部依赖使用版本范围，近期样本为精确版本。另有 v0.1.3-alpha.1 的四个 npm 包样本当前不可得，原因未知。
 
 **影响推断：**只固定 CLI 名称和版本不足以替代插件配置、依赖及发行物证据；不能把文字差异直接认定为权限漏洞，或把404认定为某种撤包原因。下一步先查发布构建来源、精确依赖与归档元数据，保持静态研究。[完整样本、源码、tarball 与 integrity](PLUGINS.md#发行包核验与版本纪律)、[能力跟踪 CAP-EXT-01](CAPABILITY-MAP.md#cap-ext-01)
+
+## 2026-10-19 · 受配置约束的新增判断
+
+**F-01／F-04 · P1 验证。** rc.2 的 Search／Fetch 插件随基础组合提供，但默认仍选旧 Messages 搜索及本地 HTTP 抓取。选择新 API 后，`sendOriginalQuestion` 默认 true，把最近用户提示的文本折叠空白、截取128字符作为 `ori_question` 发送；没有对应提示或关闭字段时不发送。Fetch 发送 URL 给远端，目标状态码及最终重定向地址不暴露，无自动重试或提供者回退。企业需审核选择后的出站内容和服务责任，不能写成所有用户默认外发或已复现漏洞。[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)、[请求与默认配置源码](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/src/index.ts)
+
+**F-04 · P1 验证。** alpha.3 改为 Web／Desktop 已保存凭据优先，Headless 默认不读本地保存密钥；环境覆盖假设需要迁移核对。同用户工具可读文件的边界不变，显示遮罩不代表日志和模型出站已脱敏。[凭据优先级](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/credentials/credentials-local/README.zh.md)、[Headless 配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/headless/cordis.patch.yml)、[显示遮罩配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/web-app/cordis.patch.yml)
+
+**F-02／F-05 · 借鉴／验证。** SDK 恢复保留会话和目录、不恢复外部进程，不等于重新授权长期目标；Minimal 图片与压缩不等于无损记忆或免费长上下文。[SDK 恢复契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/README.zh.md)、[Minimal 配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/sdk-minimal/cordis.patch.yml)
+
+**F-06 · P1 验证／观察。** 第三方兼容优先看 `engines.dsh`，自定义市场无官方索引、随附关闭，Creator 只读发现与安装权限分开；声明匹配不替代插件代码审阅。rc.2 11个包、20份 YAML 样本一致，不抹去 alpha.2 历史差异及其未知原因。[兼容判断源码](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/app-boot/src/plugin-compatibility.ts)、[自定义市场](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/plugin-market/README.zh.md)、[本轮发行证据](PLUGINS.md#发行包核验与版本纪律)
