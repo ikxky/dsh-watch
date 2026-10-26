@@ -1,6 +1,6 @@
 # 关键发现与机会
 
-当前研究推进至 v0.2.1-rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`（2026-10-19）。既有 F-01～F-06 保留 alpha.2 固定证据和历史归属；本周补充如下。以下是公开资料与静态源码分析，不是已复现漏洞清单。没有本项目运行测试。背景能力见 [OVERVIEW](OVERVIEW.md)，版本变化见 [release 分析](releases/v0.2.1-rc.2.md)，纵向证据见 [EVOLUTION](EVOLUTION.md)。历史已修复事项不作为当前缺陷登记。
+当前研究推进至 v0.2.1-rc.3／`1f81c047fc48fa190a683e469daa699857e9afe8`（2026-10-26）。既有 F-01～F-06 保留 alpha.2 固定证据和历史归属；各周补充保留日期，见下文。以下是公开资料与静态源码分析，不是已复现漏洞清单。没有本项目运行测试。背景能力见 [OVERVIEW](OVERVIEW.md)，版本变化见 [release 分析](releases/v0.2.1-rc.3.md)，纵向证据见 [EVOLUTION](EVOLUTION.md)。历史已修复事项不作为当前缺陷登记。
 
 ## F-01 · 默认 Session Log 外发需要独立治理
 
@@ -93,3 +93,13 @@ alpha.2 移除 Team 独立 mailbox/outbox，改为直接调用目标 inbox／ste
 **F-02／F-05 · 借鉴／验证。** SDK 恢复保留会话和目录、不恢复外部进程，不等于重新授权长期目标；Minimal 图片与压缩不等于无损记忆或免费长上下文。[SDK 恢复契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/README.zh.md)、[Minimal 配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/sdk-minimal/cordis.patch.yml)
 
 **F-06 · P1 验证／观察。** 第三方兼容优先看 `engines.dsh`，自定义市场无官方索引、随附关闭，Creator 只读发现与安装权限分开；声明匹配不替代插件代码审阅。rc.2 11个包、20份 YAML 样本一致，不抹去 alpha.2 历史差异及其未知原因。[兼容判断源码](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/app-boot/src/plugin-compatibility.ts)、[自定义市场](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/plugin-market/README.zh.md)、[本轮发行证据](PLUGINS.md#发行包核验与版本纪律)
+
+## 2026-10-26 · 目录、草稿和事件的边界
+
+**F-04／F-06 · P1验证。** API Key官方目录增加有凭据的发现请求和最低客户端版本门槛；自定义路由／目录不跟随。目录失败回退与模型准入不能视为推理可用性或安全验证。固定客户端之外还需记录目录及配置状态。[API Key 动态目录](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek-api-key/README.md)、[模型准入源码](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek/src/listed-catalog.ts)
+
+**F-02／F-06 · P1验证。** 空白会话复用改善草稿找回，但已加载Agent可能保留旧preset装配；新会话按钮不保证应用最新定义。更多菜单只生成待发送Creator草稿，不自动安装或扩大授权。[空白会话迁移指南](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/docs/upgrade-guide/v0.2.1-rc.2/new-session-blank-reuse/guide.zh.md)、[更多菜单与草稿](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/ui-entry-customization/README.zh.md)
+
+**F-01 · P1验证。** Desktop扩展菜单、模式与发送状态等产品事件；普通Web不装配，无提示词／回复字段声明，不能称作会话全文上传。关闭新采集与排队导出仍应分别确认。[Desktop 事件边界](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/product-analytics/README.zh.md)
+
+**F-06 · 发行证据。** 本次npm重试成功，5个rc.3归档integrity及10份YAML一致；仅为抽样，不代表完整供应链、Desktop／wheel或运行行为验证。[发行范围](PLUGINS.md#发行包核验与版本纪律)

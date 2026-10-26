@@ -1,6 +1,6 @@
 # DeepSeek Harness 发布演进
 
-截至 **2026-10-19**，官方 Releases 集合 API 第1页返回31条、第2页为空；31条均为 `draft=false`、`prerelease=true`。因此本文使用“官方已发布版本”，不把 RC 或 0.2 当作稳定版。当前可见最早发布为 **v0.1.0-rc.7（2026-08-17 UTC）**，最新为 **v0.2.1-rc.2（2026-10-17 UTC）**。没有从 git tag 名称或 release compare 的起点推断更早公开发行。[完整 API](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=1)、[下一页](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=2)
+截至 **2026-10-26**，官方 Releases 集合 API 第1页返回32条、第2页为空；32条均为 `draft=false`、`prerelease=true`。因此本文使用“官方已发布版本”，不把 RC 或 0.2 当作稳定版。当前可见最早发布为 **v0.1.0-rc.7（2026-08-17 UTC）**，最新为 **v0.2.1-rc.3（2026-10-23 UTC）**。没有从 git tag 名称或 release compare 的起点推断更早公开发行。[完整 API](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=1)、[下一页](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=2)
 
 研究为官方 release、历史 tag 对应源码及文档的静态分析，没有安装、运行、模型调用或安全实测。**官方说明**不等于复现，**源码核实**只确认实现与配置，企业影响均为**推断**；缺少证据的能力保留为**未知**。当前使用姿态仍以借鉴、验证、观察为主。[当前基线](OVERVIEW.md)、[关键发现](FINDINGS.md)、[检查规则](TRACKING.md)
 
@@ -49,6 +49,7 @@
 | [v0.2.1-alpha.5](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.5) | 2026-10-16 | `1517a4dbca0a` | [本周报告](releases/v0.2.1-rc.2.md) | 相对 alpha.4：技能菜单刷新、终端重试、PTC 指引与模型名称 Slot；以官方修复说明记录 |
 | [v0.2.1-rc.1](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-rc.1) | 2026-10-17 | `1600d8a1e140` | [本周报告](releases/v0.2.1-rc.2.md) | 相对 alpha.5：355个 package.json 版本字段更新；没有其他文件差异，正文为阶段汇总 |
 | [v0.2.1-rc.2](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-rc.2) | 2026-10-17 | `687f282e8625` | [本周报告](releases/v0.2.1-rc.2.md) | 相对 rc.1：DeepSeek-V4.1-Flash-1017 适配及 Search／Fetch API；定向检查配置、实现和归档 |
+| [v0.2.1-rc.3](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-rc.3) | 2026-10-23 | `1f81c047fc48` | [本周报告](releases/v0.2.1-rc.3.md) | API Key动态目录、更多菜单草稿、空白会话复用与Desktop交互事件 |
 
 
 候选版正文可能汇总多个 alpha 的变化。例如 v0.1.2-rc.1 和 v0.1.7-rc.1 含阶段汇总，不能据正文位置把已经存在的能力记为该 RC 首次引入。表中未见 v0.1.4，也不据此虚构缺失版本或解释未公开的发布决策。
@@ -117,6 +118,12 @@ alpha.3 将已保存凭据置于环境之前，同时让 Headless 默认退出�
 rc.2 的新网页 API 将搜索与抓取扩展为可选的直接远端服务。默认提供者没有改变；启用后的用户问题片段、URL出站、目标状态不可见和无自动回退，则增加了数据治理与失败处理责任。这个变化不能被“无辅助模型token”概括为无成本，也不能被界面遮罩概括为脱敏出站。[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)、[本周报告](releases/v0.2.1-rc.2.md)
 
 **迁移判断：**优先检查凭据来源、插件版本声明／索引可信度、网页提供者选择及失败语义；只有使用相应入口与配置的集成受影响。仍无足够证据提升生产采用或实际可靠性等级。
+
+## 2026-10-26：目录与会话装配不再只看版本号
+
+rc.3 的官方 API Key 模型发现按条件跟随远端目录，并执行最低客户端版本门槛；自定义目录停止跟随。新会话复用找回未发送草稿，同时失去“每次新建即按当前定义装配”的旧假设。两者都要求接入方记录运行时的目录／会话条件，而不是只固定安装版本。[API Key 动态目录](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek-api-key/README.md)、[空白会话迁移指南](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/docs/upgrade-guide/v0.2.1-rc.2/new-session-blank-reuse/guide.zh.md)
+
+Web 默认新增入口插件，但执行仍停在待用户发送的草稿；12项可选关闭组合与preset文件未变。Desktop扩展产品事件，不是普通Web默认采集或业务验收指标。以上保持“借鉴／验证／观察”，不提升自主或生产成熟度。[本周报告](releases/v0.2.1-rc.3.md)
 
 ## 迁移成本与持续观察
 

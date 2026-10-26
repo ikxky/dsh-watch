@@ -2,7 +2,7 @@
 
 **先确定工作缺少什么，再选择扩展。** 常用 Web 工作台本身已有文件与终端工具、计划、长目标、压缩、子代理、文件卡片和提醒；不需要把可选插件全部开启才形成可用的任务流程。可选能力更适合按需补齐：找回旧工作、保持终端任务、组织多个助手，或改善输入与阅读体验。[默认会话配置][standard]
 
-下文说明用户能增加什么能力，以及开启后需要接受的条件。插件在[14维评测框架](CAPABILITY-MAP.md)中作为能力实现依据；逐项支持状态与待验证问题只在[文末能力证据索引](CAPABILITY-MAP.md#evidence-index)维护。默认配置、版本比较和发行包证据仍由本页承载，避免重复登记。本页研究推进至 **v0.2.1-rc.2／687f282e8625c6b8d11ff58211a90524be2e4317**，本周核查日期 **2026-10-19**。既有能力与历史抽样仍保留 alpha.2 固定链接；发生变化的默认值、版本与条件以下方 rc.2 补充为准；仅静态阅读，未启用插件、安装运行环境或调用模型。
+下文说明用户能增加什么能力，以及开启后需要接受的条件。插件在[14维评测框架](CAPABILITY-MAP.md)中作为能力实现依据；逐项支持状态与待验证问题只在[文末能力证据索引](CAPABILITY-MAP.md#evidence-index)维护。默认配置、版本比较和发行包证据仍由本页承载，避免重复登记。本页研究推进至 **v0.2.1-rc.3／1f81c047fc48fa190a683e469daa699857e9afe8**，本周核查日期 **2026-10-26**。既有能力与历史抽样仍保留 alpha.2 固定链接；发生变化的默认值、版本与条件以相应日期的 rc.2／rc.3补充为准；仅静态阅读，未启用插件、安装运行环境或调用模型。
 
 ## 想让助手找回之前做过的工作
 
@@ -42,7 +42,7 @@ Team 可用于研究任务板、依赖和助手间消息，让一个主助手组
 
 这类扩展更接近一项集成工作。产品方需要说明用户能访问什么、哪些调用会修改外部数据、连接失败后如何恢复，以及选择模型后哪些功能仍可使用。本轮没有验证任何第三方服务可用性；详细边界见[资源使用](CAPABILITY-MAP.md#dimension-12)。
 
-## 本周新增：网页服务与自定义插件来源
+## 2026-10-19：网页服务与自定义插件来源
 
 **网页搜索能选择什么？** rc.2 随基础组合注册 Search／Fetch API 提供者，但默认选择仍是 `deepseek-official`／`http`；在网页搜索设置启用新 API 后才切换。新 Search 默认 `sendOriginalQuestion: true`，除查询外可发送最近用户提示的文本（折叠空白、截取128字符）；没有对应提示或关闭此配置时不带该字段。Fetch 将 URL 交给远端服务，返回 Markdown，不提供目标真实状态码或最终重定向 URL，无自动重试和提供者回退。它属于官方随包、需配置并依赖外部服务的能力，不是所有用户默认调用新 API。[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)、[rc.2 基础配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/base/cordis.patch.yml)
 
@@ -51,6 +51,14 @@ Team 可用于研究任务板、依赖和助手间消息，让一个主助手组
 **升级现有组合要检查什么？** alpha.3 的 Web／Desktop 已保存凭据优先于环境／`.env`，Headless 默认禁用保存凭据；自定义 profile 仍看实际叠加。alpha.4 的兼容判断优先 `engines.dsh`，没有声明时才用 dsh peer 依赖；声明不构成运行兼容实测。`--from-default-profile` 重建会替换已有配置、插件和设置，不能当作无损合并。[凭据优先级](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/credentials/credentials-local/README.zh.md)、[Headless 配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/headless/cordis.patch.yml)、[兼容判断源码](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/app-boot/src/plugin-compatibility.ts)、[alpha.3 发布](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.3)
 
 alpha.3 的 SDK Minimal 增图片读取、token meter、自动压缩和图片卸载，默认 Full access 不变；Web Minimal 增图片读取和压缩／手动命令。Node PTC 的 `persistent-in-memory` 需显式开启，默认仍 `per-call`；内存尽力保留，重启、取消、超时等会清空，没有空闲过期机制，不是持久工作流。pi-ai manifest 现为 `^1.1.0`，Azure 旧提供方名 `azure-openai-responses` 需迁为 `azure`。这些条件应由接入产品分别验证。[Minimal 配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/sdk-minimal/cordis.patch.yml)、[PTC 内存模式契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/ptc-runtime/ptc-runtime-node/README.zh.md)、[pi-ai manifest](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/llm/llm-pi-ai/package.json)、[本周报告](releases/v0.2.1-rc.2.md)
+
+## 2026-10-26：入口插件、模型发现与事件更新
+
+Web默认增加 `ui-entry-customization`，浏览进入主列表，创建准备可审阅Creator草稿；不自动发送或安装。可选关闭组合仍12项、preset文件与rc.2一致。空白会话会被复用，已加载Agent可能保留旧preset装配，配置更新需核对实际会话。[Web 默认组合](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/bundle/web-app/cordis.patch.yml)、[更多菜单与草稿](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/ui-entry-customization/README.zh.md)、[随附可选清单](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/boot/app-boot/src/profile.ts)、[空白会话迁移指南](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/docs/upgrade-guide/v0.2.1-rc.2/new-session-blank-reuse/guide.zh.md)
+
+API Key官方路由仅在官方origin且目录未自定义时跟随远端 `/models`，没有密钥不发请求；最低客户端版本决定部分模型准入。Desktop增加导航／菜单／模式／发送状态事件，普通Web不装配采集；事件不含提示词回复字段，产品点击不等于业务成果。[API Key 动态目录](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek-api-key/README.md)、[Desktop 事件边界](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/product-analytics/README.zh.md)
+
+组件按主tag `dsh-v0.2.1-rc.3`／`1f81c047fc48fa190a683e469daa699857e9afe8`及manifest记录，无独立插件发版推断；当前结论来自固定源码和下方有限归档样本。历史默认值及差异继续保留。
 
 ## 决定开启之前，先看影响范围
 
@@ -102,6 +110,20 @@ alpha.3 的 SDK Minimal 增图片读取、token meter、自动压缩和图片卸
 ## 发行包核验与版本纪律
 
 历史有两处证据限制仍影响版本追溯：alpha.2 的源码与 npm 发行包存在计划提示词文字差异；v0.1.3-alpha.1 的四个精确包样本不可取得。它们要求我们注明依据来自哪里，尚不能据此认定权限漏洞或撤包原因。
+
+### 2026-10-26 · rc.3 发行物抽查与未覆盖项
+
+前序检查npm不可达；本次重试成功取得以下5个精确 `0.2.1-rc.3` 归档，manifest版本一致，SHA-512全部匹配registry声明，10份可对应源码的YAML（含说明元数据）与tag字节一致。未执行包代码或安装脚本。此结果补齐这些样本的获取缺口，不代表完整依赖闭包、Desktop二进制、Python wheel、编译产物可复现性、签名或实际加载已验证。
+
+| 精确版本元数据 | YAML一致数 | 已验证integrity |
+|---|---|---|
+| [@deepseek-ai/dsh](https://registry.npmjs.org/@deepseek-ai/dsh/0.2.1-rc.3) · [tgz](https://registry.npmjs.org/@deepseek-ai/dsh/-/dsh-0.2.1-rc.3.tgz) | 1 | `sha512-H+E9HLnHf7fJqzen84Z9Bq8ggb5xbrcbyhZjXTJLE9NabHr3zteGvTRvdvGkxPl4ov80is4WLglFmSo+/olJjg==` |
+| [@deepseek-ai/dsh-web-app](https://registry.npmjs.org/@deepseek-ai/dsh-web-app/0.2.1-rc.3) · [tgz](https://registry.npmjs.org/@deepseek-ai/dsh-web-app/-/dsh-web-app-0.2.1-rc.3.tgz) | 6 | `sha512-Rhgq5CUumgdLr3esCGIecX92cjiz7Avrpj8p5usLE4/bLyMZ7JE3+AHzUroidBIc4GlMskYASsr2FpmE1ze5gw==` |
+| [@deepseek-ai/dsh-llm-deepseek-api-key](https://registry.npmjs.org/@deepseek-ai/dsh-llm-deepseek-api-key/0.2.1-rc.3) · [tgz](https://registry.npmjs.org/@deepseek-ai/dsh-llm-deepseek-api-key/-/dsh-llm-deepseek-api-key-0.2.1-rc.3.tgz) | 1 | `sha512-WMIzJGkFnt8GJpRKZRaT6DDWHhD8ahE+1lVWoG9/MQFUJm4YLk564JKadOX1lfNhwDKvKfvVdcrbDIlA46s8qg==` |
+| [@deepseek-ai/dsh-client-ui-entry-customization](https://registry.npmjs.org/@deepseek-ai/dsh-client-ui-entry-customization/0.2.1-rc.3) · [tgz](https://registry.npmjs.org/@deepseek-ai/dsh-client-ui-entry-customization/-/dsh-client-ui-entry-customization-0.2.1-rc.3.tgz) | 1 | `sha512-/qki7S0x28W7WUN3qtPAhJStKTU/kJsYQvJ6QPie4OL8J84R16s2lMEhydgiPlSyN4DWia7he33EhF7m2Wt7OA==` |
+| [@deepseek-ai/dsh-client-product-analytics](https://registry.npmjs.org/@deepseek-ai/dsh-client-product-analytics/0.2.1-rc.3) · [tgz](https://registry.npmjs.org/@deepseek-ai/dsh-client-product-analytics/-/dsh-client-product-analytics-0.2.1-rc.3.tgz) | 1 | `sha512-aIUrjsZ5Lhz2x15TDm2QCKj003RDB64giSJ7LoyxsyQ3GarSCcbPqtol65hzdZFyyHZRZlHmMEFgx4IaarmDcg==` |
+
+比较基准为 `1f81c047fc48fa190a683e469daa699857e9afe8` 各包对应目录；[Web配置](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/bundle/web-app/cordis.patch.yml)。历史rc.2通过的样本与alpha.2差异不作为本版全量验证。
 
 ### 2026-10-19 · rc.2 发行物抽查
 

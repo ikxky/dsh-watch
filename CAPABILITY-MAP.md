@@ -4,7 +4,7 @@
 
 维度名称及00–13顺序采用 [LLM 101《Agent 产品设计总表》](https://llm101.ai/agent-product-101-product-design-checklist/) 的框架。下列定义、基本要求、成熟表现和 dsh 分析为本项目原创阐释；不复制文章的完整检查题或评分法。框架用于提出问题，dsh 事实仅依据本项目已核对的官方资料、固定源码与发行物。
 
-研究推进至 **v0.2.1-rc.2**，tag `dsh-v0.2.1-rc.2`，提交 `687f282e8625c6b8d11ff58211a90524be2e4317`；本周核查 **2026-10-19**。未受增量影响的记录继续使用 alpha.2／`d743267388641bc76f17c45ce8b4c231aed1d32c` 与2026-10-13证据，发生变化的条目单列新来源与日期，不把旧证据换链接冒充复查。没有安装运行 dsh、调用模型或端到端测试。默认值以新配置、无用户覆盖为条件；支持、证据与成熟度分开，未查明仍待评。[本周版本报告](releases/v0.2.1-rc.2.md)、[当前安全声明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/SAFETY.zh.md)。
+研究推进至 **v0.2.1-rc.3**，tag `dsh-v0.2.1-rc.3`，提交 `1f81c047fc48fa190a683e469daa699857e9afe8`；本周核查 **2026-10-26**。未受增量影响的记录保留原核查日期：alpha.2基线为2026-10-13，rc.2增量为2026-10-19，发生变化的条目单列新来源与日期，不把旧证据换链接冒充复查。没有安装运行 dsh、调用模型或端到端测试。默认值以新配置、无用户覆盖为条件；支持、证据与成熟度分开，未查明仍待评。[本周版本报告](releases/v0.2.1-rc.3.md)、[当前安全声明](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/SAFETY.zh.md)。
 
 ## 评测维度总览
 
@@ -86,6 +86,8 @@ Web 支持从工作区会话输入任务和附件；它提供材料进入工作�
 
 **2026-10-19增量判断（alpha.3→rc.2）：**SDK 新增持久会话 resume，保留 ID、历史与目录且不发新输入；Minimal 增图片读取和压缩，但上传／工具可用仍不等于模型理解。当前入口范围扩大，跨入口身份与业务回执仍待评。[SDK 恢复契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/README.zh.md)、[Minimal 配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/sdk-minimal/cordis.patch.yml)
 
+**2026-10-26增量判断（rc.3）：**新会话复用空白Session恢复草稿；Creator入口追加待审阅请求，不自动发送。明确preset会跳过其他preset草稿。入口更连续，实际草稿保真仍待验证。[更多菜单与草稿](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/ui-entry-customization/README.zh.md)、[空白会话迁移指南](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/docs/upgrade-guide/v0.2.1-rc.2/new-session-blank-reuse/guide.zh.md)
+
 ### 版本与插件证据
 
 主记录为[CAP-IN-01](#cap-in-01)至[CAP-IN-04](#cap-in-04)，依据[Web 组合][web]、[SDK 契约][sdk]及[事件入口][webhook]。上传插件及不同程序入口的历史与加载条件保留在[插件指南](PLUGINS.md)。本轮没有新的输入格式、聊天连接器或事件重试实测。
@@ -139,6 +141,8 @@ Web 可通过 `/plan` 进入计划模式，执行中可继续输入和请求取�
 dsh 的工具权限请求可在支持交互的入口中呈现给操作者，计划和后续消息也为审阅与补充信息提供基础。它适合研究同一操作者持续参与的工作方式；不同程序入口的交互与权限默认值不同，不能默认拥有相同的人工节点。
 
 当前资料不足以确认企业发起人、审阅人、批准人和管理员之间完整的职责分离，或每项批准都能关联实际业务用户。可选 Auto review 用模型辅助权限判断，仍会增加调用、可能误判且记录不完整；它没有代替人类或组织承担责任的产品契约。恢复长期目标需要重新决定续行，可作为显式介入的设计借鉴，但不等于组织审批流已经具备。
+
+**2026-10-26增量判断（rc.3）：**更多菜单的“创建”只准备草稿，发送和安装仍是后续独立决定，不改变人工授权结论。缺少Creator或Workspace可能失败；需验证界面是否准确解释下一步。[更多菜单与草稿](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/ui-entry-customization/README.zh.md)
 
 ### 版本与插件证据
 
@@ -252,6 +256,8 @@ dsh 会话支持读取和切换工作目录，但不会改变已有终端进程�
 
 **2026-10-19增量判断（alpha.3→rc.2）：**已发送消息的凭据遮罩是显示层能力，不能承诺原始消息、日志或模型出站已脱敏。启用新搜索后的用户提示片段出站、Fetch 缺少目标状态与最终地址，应向使用者说明。信任体验有局部改善，内容治理与真实故障体验仍待评。[Web 遮罩配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/web-app/cordis.patch.yml)、[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)
 
+**2026-10-26增量判断（rc.3）：**用户应知道新会话可能复用旧装配、模型列表可能动态变化；Desktop交互事件不含提示词回复字段声明，普通Web不装配采集。可解释性与开关实际效果仍待评。[空白会话迁移指南](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/docs/upgrade-guide/v0.2.1-rc.2/new-session-blank-reuse/guide.zh.md)、[API Key 动态目录](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek-api-key/README.md)、[Desktop 事件边界](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/product-analytics/README.zh.md)
+
 ### 版本与插件证据
 
 本维度交叉引用[计划 CAP-CTL-01](#cap-ctl-01)、[交付 CAP-FILE-02](#cap-file-02)、[批准 CAP-CTL-03](#cap-ctl-03)与[观察 CAP-OBS-01](#cap-obs-01)。默认外发的已核事实集中在[F-01](FINDINGS.md#f-01--默认-session-log-外发需要独立治理)，Desktop 与翻译的差异见[插件数据通道](PLUGINS.md#data-channels)；不以滚动文档替代本版本证据。
@@ -277,6 +283,8 @@ dsh 会话支持读取和切换工作目录，但不会改变已有终端进程�
 dsh 提供会话用量统计和执行记录，Desktop 另有产品交互采集；这些可以为资源与使用分析提供原始信息。当前证据不足以确认其已经提供统一的业务任务验收、失败恢复质量和人工交接指标，也没有用户接受结果的公开契约可在本项目中复核。
 
 程序返回、子任务结束和用户验收语义不同，意味着接入产品需要自行规定统计单位与结算时点。用量记录也不自动覆盖整项工作费用的预算控制；限制何时停止应在13自主等级判断。本轮既无真实业务样本，也无成本数据，因此不作效率提升、完成率或单位任务成本结论。
+
+**2026-10-26增量判断（rc.3）：**Desktop新增导航位置、模式选择及发送时会话状态等字段，属于产品使用指标，不是业务成功率或验收口径；数仓与看板仍由上层承担。[Desktop 事件边界](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/product-analytics/README.zh.md)
 
 ### 版本与插件证据
 
@@ -334,6 +342,8 @@ Session 事件、Trajectory 和用量统计提供执行回看基础，深层诊�
 
 **2026-10-19增量判断（alpha.3→rc.2）：**新 Search／Fetch API 不产生辅助请求事件，工具调用与结果仍进会话记录；只统计辅助模型请求会漏掉这类服务调用。意外退出后的“任务已停止”是官方报告的状态显示修复，未实测。完整审计关联仍待评。[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)、[alpha.3 发布](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.3)
 
+**2026-10-26增量判断（rc.3）：**模型目录加载／失败有stderr诊断，Desktop交互事件扩大；两者均不自动构成业务审计闭环。来源字段与任务关联、保留政策仍待验证。[API Key 动态目录](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek-api-key/README.md)、[Desktop 事件边界](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/product-analytics/README.zh.md)
+
 ### 版本与插件证据
 
 主记录为[执行观察 CAP-OBS-01](#cap-obs-01)和[日志导出 CAP-FILE-04](#cap-file-04)。依据[生命周期][lifecycle]、[统计][stats]、[导出实现][zip]与[交付测试][present-test]。当前状态显示变化见[版本分析](releases/v0.2.1-alpha.2.md)，外发通道条件保留在[F-01](FINDINGS.md#f-01--默认-session-log-外发需要独立治理)和[插件指南](PLUGINS.md#data-channels)。
@@ -362,6 +372,8 @@ dsh 的持久会话与修复处理区分未启动和结果未知，帮助续接�
 取消采用协作机制，超时返回不等于底层资源完全释放；硬中断发生在结算前时，部分流记录可能尚未持久化。提醒的两处独立写入和 Team 消息接纳也有各自的重复与交付边界，不能统称为可靠工作流。本轮仅复用这些已确认契约，没有故障注入或重启试验。
 
 **2026-10-19增量判断（alpha.3→rc.2）：**SDK resume 对缺失、不可读、不兼容、占用会话失败且不创建替代，不恢复 Shell／浏览器等外部进程。新网页 API 无自动重试或提供者回退，Fetch 的 HTTP 200 不能当作目标页面真实状态。恢复入口更明确，实际恢复成功率与业务重试安全性仍待验证。[SDK 恢复契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/README.zh.md)、[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)
+
+**2026-10-26增量判断（rc.3）：**空白Session复用可保留创建时preset装配，不保证最新定义；目录失败保留旧列表或回退内置也不保证推理可用。应分别验证配置迁移和失败回退，不以UI修复提升可靠性等级。[空白会话迁移指南](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/docs/upgrade-guide/v0.2.1-rc.2/new-session-blank-reuse/guide.zh.md)、[API Key 动态目录](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek-api-key/README.md)
 
 ### 版本与插件证据
 
@@ -401,6 +413,8 @@ dsh 可通过插件组合执行循环、模型、工具、持久化和界面，�
 | 企业生命周期 | 未确认完整注册、评估、发布与下线契约 | 当前为上层平台需求，不能假定 harness 已交付 |
 
 **2026-10-19增量判断（alpha.3→rc.2）：**alpha.4 起兼容声明优先 `engines.dsh`；自定义市场随包关闭，无官方索引，Creator 发现只读，安装权限独立。rc.2 新网页提供者需配置且依赖外部 API，默认仍旧搜索／HTTP；此处与模型路由分开评估。pi-ai manifest 为 `^1.1.0`，Azure 旧名称需迁移。扩展机制更丰富，索引信任、外部服务和组织治理仍待验证。[兼容判断源码](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/app-boot/src/plugin-compatibility.ts)、[自定义市场](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/plugin-market/README.zh.md)、[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)、[pi-ai manifest](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/llm/llm-pi-ai/package.json)
+
+**2026-10-26增量判断（rc.3）：**官方API Key目录按端点、凭据和自定义目录条件动态加载，最低客户端版本参与准入；Web新增默认草稿入口，可选关闭组合仍12项且preset未变。固定版本还需记录目录／装配条件，支持与成熟度仍分开判断。[API Key 动态目录](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek-api-key/README.md)、[模型准入源码](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek/src/listed-catalog.ts)、[Web 默认组合](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/bundle/web-app/cordis.patch.yml)
 
 ### 版本与插件证据
 
@@ -448,7 +462,7 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 
 ## 现有36项能力ID证据索引
 
-这里是逐项支持状态的唯一维护位置。每项标注一个主归属维度，章节间的交叉引用不形成第二份记录；主归属是研究分类，不代表实现只能影响该维度。无单列更新的条目沿用 alpha.2 与2026-10-13核查日期；仅受本周证据影响的条目增加2026-10-19记录。
+这里是逐项支持状态的唯一维护位置。每项标注一个主归属维度，章节间的交叉引用不形成第二份记录；主归属是研究分类，不代表实现只能影响该维度。无单列更新的条目沿用 alpha.2 与2026-10-13核查日期；受影响条目分别保留2026-10-19／2026-10-26增量记录。
 
 36项的状态仍为支持15项、部分14项、不支持2项、待确认5项；证据仍为仅文档19项、已读源码12项、已有上游测试但未运行5项、我们实测0项。它们是覆盖范围，不是成熟度评分。“不支持”仅用于有明确否定依据的窄能力；对完整产品目标的证据不足仍写待评。维度结论在对应章节维护，不把能力状态提升为运行效果结论。
 
@@ -463,6 +477,7 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 依据：[Web 组合配置][web]、[使用指南][web-guide]。后续核验：各文件类型的读取工具和大小限制是否与界面提示一致？
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** Web Minimal 新增图片读取／压缩条件，模型图片支持仍另核；[Web Minimal 配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/web-app/presets/minimal.patch.yml)。
 
+**更新：2026-10-26，rc.3／`1f81c047fc48fa190a683e469daa699857e9afe8`。** Web／Desktop新会话复用首个未开始、未归档的空白Session；Creator入口保留草稿引用附件并追加请求，不自动发送。[空白会话迁移指南](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/docs/upgrade-guide/v0.2.1-rc.2/new-session-blank-reuse/guide.zh.md)、[更多菜单与草稿](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/ui-entry-customization/README.zh.md)。既有支持状态和主归属不变，未增加运行验证。
 
 <a id="cap-in-02"></a>
 
@@ -474,7 +489,6 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 
 依据：[SDK 契约][sdk]、[等待实现][sdk-wait]、[SDK Minimal 配置][sdk-minimal]。后续核验：逐项补齐 SDK、Headless 与 ACP 的交互及权限差异。
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** TypeScript `resumeSession`／Python `resume_session` 恢复原持久会话，需沿用 home 和工作区；不发送新输入、不恢复外部进程。[SDK 恢复契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/README.zh.md)、[Python 恢复入口](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/python/sdk/src/deepseek_harness/api.py)。
-
 
 <a id="cap-in-03"></a>
 
@@ -546,7 +560,6 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 
 依据：[凭据说明][credentials]。后续核验：哪些凭据会进入子进程环境，哪些仅由 Host 逐请求读取？
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** Web／Desktop 已保存凭据优先，Headless 默认禁用本地凭据；这改变来源选择，不改变同用户工具可读的隔离限制。[凭据优先级](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/credentials/credentials-local/README.zh.md)、[Headless 配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/headless/cordis.patch.yml)。显示遮罩不能替代出站治理，见[04权限模型](#dimension-04)。
-
 
 <a id="cap-sec-03"></a>
 
@@ -629,7 +642,6 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 依据：[压缩说明][compaction]。后续核验：不同模型预算和大工具结果的有效阈值、失败行为是什么？
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** Minimal 增图片读取和自动压缩；Web／Desktop 提供 `/compact`。[Minimal 配置](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/bundle/sdk-minimal/cordis.patch.yml)。新增组合不证明摘要无损，维持部分支持；本记录的压缩算法证据仍为文档，配置补充不等于运行验证。
 
-
 <a id="cap-ctx-02"></a>
 
 ### CAP-CTX-02 · 让 Agent 搜索历史会话
@@ -681,7 +693,6 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 依据：[恢复修复源码][repair]、[执行与恢复说明][loop]。后续核验：对有副作用的具体工具，谁核对外部状态并决定重试？
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** SDK resume 恢复持久历史与目录；占用／缺失／不兼容时失败且不创建替代。[SDK 恢复契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/README.zh.md)、[resume 实现](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/src/api.ts)。PTC 内存模式不是持久恢复：[PTC 内存模式契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/ptc-runtime/ptc-runtime-node/README.zh.md)。
 
-
 <a id="cap-run-04"></a>
 
 ### CAP-RUN-04 · 等待子树完成并形成业务回执
@@ -692,7 +703,6 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 
 依据：[等待实现][sdk-wait]、[调用实现][sdk-run]。后续核验：业务任务 ID、多个 prompt 与最后回复的因果归属如何建立？
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** resume 不发送新输入；`run()` 与子树 wait、业务验收仍分别判断，不因恢复 API 新增改变支持状态。[SDK 恢复契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/README.zh.md)、[当前 run 实现](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/src/api.ts)。
-
 
 <a id="cap-col-01"></a>
 
@@ -725,6 +735,7 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 依据：[入口组合配置][profile]、[Web 组合配置][web]、[插件管理说明][plugin-manager]。后续核验：给定 profile 的实际工具、权限、hooks 和依赖变更能否完整列出？
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** 兼容判断优先 `engines.dsh`，否则检查 dsh peer；自定义市场需启用并添加源，无官方索引，`plugin_market`只读发现与安装分开。[兼容判断源码](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/app-boot/src/plugin-compatibility.ts)、[自定义市场](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/plugin-market/README.zh.md)。发布样本与历史差异见[PLUGINS](PLUGINS.md#发行包核验与版本纪律)。
 
+**更新：2026-10-26，rc.3／`1f81c047fc48fa190a683e469daa699857e9afe8`。** Web默认新增入口插件，但只准备Creator草稿；可选关闭组合仍12项，preset文件未变。复用空白会话可能保留旧装配，不能把新会话当作配置刷新保证。[Web 默认组合](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/bundle/web-app/cordis.patch.yml)、[更多菜单与草稿](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/ui-entry-customization/README.zh.md)、[空白会话迁移指南](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/docs/upgrade-guide/v0.2.1-rc.2/new-session-blank-reuse/guide.zh.md)。既有支持状态和主归属不变，未增加运行验证。
 
 <a id="cap-ext-02"></a>
 
@@ -757,6 +768,7 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 依据：[DeepSeek 适配器源码][llm]。后续核验：自定义 endpoint 对图片、扩展字段、缓存与取消的支持是否一致？
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** rc.2 release 声明适配 DeepSeek-V4.1-Flash-1017，模型可用性受账号与路由条件影响；不作模型效果结论。[rc.2 发布](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-rc.2)。网页 Search／Fetch 是独立外部服务，见[12平台能力](#dimension-12)。
 
+**更新：2026-10-26，rc.3／`1f81c047fc48fa190a683e469daa699857e9afe8`。** 官方origin且目录未自定义时跟随 `/models`；无密钥不请求，自定义目录停止跟随；最低客户端版本门槛在推理I/O前拒绝不合格模型。未列ID透传，目录不证明推理可用。[API Key 动态目录](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek-api-key/README.md)、[模型准入源码](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek/src/listed-catalog.ts)。既有支持状态和主归属不变，未增加运行验证。
 
 <a id="cap-mod-02"></a>
 
@@ -769,7 +781,6 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 依据：[其他模型配置][pi-ai]。后续核验：以目标模型逐项确认工具、视觉、动态系统提示词及统计字段。
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** alpha.3 将 Azure 提供方名 `azure-openai-responses` 改为 `azure`；rc.2 pi-ai manifest 为 `^1.1.0`，不能将目录及版本声明等同兼容测试。[pi-ai manifest](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/llm/llm-pi-ai/package.json)、[alpha.3 发布](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.3)。
 
-
 <a id="cap-obs-01"></a>
 
 ### CAP-OBS-01 · 回看执行事件与用量
@@ -781,6 +792,7 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 依据：[事件与状态说明][lifecycle]、[用量统计说明][stats]。后续核验：用户视图、原始事件和成本统计是否能关联同一任务及子树？
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** Search／Fetch 的直接 API 请求没有辅助请求事件，常规工具调用／结果仍保留；审计覆盖需包含独立服务调用。[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)。
 
+**更新：2026-10-26，rc.3／`1f81c047fc48fa190a683e469daa699857e9afe8`。** 官方目录加载／失败写stderr；Desktop产品事件与会话执行记录分别判断，不能合并为完整审计。[API Key 动态目录](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek-api-key/README.md)、[Desktop 事件边界](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/product-analytics/README.zh.md)。既有支持状态和主归属不变，未增加运行验证。
 
 <a id="cap-obs-02"></a>
 
@@ -802,6 +814,8 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 
 依据：[用量统计说明][stats]、[产品交互采集说明][telemetry]。后续核验：是否存在任务级结果定义、验收事件与失败样本的公开契约？
 
+**更新：2026-10-26，rc.3／`1f81c047fc48fa190a683e469daa699857e9afe8`。** Desktop新增有限交互字段，普通Web不装配；仍无业务验收、恢复质量统计承诺，状态维持待确认。[Desktop 事件边界](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/product-analytics/README.zh.md)。既有支持状态和主归属不变，未增加运行验证。
+
 <a id="cap-obs-04"></a>
 
 ### CAP-OBS-04 · 统一限制整项任务费用
@@ -812,7 +826,6 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 
 依据：[长期目标说明][goal]、[压缩说明][compaction]、[用量统计说明][stats]。后续核验：预算所有者、实时归集、超额处理和取消已发请求怎样设计？
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** 新 API 没有辅助模型 token，不等于没有抓取服务或结果上下文成本，整项任务预算仍待确认。[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)。
-
 
 <a id="cap-dep-01"></a>
 
