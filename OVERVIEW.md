@@ -6,11 +6,13 @@
 
 本页保留产品定位与选型概览。系统评测从[14维总览](CAPABILITY-MAP.md#评测维度总览)开始，按00–13逐维阅读定义、判断依据、当前表现和待验证事项，再到[36项能力证据索引](CAPABILITY-MAP.md#evidence-index)核对支持状态；扩展条件与演进仍在[插件指南](PLUGINS.md)。框架要求、已有能力和运行成熟度分别判断，未查明处保持待评。
 
-研究推进至 **v0.2.1-rc.3**／`1f81c047fc48fa190a683e469daa699857e9afe8`，最近核查 **2026-10-26**。未受本周增量影响的既有分析保留 alpha.2及rc.2固定证据，新增条件以本周报告和下文为准。结论来自官方文档、源码与发行包静态分析，没有安装或运行 dsh，也没有调用模型。下列场景是基于已有能力的适用性推断，不是成功案例。
+本轮核查 **2026-11-02**，同时覆盖0.2.1-rc.4／rc.5与0.2.2-alpha.2；固定提交及比较关系见[本周报告](releases/v0.2.2-alpha.2.md)。以下既有分析保留原版本证据，alpha线新增条件以本周补充为准，不传播到RC支线。新发行包未验证，所有内容均为静态研究，没有安装运行或模型调用。
 
 2026-10-19的采用前检查新增三项：Web／Desktop 的已保存凭据优先，Headless 默认仅走环境／`.env`；第三方插件优先按 `engines.dsh` 判断兼容，自定义市场需启用并添加索引；新版 Search／Fetch 需主动选择，启用后搜索默认可附带截断的用户问题，抓取交由远端。SDK resume 和 Minimal 图片／压缩增加接入选择，但不证明外部进程恢复、可靠完成或生产安全。详见[本周相邻版本分析](releases/v0.2.1-rc.2.md)、[凭据优先级](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/credentials/credentials-local/README.zh.md)、[自定义市场](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/plugin-market/README.zh.md)、[Search／Fetch 固定说明](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/web/web-deepseek-api/README.zh.md)。
 
 2026-10-26新增检查：官方API Key路由可按条件跟随远端模型目录，固定应用版本不再固定可选目录；新会话复用可找回草稿，但可能保留旧预设装配。更多菜单只准备可审阅的Creator草稿，Desktop新增交互事件也不是业务验收指标。生产采用判断不变。[API Key 动态目录](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek-api-key/README.md)、[空白会话迁移指南](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/docs/upgrade-guide/v0.2.1-rc.2/new-session-blank-reuse/guide.zh.md)、[本周报告](releases/v0.2.1-rc.3.md)。
+
+**alpha线接入判断更新：**默认HTTP抓取取消公网地址筛选，内网范围需部署网络控制；OAR外部CLI没有DSH原生审批桥接、子进程沙箱与后代清理保证；插件回退为尽力恢复，SSH协议与工具执行器需同步迁移。Forge和推荐仍为可选关闭，不能由功能增加推导生产成熟度。[HTTP Fetch 契约](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/web/web-fetch-http/README.zh.md)、[OAR 边界](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/subagent-oar/README.zh.md)、[插件生命周期](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/boot/plugin-manager/README.md)、[本周报告](releases/v0.2.2-alpha.2.md)。
 
 ## 哪些场景值得优先研究
 
@@ -53,7 +55,7 @@
 
 接入前尤其需要看清三件事。第一，文件沙箱和工具审批没有构成完整的组织隔离；精简程序入口甚至与基础入口使用不同权限默认值。第二，默认会话日志、显式反馈、包清单与 Desktop 产品交互采集是不同的数据通道，不能用一个遥测开关推断全部关闭。第三，用量记录、轮数和单次输出限制，不等于覆盖主任务、子代理、压缩、重试等费用的总预算。证据及后续问题见[关键发现](FINDINGS.md)、[插件数据通道](PLUGINS.md#data-channels)。
 
-尚未知的是实际任务成功率、取消和崩溃恢复表现、吞吐时延、目标模型兼容程度，以及按业务任务归集的真实费用。2026-10-26 的专项检查未见已发布安全公告，这也不能抵消未经安全审计的声明；检查范围见[跟踪记录](TRACKING.md)。
+尚未知的是实际任务成功率、取消和崩溃恢复表现、吞吐时延、目标模型兼容程度，以及按业务任务归集的真实费用。2026-11-02 的专项检查未见已发布安全公告，这也不能抵消未经安全审计的声明；检查范围见[跟踪记录](TRACKING.md)。
 
 ## 技术审阅依据
 
@@ -75,7 +77,7 @@
 
 **出站与升级。** 基础组合中的 Session Log 默认启用，请求字段可增量携带完整规范事件；反馈 OTel 默认在显式反馈后释放日志前缀，另有包清单与 Desktop 交互采集。其目标、保留与自定义端点行为仍需分别验证。alpha.2 的 pi-ai 依赖从0.87.1到1.0.2；本周 rc.2 manifest 已为 `^1.1.0`，Azure 名称迁移见[本周报告](releases/v0.2.1-rc.2.md)；预稳定接口、会话格式与插件发行内容要分别跟踪。抽查归档不能替代完整供应链或漏洞审计，本项目未扫描 CVE。[会话日志][session-log]、[默认配置源码][log-source]、[反馈遥测][otel]、[包清单][inventory]、[依赖锁定][lock]、[发行内容](PLUGINS.md#发行包核验与版本纪律)
 
-下一步阅读：[14维评测总览与分析](CAPABILITY-MAP.md) → [36项能力证据索引](CAPABILITY-MAP.md#evidence-index) → [插件实现与版本依据](PLUGINS.md) → [关键发现](FINDINGS.md)。历史变化见 [EVOLUTION](EVOLUTION.md)，当前版本的具体增量见 [v0.2.1-rc.3](releases/v0.2.1-rc.3.md)。
+下一步阅读：[14维评测总览与分析](CAPABILITY-MAP.md) → [36项能力证据索引](CAPABILITY-MAP.md#evidence-index) → [插件实现与版本依据](PLUGINS.md) → [关键发现](FINDINGS.md)。历史变化见 [EVOLUTION](EVOLUTION.md)，本轮双线增量见 [2026-11-02报告](releases/v0.2.2-alpha.2.md)。
 
 [readme]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/README.zh.md
 [guide]: https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/docs/user/guide/index.zh.md

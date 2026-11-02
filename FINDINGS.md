@@ -1,6 +1,6 @@
 # 关键发现与机会
 
-当前研究推进至 v0.2.1-rc.3／`1f81c047fc48fa190a683e469daa699857e9afe8`（2026-10-26）。既有 F-01～F-06 保留 alpha.2 固定证据和历史归属；各周补充保留日期，见下文。以下是公开资料与静态源码分析，不是已复现漏洞清单。没有本项目运行测试。背景能力见 [OVERVIEW](OVERVIEW.md)，版本变化见 [release 分析](releases/v0.2.1-rc.3.md)，纵向证据见 [EVOLUTION](EVOLUTION.md)。历史已修复事项不作为当前缺陷登记。
+当前覆盖0.2.1-rc.5与0.2.2-alpha.2（2026-11-02）；历史F-01～F-06和逐周证据保留原归属，新条件只适用于标注版本。以下是公开资料与静态源码分析，不是已复现漏洞清单。没有本项目运行测试。背景能力见 [OVERVIEW](OVERVIEW.md)，版本变化见 [本轮分析](releases/v0.2.2-alpha.2.md)，纵向证据见 [EVOLUTION](EVOLUTION.md)。历史已修复事项不作为当前缺陷登记。
 
 ## F-01 · 默认 Session Log 外发需要独立治理
 
@@ -103,3 +103,13 @@ alpha.2 移除 Team 独立 mailbox/outbox，改为直接调用目标 inbox／ste
 **F-01 · P1验证。** Desktop扩展菜单、模式与发送状态等产品事件；普通Web不装配，无提示词／回复字段声明，不能称作会话全文上传。关闭新采集与排队导出仍应分别确认。[Desktop 事件边界](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/product-analytics/README.zh.md)
 
 **F-06 · 发行证据。** 本次npm重试成功，5个rc.3归档integrity及10份YAML一致；仅为抽样，不代表完整供应链、Desktop／wheel或运行行为验证。[发行范围](PLUGINS.md#发行包核验与版本纪律)
+
+## 2026-11-02 · alpha线网络与外部执行边界
+
+**F-04 · P1验证。** 0.2.2-alpha.2默认base选择的HTTP抓取不再筛选公网地址或固定连接；loopback／私网／metadata目标受部署可达性约束，不能依赖旧注释中的公网承诺。需要独立网络控制或pre-execute策略，本项目未复现利用。[HTTP Fetch 契约](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/web/web-fetch-http/README.zh.md)、[HTTP 传输实现](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/web/web-fetch-http/src/provider.ts)、[URL 策略](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/web/web-fetch-http/src/policy.ts)、[基础组合](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/bundle/base/cordis.patch.yml)
+
+**F-02／F-04 · P1验证。** OAR为显式组合的实验源码路径，非默认或官方可选清单成员；原生CLI不继承DSH子进程沙箱／后代清理、不桥接审批，Claude省略权限参数会继承OAR bypass。取消不回滚，无恢复和进度流承诺。[OAR 边界](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/subagent-oar/README.zh.md)、[官方供给清单](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/util/official-bundles/src/bundles.ts)
+
+**F-06 · P1验证。** 插件更新回退尽力而为，Host代码不受工作区沙箱隔离；Node24.9、执行器、异步投影、SSH协议2→3是独立迁移面。Ralph／search的release分类与固定实验清单冲突，不能推导成熟度提升。[插件生命周期](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/boot/plugin-manager/README.md)、[执行器迁移](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.2/tool-executor-plugins/guide.zh.md)、[投影句柄迁移](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.2/session-projection-handles/guide.zh.md)、[SSH 协议](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/ssh/ssh/src/protocol.ts)、[实验标记清单](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/util/official-bundles/src/plugin-manager.ts)
+
+**证据缺口：**本轮新npm归档及integrity未取得，未绕过获取拒绝；只保留源码manifest结论，不沿用旧版包验证。RC支线只记录ACP输出和思考展示变化，不套用alpha线判断。[本周报告](releases/v0.2.2-alpha.2.md)

@@ -2,7 +2,7 @@
 
 **先确定工作缺少什么，再选择扩展。** 常用 Web 工作台本身已有文件与终端工具、计划、长目标、压缩、子代理、文件卡片和提醒；不需要把可选插件全部开启才形成可用的任务流程。可选能力更适合按需补齐：找回旧工作、保持终端任务、组织多个助手，或改善输入与阅读体验。[默认会话配置][standard]
 
-下文说明用户能增加什么能力，以及开启后需要接受的条件。插件在[14维评测框架](CAPABILITY-MAP.md)中作为能力实现依据；逐项支持状态与待验证问题只在[文末能力证据索引](CAPABILITY-MAP.md#evidence-index)维护。默认配置、版本比较和发行包证据仍由本页承载，避免重复登记。本页研究推进至 **v0.2.1-rc.3／1f81c047fc48fa190a683e469daa699857e9afe8**，本周核查日期 **2026-10-26**。既有能力与历史抽样仍保留 alpha.2 固定链接；发生变化的默认值、版本与条件以相应日期的 rc.2／rc.3补充为准；仅静态阅读，未启用插件、安装运行环境或调用模型。
+下文说明用户能增加什么能力，以及开启后需要接受的条件。插件在[14维评测框架](CAPABILITY-MAP.md)中作为能力实现依据；逐项支持状态与待验证问题只在[文末能力证据索引](CAPABILITY-MAP.md#evidence-index)维护。默认配置、版本比较和发行包证据仍由本页承载，避免重复登记。本轮并行核查 **0.2.1-rc.5／0.2.2-alpha.2**，日期 **2026-11-02**；alpha线固定提交为 `f3803c96974ad4a94195fb97e5c637e9c2a3afe3`。既有能力与历史抽样仍保留 alpha.2 固定链接；各发布线的默认值、版本与条件以相应日期补充为准，不互相套用；仅静态阅读，未启用插件、安装运行环境或调用模型。
 
 ## 想让助手找回之前做过的工作
 
@@ -60,6 +60,18 @@ API Key官方路由仅在官方origin且目录未自定义时跟随远端 `/mode
 
 组件按主tag `dsh-v0.2.1-rc.3`／`1f81c047fc48fa190a683e469daa699857e9afe8`及manifest记录，无独立插件发版推断；当前结论来自固定源码和下方有限归档样本。历史默认值及差异继续保留。
 
+## 2026-11-02 · alpha线供给、网络和迁移
+
+**先看默认能力的边界变化。** base仍选择 `http` Fetch，现不再筛选公网／固定连接；内网、loopback和metadata不由地址类别策略阻断，实际可达性需部署控制。base与policy旧注释保留了相反描述，按实现和README记录冲突。新DeepSeek API选择开关不能代替本地HTTP路径的治理。[HTTP Fetch 契约](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/web/web-fetch-http/README.zh.md)、[HTTP 传输实现](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/web/web-fetch-http/src/provider.ts)、[URL 策略](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/web/web-fetch-http/src/policy.ts)、[基础组合](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/bundle/base/cordis.patch.yml)
+
+**供给分类。** `dsh-official-bundles` 的OPTIONAL为16项：个性化推荐、Computer Use、会话搜索、Ralph、持久终端、Badge Skill、全提示词标题、Team、语音、思考翻译、Auto review、Inspector、LiveShare、自定义插件索引、Worktree、Forge。均未被随附模板选中；持久终端没有插件页开关，应单看组合条件。ON_DEMAND仍仅Claude Code／Codex。Forge与推荐默认关闭，统计UI需显式挂载；OAR不在两份官方名单内，只能按源码显式组合，不当作默认或一键可选。[官方供给清单](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/util/official-bundles/src/bundles.ts)、[Forge／工作树](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/forge-bundle/README.zh.md)、[个性化推荐](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/personalized-recommendations/README.zh.md)、[统计界面](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/client-ui-stats/README.zh.md)、[OAR 边界](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/subagent-oar/README.zh.md)
+
+release称Ralph／search不再列为实验，但固定EXPERIMENTAL_BUNDLES仍有二者，暂不裁定分类；支持、证据与成熟度分开。插件更新可尝试恢复旧版本，但不是事务；Host插件代码在进程内、工作区沙箱之外，依赖脚本审批与会话工具批准也分开。[实验标记清单](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/util/official-bundles/src/plugin-manager.ts)、[插件生命周期](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/boot/plugin-manager/README.md)
+
+**外部CLI。** OAR不使用DSH子进程沙箱或后代清理、不桥接原生审批；Claude权限参数省略会继承bypass。原生认证与运行时另行提供，无继续／恢复、进度流或副作用回滚。原有Codex／Claude官方按需桥接包不能被替换描述为OAR。[OAR 边界](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/subagent-oar/README.zh.md)
+
+**版本纪律。** alpha线Node要求>=24.9，工具执行器／旧mode、异步projection handle及SSH协议2→3需同步迁移；PTC取消改ABORTED不等于回滚，VM context不隔离。组件以主tag和manifest为据，无独立插件release推断。[CLI manifest](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/apps/cli/package.json)、[执行器迁移](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.2/tool-executor-plugins/guide.zh.md)、[投影句柄迁移](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.2/session-projection-handles/guide.zh.md)、[SSH 协议](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/ssh/ssh/src/protocol.ts)、[PTC 模式](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/ptc-runtime/ptc-runtime-node/README.zh.md)、[取消分类](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.3/ptc-caller-cancellation/guide.zh.md)。RC支线不套用这些新增条件。
+
 ## 决定开启之前，先看影响范围
 
 插件可以由设置中的插件管理器选择，但供给方式不同：有些随安装提供而默认关闭，有些需另行安装，有些还需外部服务和认证。一次配置变化也可能影响多个会话，而不只改变当前对话。具体开关、安装步骤和可用工具应以实际版本为准；本项目只核对了配置与发行内容。
@@ -84,7 +96,7 @@ API Key官方路由仅在官方origin且目录未自定义时跟随远端 `/mode
 
 **程序入口。** Headless 和普通 SDK 基于基础组合再叠加自己的配置；普通 SDK 关闭标题模型和热重载。SDK Minimal 使用独立组合，默认文件策略为 `danger-full-access`，不能套用基础组合的 `workspace-write + ask`；同时挂载 Session Log、包清单扩展和目录工具。该精简入口的 tag 与抽查 npm 配置一致。依据：[入口组合][profile]、[普通 SDK][sdk]、[SDK Minimal][sdk-minimal]、[对应发行元数据](https://registry.npmjs.org/@deepseek-ai/dsh-sdk-minimal/0.2.1-alpha.2)。权限名称不代表隔离实测。
 
-**12个随附关闭组合。** rc.2 清单为会话搜索、Ralph、持久终端、Badge Skill、全提示词标题、Team、语音输入、思考翻译、Auto review、Inspector、自定义插件市场、Worktree；alpha.2 的11项历史清单保留在下方演进记录。当前清单依据：[rc.2 入口与可选清单](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/app-boot/src/profile.ts)。源码将其列为随安装提供、未被默认模板选择、插件管理器中默认关闭；是否实验性另行判断。目录出现不等于本项目完整核验了每项用户体验。会话搜索提供5个全局只读工具，持久终端提供6个全局工具，启用后包括 minimal 在内的会话模式均会受到影响。依据：[随附列表][profile]、[CLI manifest][manifest]、[搜索][search]、[终端][terminal]。
+**rc.2／rc.3历史的12个随附关闭组合。** rc.2 清单为会话搜索、Ralph、持久终端、Badge Skill、全提示词标题、Team、语音输入、思考翻译、Auto review、Inspector、自定义插件市场、Worktree；alpha.2 的11项历史清单保留在下方演进记录。当前清单依据：[rc.2 入口与可选清单](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/boot/app-boot/src/profile.ts)。源码将其列为随安装提供、未被默认模板选择、插件管理器中默认关闭；是否实验性另行判断。目录出现不等于本项目完整核验了每项用户体验。会话搜索提供5个全局只读工具，持久终端提供6个全局工具，启用后包括 minimal 在内的会话模式均会受到影响。依据：[随附列表][profile]、[CLI manifest][manifest]、[搜索][search]、[终端][terminal]。
 
 **按需安装与第三方。** Codex、Claude Code 是官方按需子代理包，其 provider runtime 不随主分发安装；命令挂钩还需显式加载和配置路径。MCP memory 示例指向外部服务器，默认关闭，不能作为 dsh 默认长期记忆或官方背书。依据：[按需目录][on-demand]、[规则桥接][hooks]、[外部记忆][memory]。
 
@@ -110,6 +122,10 @@ API Key官方路由仅在官方origin且目录未自定义时跟随远端 `/mode
 ## 发行包核验与版本纪律
 
 历史有两处证据限制仍影响版本追溯：alpha.2 的源码与 npm 发行包存在计划提示词文字差异；v0.1.3-alpha.1 的四个精确包样本不可取得。它们要求我们注明依据来自哪里，尚不能据此认定权限漏洞或撤包原因。
+
+### 2026-11-02 · 发行物检查不完整
+
+三个新增release的assets为空。本轮registry页面不可访问、npm页面403，未取得精确tarball或dist.integrity，没有换通道绕过拒绝；因而没有新增包完整性或YAML一致性通过结论。源码 [CLI manifest](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/apps/cli/package.json) 声明包名 `@deepseek-ai/dsh` 和 `0.2.2-alpha.2`，不能替代发布包验证。rc.4／rc.5归档、Desktop／Python发行物及完整依赖也未核验。以下历史通过记录仅对当时样本有效。
 
 ### 2026-10-26 · rc.3 发行物抽查与未覆盖项
 
