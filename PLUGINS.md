@@ -2,7 +2,7 @@
 
 **先确定工作缺少什么，再选择扩展。** 常用 Web 工作台本身已有文件与终端工具、计划、长目标、压缩、子代理、文件卡片和提醒；不需要把可选插件全部开启才形成可用的任务流程。可选能力更适合按需补齐：找回旧工作、保持终端任务、组织多个助手，或改善输入与阅读体验。[默认会话配置][standard]
 
-下文说明用户能增加什么能力，以及开启后需要接受的条件。插件在[14维评测框架](CAPABILITY-MAP.md)中作为能力实现依据；逐项支持状态与待验证问题只在[文末能力证据索引](CAPABILITY-MAP.md#evidence-index)维护。默认配置、版本比较和发行包证据仍由本页承载，避免重复登记。本轮并行核查 **0.2.1-rc.5／0.2.2-alpha.2**，日期 **2026-11-02**；alpha线固定提交为 `f3803c96974ad4a94195fb97e5c637e9c2a3afe3`。既有能力与历史抽样仍保留 alpha.2 固定链接；各发布线的默认值、版本与条件以相应日期补充为准，不互相套用；仅静态阅读，未启用插件、安装运行环境或调用模型。
+下文说明用户能增加什么能力，以及开启后需要接受的条件。插件在[14维评测框架](CAPABILITY-MAP.md)中作为能力实现依据；逐项支持状态与待验证问题只在[文末能力证据索引](CAPABILITY-MAP.md#evidence-index)维护。默认配置、版本比较和发行包证据仍由本页承载，避免重复登记。本轮核查 **0.2.2-alpha.3／rc.1**，日期 **2026-11-09**；固定提交分别为 `05b1cae8db6e674c5685101494d4eec24652424a`／`66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db`。既有能力与历史抽样仍保留 alpha.2 固定链接；各发布线的默认值、版本与条件以相应日期补充为准，不互相套用；仅静态阅读，未启用插件、安装运行环境或调用模型。
 
 ## 想让助手找回之前做过的工作
 
@@ -72,6 +72,21 @@ release称Ralph／search不再列为实验，但固定EXPERIMENTAL_BUNDLES仍有
 
 **版本纪律。** alpha线Node要求>=24.9，工具执行器／旧mode、异步projection handle及SSH协议2→3需同步迁移；PTC取消改ABORTED不等于回滚，VM context不隔离。组件以主tag和manifest为据，无独立插件release推断。[CLI manifest](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/apps/cli/package.json)、[执行器迁移](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.2/tool-executor-plugins/guide.zh.md)、[投影句柄迁移](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.2/session-projection-handles/guide.zh.md)、[SSH 协议](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/ssh/ssh/src/protocol.ts)、[PTC 模式](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/ptc-runtime/ptc-runtime-node/README.zh.md)、[取消分类](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.3/ptc-caller-cancellation/guide.zh.md)。RC支线不套用这些新增条件。
 
+## 2026-11-09 · 默认防护、SDK与宿主自动化
+
+| 供给／入口 | 当前条件及相对alpha.2变化 |
+|---|---|
+| 核心／默认组合 | base观察策略行改为disabled:true；工具schema及base的applyPatch:false。Web standard／ptc／cordis同为false。文件沙箱与Review仍保留。 |
+| 完整SDK默认插件 | sdk-app显式启用tool-plugin-manager；HMR仍关闭，配置变更重启生效。调度、问答、交付等装配在alpha.2已存在。sdk-minimal本周配置无差异。 |
+| 宿主自动化 | Web默认服务与完整SDK调度接入；标准／创造／PTC按预设暴露，委派调用拒绝。Host管理无任务级授权，回执只证明持久入队。 |
+| 随附官方可选 | OPTIONAL_BUNDLES由16变15：CUA移入按需；默认模板仍不选择这些组合。独立worktree仍在列表，Web卡片隐藏；Forge可同时启用面板与工具，旧选择不自动移除。 |
+| 官方按需／外部平台 | ON_DEMAND_BUNDLES由2变3：Claude、Codex、CUA。安装包、外部CLI／系统权限和实际可用性分开；本项目未安装。 |
+| 需配置／第三方 | 自定义索引组合默认关闭、indexes=[]；添加源才读取，发现不授权安装，private:true过滤不等于安全审查。名称、过滤和独立官方列表导出已在alpha.2。 |
+
+[base配置](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/bundle/base/cordis.patch.yml)、[文件工具源码](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/fs/tool-fs/src/index.ts)、[Web Standard配置](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/bundle/web-app/presets/standard.patch.yml)、[SDK组合](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/bundle/sdk-app/cordis.patch.yml)、[官方供给列表](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/util/official-bundles/src/bundles.ts)、[工作树迁移](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/docs/upgrade-guide/v0.2.2-alpha.2/forge-worktree-entry/guide.zh.md)、[自定义索引契约](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/boot/plugin-market/README.zh.md)。
+
+**版本冲突和迁移：**迁移指南仍写applyPatch:true，而源码及两个版本npm配置为false；Ralph／search从实验列表移除的发行说明也与固定EXPERIMENTAL_BUNDLES相冲突。保持逐版本条件，不把标签变化视作成熟度验证。Loader的EntryTree.commit／Include journal、投影changes数组是alpha.3新增迁移；Node≥24.9、工具resolve/executable及执行器拆分已在alpha.2。完整证据只在[本周报告](releases/v0.2.2-rc.1.md)展开。插件未取得独立发布证据时，按本tag／commit和manifest记录，不虚构独立版本。
+
 ## 决定开启之前，先看影响范围
 
 插件可以由设置中的插件管理器选择，但供给方式不同：有些随安装提供而默认关闭，有些需另行安装，有些还需外部服务和认证。一次配置变化也可能影响多个会话，而不只改变当前对话。具体开关、安装步骤和可用工具应以实际版本为准；本项目只核对了配置与发行内容。
@@ -122,6 +137,30 @@ release称Ralph／search不再列为实验，但固定EXPERIMENTAL_BUNDLES仍有
 ## 发行包核验与版本纪律
 
 历史有两处证据限制仍影响版本追溯：alpha.2 的源码与 npm 发行包存在计划提示词文字差异；v0.1.3-alpha.1 的四个精确包样本不可取得。它们要求我们注明依据来自哪里，尚不能据此认定权限漏洞或撤包原因。
+
+### 2026-11-09 · alpha.3／rc.1静态发行样本
+
+各15包共30个归档均匹配registry SHA-512 dist.integrity，manifest版本均与请求的精确版本一致；48份可对应源码YAML字节一致（18份组合／preset配置，30份README.i18n.yaml）。下表登记tarball原始字节SHA-256；链接直接指向精确归档，registry版本端点可复核dist.integrity。未执行包代码、prepare或安装脚本。base／Web预设归档确认applyPatch:false和base观察策略disabled:true。
+
+| 包（统一@deepseek-ai/前缀） | alpha.3 tarball／SHA-256 | rc.1 tarball／SHA-256 |
+|---|---|---|
+| `dsh` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh/-/dsh-0.2.2-alpha.3.tgz) `6431bf35a680cd88c4ded4d606200b89443e38c70d505b20f6f5434757a7cc29` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh/-/dsh-0.2.2-rc.1.tgz) `ad21968aed0337a326b853507a23b30eacbbec4d67ab07f3b6fde69b75b19cd6` |
+| `dsh-base` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-base/-/dsh-base-0.2.2-alpha.3.tgz) `f5b995c3f6ef9a6a214055841dcbd668ad09ff8718614de539fec9a173363cf3` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-base/-/dsh-base-0.2.2-rc.1.tgz) `8818aab396410660ecae5bd236580803f523b450c5957c193cd3924c1dc229ae` |
+| `dsh-web-app` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-web-app/-/dsh-web-app-0.2.2-alpha.3.tgz) `efedb4329a9e8187dfae66c2b7dbb47f751ae8e9b2ed4e3d7a0fabca9dec1d4a` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-web-app/-/dsh-web-app-0.2.2-rc.1.tgz) `4118b90f82a7a1fb3559c18f224214d2e05ac350b0f265eb13aa8fda4a8ef4f3` |
+| `dsh-sdk-app` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-sdk-app/-/dsh-sdk-app-0.2.2-alpha.3.tgz) `a67055dac4e271648b79ca18249b9e877cc12739c1baa41b739877b2daa0c9c6` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-sdk-app/-/dsh-sdk-app-0.2.2-rc.1.tgz) `b1d1ed09f64e70f9d0401de0afac97cbfaca05bdaedd946f6ec73628365ab253` |
+| `dsh-sdk-minimal` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-sdk-minimal/-/dsh-sdk-minimal-0.2.2-alpha.3.tgz) `328b5458332a03d33b758a38ff27b89bf189380bffa38e637e688413d0ec26cf` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-sdk-minimal/-/dsh-sdk-minimal-0.2.2-rc.1.tgz) `86065da7c07b97eac5cfcb4f42caf0f4da524802b7266084c97c007481909169` |
+| `dsh-tool-fs` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-tool-fs/-/dsh-tool-fs-0.2.2-alpha.3.tgz) `a6f3fac35f8ef5adfa2d12301ae836f17a895a7f27424376b105fe42097411d7` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-tool-fs/-/dsh-tool-fs-0.2.2-rc.1.tgz) `7f451c618028e7def1beda6c0ea3e459a99c681cd6ec28df58d671bace66a93c` |
+| `dsh-fs-observation-policy` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-fs-observation-policy/-/dsh-fs-observation-policy-0.2.2-alpha.3.tgz) `87320472a9a6eace0ec15ed2076fa8d9df94a9476591cd1fe1d30b25d8b4d287` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-fs-observation-policy/-/dsh-fs-observation-policy-0.2.2-rc.1.tgz) `15112c42875c3fe5efd3b34f4f4cd22e13667766a5effd8f66b29ff097a70ef8` |
+| `dsh-schedule` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-schedule/-/dsh-schedule-0.2.2-alpha.3.tgz) `0af7d1b268142f683b8f811c5e3ac95ff1dd1c3840a1e4e77e1f1e4d08af1d86` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-schedule/-/dsh-schedule-0.2.2-rc.1.tgz) `8848d908ec7b2eb8671ba8a7f5b4a0b74d05f02afb8a12c1bb01d19ca195da1b` |
+| `dsh-tool-schedule` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-tool-schedule/-/dsh-tool-schedule-0.2.2-alpha.3.tgz) `d5568617d537afb56dcc32dc344f53c12f91d1e496dc6c875889bd093061cd75` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-tool-schedule/-/dsh-tool-schedule-0.2.2-rc.1.tgz) `d10b1a40dadf22621cad92a31b76e3e948444504990bdf96d207fd14ad1c5a6c` |
+| `dsh-sdk-client` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-sdk-client/-/dsh-sdk-client-0.2.2-alpha.3.tgz) `354e65751431037ac0085718a700677e0a0016469352aaa6e019ad8de17ae145` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-sdk-client/-/dsh-sdk-client-0.2.2-rc.1.tgz) `3d9003e9bf921f20208bb620bfbba71f2762f015886e4851dbfaaee94bd7beb6` |
+| `dsh-sdk-jsonrpc-server` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-sdk-jsonrpc-server/-/dsh-sdk-jsonrpc-server-0.2.2-alpha.3.tgz) `ed85ab37d49283f771441a40adb932d1e49ae1825311181e5407d317c85358e8` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-sdk-jsonrpc-server/-/dsh-sdk-jsonrpc-server-0.2.2-rc.1.tgz) `b6dca7298810ab9b36dfe8a6d48863f783cd1e819d65450a61c6088def330e0d` |
+| `dsh-experimental-auto-review` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-experimental-auto-review/-/dsh-experimental-auto-review-0.2.2-alpha.3.tgz) `d276f92f2e900be973012ab24d3ebbe1ac5266fa58a6c7cf1872d800188f3c6d` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-experimental-auto-review/-/dsh-experimental-auto-review-0.2.2-rc.1.tgz) `1eed5b39a51ff7cdc6dcc8d89dc4a60973d430ac360330b91c07445de38c0877` |
+| `dsh-official-bundles` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-official-bundles/-/dsh-official-bundles-0.2.2-alpha.3.tgz) `8ab6655885fd66dba899d466fd56a1a109fcb67aa64c3186c17c2a1d217a96a7` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-official-bundles/-/dsh-official-bundles-0.2.2-rc.1.tgz) `f547d8d166865d00d8bb6aca15d2327d4eea5da8fe448f2abb1fc10e40e07432` |
+| `dsh-plugin-manager` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-plugin-manager/-/dsh-plugin-manager-0.2.2-alpha.3.tgz) `6cf9e8c5a2d01f2074e08d332464bf2b1b54fcc1659d6d60af7e54f906e5a071` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-plugin-manager/-/dsh-plugin-manager-0.2.2-rc.1.tgz) `eddbbeb13a3cbf53b6676a58a848741270f26632cd3052fffc68abc0f93d637c` |
+| `dsh-plugin-market` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-plugin-market/-/dsh-plugin-market-0.2.2-alpha.3.tgz) `f978e5ce40f3d96f1e23213b5e08e8a31ca4af42d36911583ac809ada6a3cb4c` | [归档](https://registry.npmjs.org/@deepseek-ai/dsh-plugin-market/-/dsh-plugin-market-0.2.2-rc.1.tgz) `4e6f33f97f683a7f413e6ea0fe1e57cf0605bd2772254020b743556bef202a1b` |
+
+样本不覆盖完整依赖闭包、Desktop二进制、Python wheel、编译产物可复现性和运行加载；不把hash一致表述成安全审计或所有文件与源码一致。上周alpha.2的发行缺口仍属历史记录，本次未用新版样本替代。两个新GitHub release assets均为空。
 
 ### 2026-11-02 · 发行物检查不完整
 

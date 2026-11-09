@@ -1,6 +1,6 @@
 # 关键发现与机会
 
-当前覆盖0.2.1-rc.5与0.2.2-alpha.2（2026-11-02）；历史F-01～F-06和逐周证据保留原归属，新条件只适用于标注版本。以下是公开资料与静态源码分析，不是已复现漏洞清单。没有本项目运行测试。背景能力见 [OVERVIEW](OVERVIEW.md)，版本变化见 [本轮分析](releases/v0.2.2-alpha.2.md)，纵向证据见 [EVOLUTION](EVOLUTION.md)。历史已修复事项不作为当前缺陷登记。
+当前覆盖0.2.2-alpha.3与rc.1（2026-11-09）；历史F-01～F-06和逐周证据保留原归属，新条件只适用于标注版本。以下是公开资料与静态源码分析，不是已复现漏洞清单。没有本项目运行测试。背景能力见 [OVERVIEW](OVERVIEW.md)，版本变化见 [本轮分析](releases/v0.2.2-rc.1.md)，纵向证据见 [EVOLUTION](EVOLUTION.md)。历史已修复事项不作为当前缺陷登记。
 
 ## F-01 · 默认 Session Log 外发需要独立治理
 
@@ -113,3 +113,11 @@ alpha.2 移除 Team 独立 mailbox/outbox，改为直接调用目标 inbox／ste
 **F-06 · P1验证。** 插件更新回退尽力而为，Host代码不受工作区沙箱隔离；Node24.9、执行器、异步投影、SSH协议2→3是独立迁移面。Ralph／search的release分类与固定实验清单冲突，不能推导成熟度提升。[插件生命周期](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/boot/plugin-manager/README.md)、[执行器迁移](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.2/tool-executor-plugins/guide.zh.md)、[投影句柄迁移](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.2/session-projection-handles/guide.zh.md)、[SSH 协议](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/ssh/ssh/src/protocol.ts)、[实验标记清单](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/util/official-bundles/src/plugin-manager.ts)
 
 **证据缺口：**本轮新npm归档及integrity未取得，未绕过获取拒绝；只保留源码manifest结论，不沿用旧版包验证。RC支线只记录ACP输出和思考展示变化，不套用alpha线判断。[本周报告](releases/v0.2.2-alpha.2.md)
+
+## 2026-11-09 · 防护、任务管理与人工节点
+
+**F-04 · P1验证。** alpha.3起base观察策略默认关闭，文件先读与外部变更检查不再强制；沙箱、Review仍在。宿主自动化没有任务级授权，模型工具拒绝委派调用方也不能推出多用户隔离。Auto退出权限保存修复已在alpha.2，本周新增的是评审请求Session身份与用途；实时卸载Auto仍可把Auto会话切到Full access。[base配置](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/bundle/base/cordis.patch.yml)、[自动化契约](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/schedule/schedule/README.zh.md)、[Auto销毁及评审源码](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/experimental/auto-review/src/index.ts)。
+
+**F-02／F-05 · P1验证。** 自动化回执确认持久入队，Session与任务独立提交仍有重复投递窗口；new目标可并发且无并发上限。SDK原生命令有独立完成通知，普通prompt仍以根idle结束活动区间，二者均不自动证明业务验收。[投递实现](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/schedule/schedule/src/runtime.ts)、[SDK输入路由](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/sdk/client/src/api.ts)。
+
+**F-06 · P1验证／观察。** apply_patch源码与精确npm配置默认关闭，固定迁移指南却仍写默认开启；保留双方证据。补丁提交不回滚，成功标志不能替代逐操作核对。30个发行样本通过hash校验不证明完整依赖或运行行为安全。[本周报告](releases/v0.2.2-rc.1.md)、[发行证据](PLUGINS.md#发行包核验与版本纪律)。

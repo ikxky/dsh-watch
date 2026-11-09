@@ -4,7 +4,7 @@
 
 维度名称及00–13顺序采用 [LLM 101《Agent 产品设计总表》](https://llm101.ai/agent-product-101-product-design-checklist/) 的框架。下列定义、基本要求、成熟表现和 dsh 分析为本项目原创阐释；不复制文章的完整检查题或评分法。框架用于提出问题，dsh 事实仅依据本项目已核对的官方资料、固定源码与发行物。
 
-本轮核查 **2026-11-02**，并行覆盖 **0.2.1-rc.5** 与 **0.2.2-alpha.2**。后者固定commit `f3803c96974ad4a94195fb97e5c637e9c2a3afe3`，是本轮主要执行边界增量；不得套用到RC支线。旧记录保留原版本与日期，新证据只补受影响维度与条目。没有运行、模型调用或端到端测试；新发行包未验证。支持、证据和成熟度分开，未知保持待评。[本周报告](releases/v0.2.2-alpha.2.md)。
+本轮核查 **2026-11-09**，覆盖 **0.2.2-alpha.3／rc.1**，固定提交分别为 `05b1cae8db6e674c5685101494d4eec24652424a`／`66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db`。旧记录保留原版本与日期，本周只补受影响维度与既有ID；rc.1累计说明不作为全部新引入。30个精确npm样本校验通过，完整发行闭包与运行表现未验证。支持、证据与成熟度分开，未知保持待评。[本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。
 
 ## 评测维度总览
 
@@ -94,6 +94,8 @@ Web 支持从工作区会话输入任务和附件；它提供材料进入工作�
 
 主记录为[CAP-IN-01](#cap-in-01)至[CAP-IN-04](#cap-in-04)，依据[Web 组合][web]、[SDK 契约][sdk]及[事件入口][webhook]。上传插件及不同程序入口的历史与加载条件保留在[插件指南](PLUGINS.md)。本轮没有新的输入格式、聊天连接器或事件重试实测。
 
+**2026-11-09版本补充（alpha.3／rc.1）：**完整SDK增加原生命令与操作审批，自动化可投递到既有或新会话。入口必须保留命令身份、目标与接收回执；新增入口不证明任务验收。关联CAP-IN-02／CAP-RUN-02。 [本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。证据为静态源码／文档与发行样本，未开展运行验证；本段不改变其他版本的默认值。
+
 ### 评测结论与待验证事项
 
 **入口机制有局部支撑，跨入口的业务任务契约待评。** 已有资料可确认交互和程序入口；尚不能确认发起人、权限、附件和结果在多入口间完整一致。后续优先核对文件格式与大小提示、各入口权限差异，以及外部事件的持久性和重复处理责任。官方聊天入口维持待确认。
@@ -120,6 +122,8 @@ Web 可通过 `/plan` 进入计划模式，执行中可继续输入和请求取�
 ### 版本与插件证据
 
 主记录为[计划 CAP-CTL-01](#cap-ctl-01)、[干预与取消 CAP-CTL-02](#cap-ctl-02)、[命令挂钩 CAP-EXT-02](#cap-ext-02)。[计划说明][plan]、[循环源码][loop-source]和[挂钩说明][hooks]界定各自范围。alpha.2 的 tag 与 npm 计划提示词有文字差异，详见[发行证据](PLUGINS.md#发行包核验与版本纪律)；该差异未被证明导致权限绕过。
+
+**2026-11-09版本补充（alpha.3／rc.1）：**SDK计划命令可以等待审阅及获批后活动；文件补丁默认关闭，启用后的多文件提交不回滚。控制层仍需呈现部分效果和unknown，不能只读工具成功标志。关联CAP-CTL-01及CAP-RUN-03。 [本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。证据为静态源码／文档与发行样本，未开展运行验证；本段不改变其他版本的默认值。
 
 ### 评测结论与待验证事项
 
@@ -152,6 +156,8 @@ dsh 的工具权限请求可在支持交互的入口中呈现给操作者，计�
 
 主记录为[人工批准 CAP-CTL-03](#cap-ctl-03)，依据[权限预设][permission]、[基础配置][base]及[精简程序入口][sdk-minimal]。交叉引用[续行 CAP-RUN-01](#cap-run-01)、[组织身份 CAP-SEC-03](#cap-sec-03)；自动评审的默认关闭和限制见[官方说明][auto-review]与[插件指南](PLUGINS.md#review)。
 
+**2026-11-09版本补充（alpha.3／rc.1）：**SDK客户端审批需显式开启并先就绪处理器，缺失或无效应答不放行；onUserQuestion承接计划审阅。人工节点可接入不代表组织审批人、代办与超时升级契约已经建立。关联CAP-CTL-03。 [本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。证据为静态源码／文档与发行样本，未开展运行验证；本段不改变其他版本的默认值。
+
 ### 评测结论与待验证事项
 
 **单操作者介入有局部支撑，多角色责任流程待评。** 不能把模型自动评审或一般浏览器认证等同于业务批准者身份。下一步需明确哪些请求需要人、由谁接收、拒绝或超时后怎样处理，以及决定和继续执行之间如何留痕。现有证据不足处保留待评，不新增强制审批制度或假定 dsh 已实现企业审批。
@@ -182,6 +188,8 @@ dsh 的工具权限请求可在支持交互的入口中呈现给操作者，计�
 
 主记录为[CAP-SEC-01](#cap-sec-01)至[CAP-SEC-03](#cap-sec-03)及[文件读取 CAP-FILE-05](#cap-file-05)。依据[沙箱][sandbox]、[本地凭据][credentials]、[连接鉴权][connection]和[文件读取源码][file-api]；SDK Minimal 的 tag 与已抽查 npm 配置一致，见[入口配置证据](PLUGINS.md#当前默认组成与重要例外)。[安全声明][safety]仍明确未经审计。
 
+**2026-11-09版本补充（alpha.3／rc.1）：**base文件观察策略默认关闭；沙箱与Review不补出先读／外部变更检查。宿主自动化无任务级授权，不能以会话边界推断任务隔离。Auto关闭应用时保留权限的修复已在alpha.2；实时移除插件仍有切到Full access条件。关联CAP-SEC-01／CAP-CTL-03／CAP-RUN-02。 [本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。证据为静态源码／文档与发行样本，未开展运行验证；本段不改变其他版本的默认值。
+
 ### 评测结论与待验证事项
 
 **文件策略存在局部实现，企业权限与隔离成熟度待评。** 静态配置可解释入口差异，但不能证明目标环境中所有动作都受控。后续应按实际操作系统核对读写、网络、失败处理和凭据传递范围，再确认业务身份接入。当前没有独立安全验证，不从公开公告为空推导安全，也不将官方边界写成已复现漏洞。
@@ -210,6 +218,8 @@ dsh 会话支持读取和切换工作目录，但不会改变已有终端进程�
 ### 版本与插件证据
 
 主记录为[目录 CAP-FILE-01](#cap-file-01)、[卡片 CAP-FILE-02](#cap-file-02)、[下载 CAP-FILE-03](#cap-file-03)、[副本 CAP-FILE-06](#cap-file-06)、[搜索 CAP-CTX-02](#cap-ctx-02)和[外部记忆 CAP-CTX-03](#cap-ctx-03)。依据[交付设计][present-decision]和[已读未运行的测试][present-test]；alpha.2 目录工具及插件加载证据见[本次版本分析](releases/v0.2.1-alpha.2.md)。日志 ZIP 属于记录导出，在10可观测性维护[CAP-FILE-04](#cap-file-04)。
+
+**2026-11-09版本补充（alpha.3／rc.1）：**Forge统一面板与create_worktree，旧独立包选择不自动移除，关闭Forge也未必关闭旧工具。文件补丁可能留下部分效果，工作区状态需重新核对；这不新增不可变交付副本或下载保证。关联CAP-FILE-01／CAP-RUN-03。 [本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。证据为静态源码／文档与发行样本，未开展运行验证；本段不改变其他版本的默认值。
 
 ### 评测结论与待验证事项
 
@@ -242,6 +252,8 @@ dsh 会话支持读取和切换工作目录，但不会改变已有终端进程�
 
 主记录为[压缩 CAP-CTX-01](#cap-ctx-01)、[提醒 CAP-RUN-02](#cap-run-02)、[任务等待 CAP-RUN-04](#cap-run-04)。依据[压缩说明][compaction]、[提醒契约][schedule]及[等待实现][sdk-wait]；alpha.1 提醒回到 Web 默认组合、alpha.2 等待语义的变化见[插件演进](PLUGINS.md)和[版本增量](releases/v0.2.1-alpha.2.md)。续行授权在13维护[CAP-RUN-01](#cap-run-01)，子代理能力在12维护[CAP-COL-01](#cap-col-01)。
 
+**2026-11-09版本补充（alpha.3／rc.1）：**自动化管理升为Host范围，支持三种会话目标与编辑冲突复核；回执仍只证明持久入队。new目标可重叠且无并发上限，重复投递和业务验收仍需上层处理。SDK普通prompt与原生命令等待语义分别判断。关联CAP-RUN-02／CAP-RUN-04。 [本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。证据为静态源码／文档与发行样本，未开展运行验证；本段不改变其他版本的默认值。
+
 ### 评测结论与待验证事项
 
 **持续执行和等待具有局部契约，业务状态管理待评。** 需要进一步确认阻塞原因、人工输入、子任务与通知能否关联同一业务任务，重启后的提醒是否需要业务去重，以及不同模型下压缩的有效范围。当前没有长任务成功率、时延或重启表现的运行证据，不把修复记录当作可靠性指标。
@@ -273,6 +285,8 @@ dsh 会话支持读取和切换工作目录，但不会改变已有终端进程�
 ### 版本与插件证据
 
 本维度交叉引用[计划 CAP-CTL-01](#cap-ctl-01)、[交付 CAP-FILE-02](#cap-file-02)、[批准 CAP-CTL-03](#cap-ctl-03)与[观察 CAP-OBS-01](#cap-obs-01)。默认外发的已核事实集中在[F-01](FINDINGS.md#f-01--默认-session-log-外发需要独立治理)，Desktop 与翻译的差异见[插件数据通道](PLUGINS.md#data-channels)；不以滚动文档替代本版本证据。
+
+**2026-11-09版本补充（alpha.3／rc.1）：**applyPatch默认值的迁移指南与源码／归档冲突，以及Ralph／search实验标记冲突必须向读者可见。回执、工具返回及配置变更不能直接展示为业务成功或立即生效。关联CAP-EXT-01／CAP-RUN-02；信任成熟度仍待运行证据。 [本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。证据为静态源码／文档与发行样本，未开展运行验证；本段不改变其他版本的默认值。
 
 ### 评测结论与待验证事项
 
@@ -362,6 +376,8 @@ Session 事件、Trajectory 和用量统计提供执行回看基础，深层诊�
 
 主记录为[执行观察 CAP-OBS-01](#cap-obs-01)和[日志导出 CAP-FILE-04](#cap-file-04)。依据[生命周期][lifecycle]、[统计][stats]、[导出实现][zip]与[交付测试][present-test]。当前状态显示变化见[版本分析](releases/v0.2.1-alpha.2.md)，外发通道条件保留在[F-01](FINDINGS.md#f-01--默认-session-log-外发需要独立治理)和[插件指南](PLUGINS.md#data-channels)。
 
+**2026-11-09版本补充（alpha.3／rc.1）：**Session投影帧改为一次提交事件携带changes数组，直接Remote消费者必须迁移。自动化保留有界投递历史，不是完整执行或永久审计；工具部分效果需关联Review。关联CAP-OBS-01。 [本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。证据为静态源码／文档与发行样本，未开展运行验证；本段不改变其他版本的默认值。
+
 ### 评测结论与待验证事项
 
 **执行记录与查询有局部成熟表现，跨角色业务追踪待评。** 后续应核对用户视图、原始事件、后代和成本是否对应同一任务，导出如何选择后代与附件，以及敏感记录的访问和保留责任。不能把记录完整性、审计合规和界面可理解性合并为一个“有 trace”的结论。
@@ -394,6 +410,8 @@ dsh 的持久会话与修复处理区分未启动和结果未知，帮助续接�
 ### 版本与插件证据
 
 主记录为[恢复 CAP-RUN-03](#cap-run-03)，依据[修复源码][repair]和[执行故障说明][loop]。交叉引用[取消 CAP-CTL-02](#cap-ctl-02)、[提醒 CAP-RUN-02](#cap-run-02)及[协作消息 CAP-COL-02](#cap-col-02)。alpha.2 的超时修复、Team 消息机制变化见[当前增量](releases/v0.2.1-alpha.2.md)与[F-03](FINDINGS.md#f-03--team-简化了消息链路也改变了交付承诺)。
+
+**2026-11-09版本补充（alpha.3／rc.1）：**自动化的Session flush与任务确认独立，故障可能重复；apply_patch预检与提交分开，提交失败不回滚。SDK等待超时不停止运行时。可靠性需在明确版本与副作用下验证，不能由修复数量推断。关联CAP-RUN-03／CAP-RUN-02。 [本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。证据为静态源码／文档与发行样本，未开展运行验证；本段不改变其他版本的默认值。
 
 ### 评测结论与待验证事项
 
@@ -438,6 +456,8 @@ dsh 可通过插件组合执行循环、模型、工具、持久化和界面，�
 
 主记录包括[扩展 CAP-EXT-01](#cap-ext-01)、[MCP CAP-EXT-03](#cap-ext-03)、[模型 CAP-MOD-01](#cap-mod-01)与[CAP-MOD-02](#cap-mod-02)、[部署 CAP-DEP-01](#cap-dep-01)与[治理 CAP-DEP-02](#cap-dep-02)、[子代理 CAP-COL-01](#cap-col-01)与[Team CAP-COL-02](#cap-col-02)。依据[插件管理][plugin-manager]、[入口配置][profile]及[远程部署指南][public-deploy]。随附关闭、按需安装、版本演进与归档差异统一在[PLUGINS](PLUGINS.md)维护，不在本页复制包清单。
 
+**2026-11-09版本补充（alpha.3／rc.1）：**SDK插件管理启用但变更需重启；Loader／Include持久化和投影帧需迁移，15项随附可选与3项按需分别登记。Node≥24.9和条件工具／执行器拆分已在alpha.2，不重复算新能力。组织身份、租户治理及完整发行闭包仍待评。关联CAP-EXT-01／CAP-DEP-01。 [本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。证据为静态源码／文档与发行样本，未开展运行验证；本段不改变其他版本的默认值。
+
 ### 评测结论与待验证事项
 
 **共享运行机制有局部成熟表现，企业平台成熟度待评。** 当前适合借鉴可组合执行与能力服务，不将本地插件管理解释为完整组织治理。后续需核对目标入口的实际工具、权限和依赖，连接器故障与模型兼容，及配置升级对运行任务的影响。已发现的发行文字差异和历史包缺口保留为证据限制，不据此泛化为供应链故障。
@@ -473,6 +493,8 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 ### 版本与插件证据
 
 主记录为[持续目标 CAP-RUN-01](#cap-run-01)和[任务预算 CAP-OBS-04](#cap-obs-04)，依据[Goal 契约][goal]、[压缩][compaction]与[统计][stats]。交叉引用[批准 CAP-CTL-03](#cap-ctl-03)和[恢复 CAP-RUN-03](#cap-run-03)；自动评审限制见[插件说明](PLUGINS.md#review)，不得从可选开关推导授权范围已经经过验证。
+
+**2026-11-09版本补充（alpha.3／rc.1）：**Host自动化和SDK人工节点扩大组合能力；没有任务级授权、投递去重或验收成功率新证据，故不提高无人值守采用等级。默认文件新鲜度防护减少，需按目标风险显式配置与验证。交叉引用04、06、11维，维持借鉴／验证／观察结论。 [本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。证据为静态源码／文档与发行样本，未开展运行验证；本段不改变其他版本的默认值。
 
 ### 评测结论与待验证事项
 
@@ -513,6 +535,9 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 依据：[SDK 契约][sdk]、[等待实现][sdk-wait]、[SDK Minimal 配置][sdk-minimal]。后续核验：逐项补齐 SDK、Headless 与 ACP 的交互及权限差异。
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** TypeScript `resumeSession`／Python `resume_session` 恢复原持久会话，需沿用 home 和工作区；不发送新输入、不恢复外部进程。[SDK 恢复契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/README.zh.md)、[Python 恢复入口](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/python/sdk/src/deepseek_harness/api.py)。
 
+**更新：2026-11-09，0.2.2-alpha.3／rc.1。** 完整SDK新增原生命令路由和客户端审批；普通输入与命令完成通知分开。插件管理在sdk-app启用、配置变更重启生效，sdk-minimal本周配置无差异。下一步核对命令失败、处理器缺失、断连与重启边界。 [固定版本证据](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/sdk/client/src/api.ts)、[本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。支持状态和唯一主归属保持，未运行验证。
+
+
 <a id="cap-in-03"></a>
 
 ### CAP-IN-03 · 官方 IM 会话与附件入口
@@ -543,6 +568,9 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 
 依据：[计划模式说明][plan]。后续核验：对实际发行包，退出计划的确认与取消分支如何对应日志？
 
+**更新：2026-11-09，0.2.2-alpha.3／rc.1。** 完整SDK的run(/plan <task>)等待计划审阅及获批后活动，计划正文在问题detail中；计划不改变权限。新增SDK路径为已读源码／文档，历史Web证据等级不因此改写。下一步验证审阅取消和后续执行日志。 [固定版本证据](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/sdk/client/README.zh.md)、[本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。支持状态和唯一主归属保持，未运行验证。
+
+
 <a id="cap-ctl-02"></a>
 
 ### CAP-CTL-02 · 运行中插话、暂停与取消
@@ -565,6 +593,8 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 
 **更新：2026-11-02，0.2.2-alpha.2／`f3803c96974ad4a94195fb97e5c637e9c2a3afe3`。** OAR原生审批不桥接DSH；外部CLI权限与安装批准须独立核对，不改变本项人工批准的原范围。[OAR 边界](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/subagent-oar/README.zh.md)、[插件生命周期](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/boot/plugin-manager/README.md) 支持状态与主归属不变，限制仅作用于标注路径；无运行验证。[本周报告](releases/v0.2.2-alpha.2.md)。
 
+**更新：2026-11-09，0.2.2-alpha.3／rc.1。** SDK的approvalRequests需显式开启并预装请求处理器；只授权单次操作，无效应答或断连不放行。Auto退出保存修复已在alpha.2，本周新增评审Session身份／用途，实时移除Auto仍可能转换权限。下一步核对处理器失联、迟到应答与批准者归属。 [固定版本证据](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/sdk/protocol/README.zh.md)、[本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。支持状态和唯一主归属保持，未运行验证。
+
 
 <a id="cap-sec-01"></a>
 
@@ -577,6 +607,8 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 依据：[沙箱说明][sandbox]、[安全声明][safety]。后续核验：按目标 OS 核实读、写、网络与失败闭合的实际范围。
 
 **更新：2026-11-02，0.2.2-alpha.2／`f3803c96974ad4a94195fb97e5c637e9c2a3afe3`。** 既有文件约束不涵盖新增HTTP网络范围或OAR原生进程；VM context不是隔离边界。[HTTP Fetch 契约](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/web/web-fetch-http/README.zh.md)、[OAR 边界](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/subagent-oar/README.zh.md)、[PTC 模式](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/ptc-runtime/ptc-runtime-node/README.zh.md) 支持状态与主归属不变，限制仅作用于标注路径；无运行验证。[本周报告](releases/v0.2.2-alpha.2.md)。
+
+**更新：2026-11-09，0.2.2-alpha.3／rc.1。** base观察策略disabled:true取消默认先读／外部变更检查，但不取消沙箱与Review；sdk-minimal不叠加base。此次只核实配置与策略源码，未扩大沙箱证据等级。下一步在另行授权后验证启用／关闭策略与恢复重读。 [固定版本证据](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/bundle/base/cordis.patch.yml)、[本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。支持状态和唯一主归属保持，未运行验证。
 
 
 <a id="cap-sec-02"></a>
@@ -611,6 +643,8 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 依据：[目录工具源码][cwd]。后续核验：目录迁移对相对路径、fork、恢复和已有终端分别如何生效？
 
 **更新：2026-11-02，0.2.2-alpha.2／`f3803c96974ad4a94195fb97e5c637e9c2a3afe3`。** Forge可选工作树与Session工作目录关联；仍需区分目录选择与授权。[Forge／工作树](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/forge-bundle/README.zh.md) 支持状态与主归属不变，限制仅作用于标注路径；无运行验证。[本周报告](releases/v0.2.2-alpha.2.md)。
+
+**更新：2026-11-09，0.2.2-alpha.3／rc.1。** Forge新增统一工作树入口；旧独立组合保留时，关闭Forge不一定关闭create_worktree。工作目录与授权仍分开；下一步核对重复选择、目录变化与已有进程。 [固定版本证据](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/docs/upgrade-guide/v0.2.2-alpha.2/forge-worktree-entry/guide.zh.md)、[本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。支持状态和唯一主归属保持，未运行验证。
 
 
 <a id="cap-file-02"></a>
@@ -714,6 +748,9 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 
 依据：[提醒投递说明][schedule]、[Web 组合配置][web]。后续核验：重启、补发与重复投递是否需要上层业务幂等键？
 
+**更新：2026-11-09，0.2.2-alpha.3／rc.1。** 宿主级任务支持session／new_once／new目标，管理无任务级授权；委派调用拒绝。回执仅持久入队、至少一次投递，Host需运行，new目标没有并发上限。此次读取runtime.ts及管理源码，新增路径证据为已读源码；下一步验证重复投递与任务权限。 [固定版本证据](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/schedule/schedule/src/runtime.ts)、[本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。支持状态和唯一主归属保持，未运行验证。
+
+
 <a id="cap-run-03"></a>
 
 ### CAP-RUN-03 · 恢复持久会话并识别未知副作用
@@ -727,6 +764,8 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 
 **更新：2026-11-02，0.2.2-alpha.2／`f3803c96974ad4a94195fb97e5c637e9c2a3afe3`。** 官方报告sdk-minimal在模型请求／工具前保存恢复记录，失败停止相关动作；这不是外部事务回滚证据。 支持状态与主归属不变，限制仅作用于标注路径；无运行验证。[本周报告](releases/v0.2.2-alpha.2.md)。
 
+**更新：2026-11-09，0.2.2-alpha.3／rc.1。** apply_patch默认关闭，启用后先预检再顺序提交，后续失败不回滚；isError:false可含停止或unknown。自动化独立提交也不能等同业务事务；下一步核对部分效果与重复操作的对账责任。 [固定版本证据](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/fs/tool-fs/README.zh.md)、[本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。支持状态和唯一主归属保持，未运行验证。
+
 
 <a id="cap-run-04"></a>
 
@@ -738,6 +777,9 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 
 依据：[等待实现][sdk-wait]、[调用实现][sdk-run]。后续核验：业务任务 ID、多个 prompt 与最后回复的因果归属如何建立？
 **更新：2026-10-19，rc.2／`687f282e8625c6b8d11ff58211a90524be2e4317`。** resume 不发送新输入；`run()` 与子树 wait、业务验收仍分别判断，不因恢复 API 新增改变支持状态。[SDK 恢复契约](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/README.zh.md)、[当前 run 实现](https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/packages/sdk/client/src/api.ts)。
+
+**更新：2026-11-09，0.2.2-alpha.3／rc.1。** 普通prompt仍以根idle结束活动区间；新原生命令路径按session.query.completed等待指定命令，计划／目标可等待后续活动。故原“run根首次idle”仅适用于普通prompt，不能概括所有新命令。业务回执支持仍为部分，下一步核对重叠输入因果归属与子树完成。 [固定版本证据](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/sdk/client/src/api.ts)、[本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。支持状态和唯一主归属保持，未运行验证。
+
 
 <a id="cap-col-01"></a>
 
@@ -776,6 +818,8 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 **更新：2026-10-26，rc.3／`1f81c047fc48fa190a683e469daa699857e9afe8`。** Web默认新增入口插件，但只准备Creator草稿；可选关闭组合仍12项，preset文件未变。复用空白会话可能保留旧装配，不能把新会话当作配置刷新保证。[Web 默认组合](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/bundle/web-app/cordis.patch.yml)、[更多菜单与草稿](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/ui-entry-customization/README.zh.md)、[空白会话迁移指南](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/docs/upgrade-guide/v0.2.1-rc.2/new-session-blank-reuse/guide.zh.md)。既有支持状态和主归属不变，未增加运行验证。
 
 **更新：2026-11-02，0.2.2-alpha.2／`f3803c96974ad4a94195fb97e5c637e9c2a3afe3`。** 官方目录移至独立包、OPTIONAL16项；插件更新回退尽力，Host代码不受工作区隔离。旧工具mode／投影API需迁移，Ralph／search实验分类保留冲突。[官方供给清单](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/util/official-bundles/src/bundles.ts)、[实验标记清单](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/util/official-bundles/src/plugin-manager.ts)、[插件生命周期](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/boot/plugin-manager/README.md)、[执行器迁移](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.2/tool-executor-plugins/guide.zh.md)、[投影句柄迁移](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/docs/upgrade-guide/v0.2.1-rc.2/session-projection-handles/guide.zh.md) 支持状态与主归属不变，限制仅作用于标注路径；无运行验证。[本周报告](releases/v0.2.2-alpha.2.md)。
+
+**更新：2026-11-09，0.2.2-alpha.3／rc.1。** 15项随附可选、3项官方按需；CUA迁到按需，第三方索引仍需配置。Loader commit／journal和投影changes需迁移；执行器／条件工具拆分已在alpha.2。本次30个npm样本hash与配置一致，applyPatch指南及实验标记仍有冲突；下一步补完整发行与实际装配。 [固定版本证据](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/packages/util/official-bundles/src/bundles.ts)、[本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。支持状态和唯一主归属保持，未运行验证。
 
 
 <a id="cap-ext-02"></a>
@@ -836,6 +880,8 @@ Goal 支持在同一会话持续推进，恢复或分叉后不会自动重新启
 **更新：2026-10-26，rc.3／`1f81c047fc48fa190a683e469daa699857e9afe8`。** 官方目录加载／失败写stderr；Desktop产品事件与会话执行记录分别判断，不能合并为完整审计。[API Key 动态目录](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/llm/llm-deepseek-api-key/README.md)、[Desktop 事件边界](https://github.com/deepseek-ai/deepseek-harness/blob/1f81c047fc48fa190a683e469daa699857e9afe8/packages/client/product-analytics/README.zh.md)。既有支持状态和主归属不变，未增加运行验证。
 
 **更新：2026-11-02，0.2.2-alpha.2／`f3803c96974ad4a94195fb97e5c637e9c2a3afe3`。** 统计UI需另挂载，其时间总和不是并行墙钟；OAR仅保留外部任务标识及最终结果，非完整原生轨迹。[统计界面](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/client-ui-stats/README.zh.md)、[OAR 边界](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/subagent-oar/README.zh.md) 支持状态与主归属不变，限制仅作用于标注路径；无运行验证。[本周报告](releases/v0.2.2-alpha.2.md)。
+
+**更新：2026-11-09，0.2.2-alpha.3／rc.1。** 实时投影帧由单key改为changes数组，未出现的key不变；投递历史默认30天／200条，仅确认收件箱，不等于执行审计。下一步验证多key单事件、断线回读与原始日志的一致性。 [固定版本证据](https://github.com/deepseek-ai/deepseek-harness/blob/66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db/docs/upgrade-guide/v0.2.2-alpha.2/projection-event-frames/guide.zh.md)、[本周固定证据与版本边界](releases/v0.2.2-rc.1.md)。支持状态和唯一主归属保持，未运行验证。
 
 
 <a id="cap-obs-02"></a>

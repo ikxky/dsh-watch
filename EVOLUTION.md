@@ -1,6 +1,6 @@
 # DeepSeek Harness 发布演进
 
-截至 **2026-11-02**，官方 Releases 集合 API 第1页返回35条、第2页为空；35条均为 `draft=false`、`prerelease=true`。因此本文使用“官方已发布版本”，不把 RC 或 0.2 当作稳定版。当前可见最早发布为 **v0.1.0-rc.7（2026-08-17 UTC）**，按发布时间最新为 **v0.2.1-rc.5（2026-10-30 UTC）**，另有较高版本 **v0.2.2-alpha.2（2026-10-28 UTC）**。没有从 git tag 名称或 release compare 的起点推断更早公开发行。[完整 API](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=1)、[下一页](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=2)
+截至 **2026-11-09**，完整Releases第1页37条、第2页为空，全部为预发布。最新为 **v0.2.2-rc.1（2026-11-04）**，前序为 **v0.2.2-alpha.3（2026-11-03）**；最早仍为v0.1.0-rc.7。没有从 git tag 名称或 release compare 的起点推断更早公开发行。[完整 API](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=1)、[下一页](https://api.github.com/repos/deepseek-ai/deepseek-harness/releases?per_page=100&page=2)
 
 研究为官方 release、历史 tag 对应源码及文档的静态分析，没有安装、运行、模型调用或安全实测。**官方说明**不等于复现，**源码核实**只确认实现与配置，企业影响均为**推断**；缺少证据的能力保留为**未知**。当前使用姿态仍以借鉴、验证、观察为主。[当前基线](OVERVIEW.md)、[关键发现](FINDINGS.md)、[检查规则](TRACKING.md)
 
@@ -53,6 +53,8 @@
 | [v0.2.1-rc.4](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-rc.4) | 2026-10-28 | `504a01a9578a` | [本周报告](releases/v0.2.2-alpha.2.md) | 相对rc.3：ACP诊断stdout修复 |
 | [v0.2.2-alpha.2](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.2-alpha.2) | 2026-10-28 | `f3803c96974a` | [本周报告](releases/v0.2.2-alpha.2.md) | 相对rc.4：网络、外部委派、插件与协议迁移 |
 | [v0.2.1-rc.5](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-rc.5) | 2026-10-30 | `b830ec950fab` | [本周报告](releases/v0.2.2-alpha.2.md) | 相对rc.4：思考展示，独立于alpha线 |
+| [v0.2.2-alpha.3](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.2-alpha.3) | 2026-11-03 | `05b1cae8db6e` | [专题](releases/v0.2.2-rc.1.md) | 相对alpha.2：观察策略默认关闭、宿主自动化、SDK原生命令及审批、Loader和投影迁移 |
+| [v0.2.2-rc.1](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.2-rc.1) | 2026-11-04 | `66491b05e3f05` | [专题](releases/v0.2.2-rc.1.md) | 相对alpha.3：387份package.json变化；正文为累计摘要 |
 
 
 候选版正文可能汇总多个 alpha 的变化。例如 v0.1.2-rc.1 和 v0.1.7-rc.1 含阶段汇总，不能据正文位置把已经存在的能力记为该 RC 首次引入。表中未见 v0.1.4，也不据此虚构缺失版本或解释未公开的发布决策。
@@ -133,6 +135,12 @@ Web 默认新增入口插件，但执行仍停在待用户发送的草稿；12�
 rc.4是alpha.2与rc.5的共同祖先。RC支线改善ACP诊断和思考展示，alpha线扩大HTTP网络访问、增加显式外部CLI路径，并重整执行器、投影与SSH协议；不能把两条线按发布时间串成逐级继承。
 
 默认HTTP仍是原提供者名，却不再限制公网；OAR与原生CLI的权限和进程所有权也独立于DSH。新增可选Forge／推荐和尽力插件回退，应与网络控制、安装代码及恢复责任一起评估。发布说明与实验分类冲突、npm证据缺口保持待核，不以“退出实验”提升成熟度。[HTTP Fetch 契约](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/web/web-fetch-http/README.zh.md)、[OAR 边界](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/experimental/subagent-oar/README.zh.md)、[插件生命周期](https://github.com/deepseek-ai/deepseek-harness/blob/f3803c96974ad4a94195fb97e5c637e9c2a3afe3/packages/boot/plugin-manager/README.md)、[本周报告](releases/v0.2.2-alpha.2.md)
+
+## 2026-11-09：管理范围扩大，默认防护需要显式选择
+
+alpha.3把自动化管理提升到Host范围，并扩展SDK原生命令、计划审阅和操作审批；业务责任仍由调用方承担。文件观察策略默认关闭是实际默认值变化，apply_patch则仍需显式开启。两者不能混称“文件写入全面放开”，因为沙箱与Review仍有各自作用。rc.1只改变发行manifest，Node门槛、退出权限保存修复、工具执行器和索引迁移已在alpha.2，不重复归为本周首次引入。[固定差异、冲突与限制](releases/v0.2.2-rc.1.md)。
+
+发行证据本周增至两个版本30个精确样本，hash与48份YAML均匹配；这不抹去旧版差异，也不证明构建可复现或生产安全。继续优先验证任务级权限、投递幂等、回调取消及文件部分提交后的验收。[样本台账](PLUGINS.md#发行包核验与版本纪律)。
 
 ## 迁移成本与持续观察
 

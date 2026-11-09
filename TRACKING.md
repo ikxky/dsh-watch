@@ -42,7 +42,7 @@
 
 ## 已登记发布
 
-2026-11-02 查询完整 Releases API：第1页35条，第2页为空；均为 `draft=false`、`prerelease=true`。当前可见最早为 v0.1.0-rc.7，按发布时间最新为v0.2.1-rc.5，另有并行v0.2.2-alpha.2。完整时间线、各版本覆盖程度和历史六维分析见 [EVOLUTION](EVOLUTION.md)，不把本列表称作稳定版列表。
+2026-11-09查询完整Releases API：第1页37条，第2页为空，全部draft=false、prerelease=true。最新0.2.2-rc.1，新增alpha.3与rc.1；旧35条ID、updated_at、正文SHA-256及peeled commit均无漂移。时间线见[EVOLUTION](EVOLUTION.md)，不把本列表称作稳定版列表。
 
 | 独立分析 | 选择原因与比较范围 |
 |---|---|
@@ -53,11 +53,13 @@
 | [v0.2.1-alpha.1](releases/v0.2.1-alpha.1.md) | alpha.2的直接前身、插件与诊断重组；对比 v0.2.0-rc.2 |
 | [v0.2.1-alpha.2](releases/v0.2.1-alpha.2.md) | 历史增量；对比 alpha.1 |
 
+2026-11-09新增[alpha.3／rc.1报告](releases/v0.2.2-rc.1.md)，区分alpha.2延续、alpha.3实际增量和rc.1发行manifest变化。
+
 2026-10-19新增 [v0.2.1-rc.2 合并报告](releases/v0.2.1-rc.2.md)，逐项区分 alpha.3、alpha.4、alpha.5、rc.1、rc.2 的相邻增量。
 
 其余发布已读取 release 并解析 tag。对格式、模型协议、沙箱修复和默认配置等关键转折补充定向源码核查，但不声称每个版本都做了完整全景评估。各专题正文绑定当时 commit；比较基准与补充范围明确区分。
 
-正文指纹算法：API 返回的 `body` 字符串保持原始 CR/LF，UTF-8 编码后计算 SHA-256；不要先做 Markdown 格式化。以下登记全部35条以支持未来发现旧正文修改，公开 release ID 只是上游条目标识。
+正文指纹算法：API 返回的 `body` 字符串保持原始 CR/LF，UTF-8 编码后计算 SHA-256；不要先做 Markdown 格式化。以下登记全部37条以支持未来发现旧正文修改，公开 release ID 只是上游条目标识。
 
 ### 全部发布的固定 commit、release ID、更新时间与正文指纹
 
@@ -98,8 +100,10 @@
 | dsh-v0.2.1-rc.4 | `504a01a9578abc2c6f1fb896b1dc322c9fe24f66` | 426210322 | 2026-10-28T03:08:57Z | `c5ac198d97cc39df488386c0eedfac252d59585ed487d080c6a0a921d267bff1` |
 | dsh-v0.2.2-alpha.2 | `f3803c96974ad4a94195fb97e5c637e9c2a3afe3` | 426210803 | 2026-10-28T07:00:42Z | `4615624f7592d82521e854ec7b02a809cded45c3689aedae81a02892db5272a8` |
 | dsh-v0.2.1-rc.5 | `b830ec950faba0a46dda564be3e2d854afed94f1` | 428584211 | 2026-10-30T02:12:26Z | `15c559979a442117ad0896b5fe7b939efb2b564a81f63792f37967956f5d70bb` |
+| dsh-v0.2.2-alpha.3 | `05b1cae8db6e674c5685101494d4eec24652424a` | 432408236 | 2026-11-03T08:27:26Z | `aaf94215cb70714dc49278dcb164c905c71fc64166cd2ce7dc6effe1d642783d` |
+| dsh-v0.2.2-rc.1 | `66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db` | 433935433 | 2026-11-04T13:07:14Z | `71662c56501342eae14a2dfb9879423cefce9339b41833b21ef2999272e6a3eb` |
 
-tag 核验应解析到 commit（例如 `tag^{commit}`），不能把 annotated tag 对象的 SHA 当作源码 commit。本轮alpha.2的peeled commit为 `f3803c96974ad4a94195fb97e5c637e9c2a3afe3`，RC支线rc.5为 `b830ec950faba0a46dda564be3e2d854afed94f1`；对象种类不同本身不是 tag 漂移证据。
+tag 核验应解析到 commit（例如 `tag^{commit}`），不能把 annotated tag 对象的 SHA 当作源码 commit。2026-11-02的alpha.2 peeled commit为 `f3803c96974ad4a94195fb97e5c637e9c2a3afe3`，RC支线rc.5为 `b830ec950faba0a46dda564be3e2d854afed94f1`；对象种类不同本身不是 tag 漂移证据。
 
 ## 插件与能力地图的维护范围
 
@@ -119,20 +123,21 @@ CAPABILITY-MAP 使用固定结构：评测维度总览 → 00–13逐维分析 �
 
 ## 最近检查
 
-- 日期：**2026-11-02 UTC**；有实质变化。文档／源码研究完成，**新发行物检查不完整**。
-- Releases：35条、第二页为空，全为预发布；新增rc.4、0.2.2-alpha.2、rc.5，旧32条commit、ID、updated_at和正文指纹无漂移。三条新增assets均为空。
-- 比较：rc.4相对rc.3；alpha.2与rc.5均相对rc.4，两线共同祖先为rc.4，不按时间串联。[本周报告](releases/v0.2.2-alpha.2.md)。
-- 源码覆盖：HTTP网络策略及默认组合、OAR限制、16项可选目录／2项按需目录、Forge／推荐／统计、插件更新、执行器、投影和SSH2→3；release分类与固定实验清单冲突显式保留。
-- 发行限制：本轮registry页面不可访问、npm页面403，未取得dist.integrity或tarball，未换通道绕过拒绝；仅有源码manifest版本声明，不声称包核验通过。历史样本继续保留，不能替代本版。
-- 安全：[公告页](https://github.com/deepseek-ai/deepseek-harness/security/advisories)未列已发布公告；alpha.2中英文SAFETY与rc.3无差异，仍实验未审计。无公告不证明无风险。
-- 结构与范围：保留00–13、36项CAP-ID、唯一主归属及MOVO内容；七份主文档和一份新报告，历史版本报告不改写。未安装运行、调用模型、执行上游测试、发布私有数据、写软件补丁或联系上游。
-- 后续：优先补精确发行物证据、网络限制与外部CLI权限／取消／恢复验证。没有新增或修改自动化；不能把本轮发行物缺口记为无变化或全量完成。
+- 日期：**2026-11-09 UTC**；有实质变化，已维护七份主文档及一份合并报告。
+- Releases：37条、第2页为空，全部预发布；新增alpha.3、rc.1，assets为空；旧35条ID、updated_at、原始body SHA-256与peeled commit均无漂移。全部tag逐条解析到commit，没有将tag对象误作源码提交。
+- 比较：alpha.2→alpha.3为462提交；发布时间相邻rc.5→alpha.3为ahead／2619、behind=0。alpha.3→rc.1为4提交；compare文件列表截断至300，另以固定源码归档逐文件比对，实际387个差异均为package.json。见[报告](releases/v0.2.2-rc.1.md)。
+- 默认与接口：核查base、Web各preset、sdk／sdk-minimal、观察策略、apply_patch、SDK命令和审批、Host schedule、Auto退出／路由、官方目录、索引、Loader及投影。Node≥24.9、权限保存修复、执行器和索引迁移已在alpha.2，不按rc.1累计说明重复计新。
+- 冲突：applyPatch迁移指南仍写true，schema／组合／归档为false；Ralph与会话搜索的实验分类仍与release冲突。保留证据，不推断运行效果。
+- 发行物：本次官方registry可读，alpha.3／rc.1各15包，30个SHA-512均匹配dist.integrity；48份YAML字节一致（18份配置与30份i18n）。精确tarball与SHA-256集中[PLUGINS](PLUGINS.md#发行包核验与版本纪律)。未覆盖完整依赖闭包、Desktop、Python wheel或构建可复现性；没有绕过来源拒绝。
+- 安全：[公告页](https://github.com/deepseek-ai/deepseek-harness/security/advisories)未列已发布公告；alpha.2／alpha.3／rc.1中英文SAFETY字节一致，仍未审计。无公告不证明无风险。
+- 结构与范围：保留00–13、36项CAP-ID与唯一主归属，无数字总分／折叠；MOVO与历史报告不改写。仅公开静态研究，未安装运行dsh、调用模型、执行上游测试、写软件补丁或联系上游。
+- 后续：补任务级权限、自动化重复投递、SDK回调取消、文件部分提交对账及完整发行证据。运行验证仍需另行授权。本次未新建或修改自动化。
 
 ## 每周机制
 
 目标时间为**每周一北京时间上午 9 点附近（Asia/Shanghai，UTC 01:00）**。由平台 automations 调度，不通过 GitHub Actions；本仓库的 `on: release` 只能响应本仓事件，不能作为监听上游发布的实现。
 
-**状态：每周跟踪已创建并启用。** 采用灵活时间窗口，目标为每周一北京时间上午 9 点附近；首个计划日为 **2026-10-19**。本次2026-11-02研究与发行物缺口已在上方登记；本轮没有创建或修改定时任务，也未重新查询调度状态。
+**状态：每周跟踪已创建并启用。** 采用灵活时间窗口，目标为每周一北京时间上午 9 点附近；首个计划日为 **2026-10-19**。本次2026-11-09研究与发行覆盖边界已在上方登记；本轮没有创建或修改定时任务，也未重新查询调度状态。
 
 每次执行：
 
@@ -147,6 +152,6 @@ CAPABILITY-MAP 使用固定结构：评测维度总览 → 00–13逐维分析 �
 
 ## 下一步
 
-1. 2026-11-02静态研究已登记，发行物仍待补；下一轮继续包含预发布、正文漂移与插件配置，无实质变化只登记状态并保持通知静默。
+1. 2026-11-09静态研究及30个发行样本已登记，完整发行证据仍待补；下一轮继续包含预发布、正文漂移与插件配置，无实质变化只登记状态并保持通知静默。
 2. 下一批优先补插件发行一致性、文件交付分层、任务恢复／完成及入口权限差异；具体问题按 CAPABILITY-MAP 的 ID 跟踪，并关联 F-01～F-06。当前仅进行公开资料与源码研究。
 3. 如另行开展运行验证，在隔离环境使用非敏感样本，单独记录平台、精确版本、配置、输入和失败证据；不把源码测试的存在写成本项目测试通过。
