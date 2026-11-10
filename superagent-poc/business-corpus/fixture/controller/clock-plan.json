@@ -1,0 +1,379 @@
+[
+  {
+    "at": "2026-11-16T09:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-16T09:02:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d001"
+  },
+  {
+    "at": "2026-11-16T09:02:07+08:00",
+    "kind": "deliver",
+    "delivery_id": "d002"
+  },
+  {
+    "at": "2026-11-16T09:02:09+08:00",
+    "kind": "deliver",
+    "delivery_id": "d003"
+  },
+  {
+    "at": "2026-11-16T09:02:11+08:00",
+    "kind": "deliver",
+    "delivery_id": "d004"
+  },
+  {
+    "at": "2026-11-16T09:02:28+08:00",
+    "kind": "deliver",
+    "delivery_id": "d005"
+  },
+  {
+    "at": "2026-11-16T09:02:31+08:00",
+    "kind": "deliver",
+    "delivery_id": "d006"
+  },
+  {
+    "at": "2026-11-16T09:03:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-16T09:04:50+08:00",
+    "kind": "deliver",
+    "delivery_id": "d007"
+  },
+  {
+    "at": "2026-11-16T09:04:53+08:00",
+    "kind": "deliver",
+    "delivery_id": "d008"
+  },
+  {
+    "at": "2026-11-16T09:05:10+08:00",
+    "kind": "deliver",
+    "delivery_id": "d009"
+  },
+  {
+    "at": "2026-11-16T09:05:22+08:00",
+    "kind": "deliver",
+    "delivery_id": "d010"
+  },
+  {
+    "at": "2026-11-16T15:47:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d011"
+  },
+  {
+    "at": "2026-11-16T15:47:04+08:00",
+    "kind": "deliver",
+    "delivery_id": "d012"
+  },
+  {
+    "at": "2026-11-16T15:47:09+08:00",
+    "kind": "deliver",
+    "delivery_id": "d013"
+  },
+  {
+    "at": "2026-11-16T16:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-17T09:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-17T10:36:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d014"
+  },
+  {
+    "at": "2026-11-17T10:36:03+08:00",
+    "kind": "deliver",
+    "delivery_id": "d015"
+  },
+  {
+    "at": "2026-11-17T10:36:05+08:00",
+    "kind": "deliver",
+    "delivery_id": "d016"
+  },
+  {
+    "at": "2026-11-17T10:36:08+08:00",
+    "kind": "deliver",
+    "delivery_id": "d017"
+  },
+  {
+    "at": "2026-11-17T14:32:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d018"
+  },
+  {
+    "at": "2026-11-17T14:32:02+08:00",
+    "kind": "deliver",
+    "delivery_id": "d019"
+  },
+  {
+    "at": "2026-11-17T14:32:05+08:00",
+    "kind": "deliver",
+    "delivery_id": "d020"
+  },
+  {
+    "at": "2026-11-17T16:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-18T08:51:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d021"
+  },
+  {
+    "at": "2026-11-18T08:51:02+08:00",
+    "kind": "deliver",
+    "delivery_id": "d022"
+  },
+  {
+    "at": "2026-11-18T08:51:05+08:00",
+    "kind": "deliver",
+    "delivery_id": "d023"
+  },
+  {
+    "at": "2026-11-18T08:51:05+08:00",
+    "kind": "fault_plan_entry",
+    "index": 0
+  },
+  {
+    "at": "2026-11-18T08:52:10+08:00",
+    "kind": "deliver",
+    "delivery_id": "d024"
+  },
+  {
+    "at": "2026-11-18T08:53:00+08:00",
+    "kind": "asset_available",
+    "asset": "demo-change.wav"
+  },
+  {
+    "at": "2026-11-18T08:54:00+08:00",
+    "kind": "fault_plan_release",
+    "index": 0
+  },
+  {
+    "at": "2026-11-18T08:54:00+08:00",
+    "kind": "reference_available",
+    "asset": "demo-change.wav"
+  },
+  {
+    "at": "2026-11-18T09:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-18T15:11:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d025"
+  },
+  {
+    "at": "2026-11-18T15:11:00+08:00",
+    "kind": "fault_plan_entry",
+    "index": 1
+  },
+  {
+    "at": "2026-11-18T15:11:04+08:00",
+    "kind": "deliver",
+    "delivery_id": "d026"
+  },
+  {
+    "at": "2026-11-18T15:11:09+08:00",
+    "kind": "deliver",
+    "delivery_id": "d027"
+  },
+  {
+    "at": "2026-11-18T16:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-19T09:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-19T11:58:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d028"
+  },
+  {
+    "at": "2026-11-19T11:58:03+08:00",
+    "kind": "deliver",
+    "delivery_id": "d029"
+  },
+  {
+    "at": "2026-11-19T11:58:06+08:00",
+    "kind": "deliver",
+    "delivery_id": "d030"
+  },
+  {
+    "at": "2026-11-19T16:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-19T17:40:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d031"
+  },
+  {
+    "at": "2026-11-19T17:40:07+08:00",
+    "kind": "deliver",
+    "delivery_id": "d032"
+  },
+  {
+    "at": "2026-11-20T09:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-20T11:49:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d033"
+  },
+  {
+    "at": "2026-11-20T11:49:03+08:00",
+    "kind": "deliver",
+    "delivery_id": "d034"
+  },
+  {
+    "at": "2026-11-20T11:49:06+08:00",
+    "kind": "deliver",
+    "delivery_id": "d035"
+  },
+  {
+    "at": "2026-11-20T16:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-20T16:02:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d036"
+  },
+  {
+    "at": "2026-11-23T09:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-23T09:13:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d037"
+  },
+  {
+    "at": "2026-11-23T09:13:06+08:00",
+    "kind": "deliver",
+    "delivery_id": "d038"
+  },
+  {
+    "at": "2026-11-23T09:13:09+08:00",
+    "kind": "deliver",
+    "delivery_id": "d039"
+  },
+  {
+    "at": "2026-11-23T09:13:12+08:00",
+    "kind": "deliver",
+    "delivery_id": "d040"
+  },
+  {
+    "at": "2026-11-23T15:53:58+08:00",
+    "kind": "fault_plan_entry",
+    "index": 2
+  },
+  {
+    "at": "2026-11-23T15:54:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d041"
+  },
+  {
+    "at": "2026-11-23T15:54:05+08:00",
+    "kind": "deliver",
+    "delivery_id": "d042"
+  },
+  {
+    "at": "2026-11-23T15:54:08+08:00",
+    "kind": "fault_plan_release",
+    "index": 2
+  },
+  {
+    "at": "2026-11-23T16:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-24T08:59:00+08:00",
+    "kind": "fault_plan_entry",
+    "index": 3
+  },
+  {
+    "at": "2026-11-24T09:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-24T09:03:00+08:00",
+    "kind": "fault_plan_release",
+    "index": 3
+  },
+  {
+    "at": "2026-11-24T10:46:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d043"
+  },
+  {
+    "at": "2026-11-24T10:46:04+08:00",
+    "kind": "deliver",
+    "delivery_id": "d044"
+  },
+  {
+    "at": "2026-11-24T10:46:08+08:00",
+    "kind": "deliver",
+    "delivery_id": "d045"
+  },
+  {
+    "at": "2026-11-24T16:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-25T09:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-25T16:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-26T09:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-26T16:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-27T09:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-27T15:32:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d046"
+  },
+  {
+    "at": "2026-11-27T15:32:07+08:00",
+    "kind": "deliver",
+    "delivery_id": "d047"
+  },
+  {
+    "at": "2026-11-27T16:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-30T09:00:00+08:00",
+    "kind": "clock_tick"
+  },
+  {
+    "at": "2026-11-30T09:07:00+08:00",
+    "kind": "deliver",
+    "delivery_id": "d048"
+  },
+  {
+    "at": "2026-11-30T16:00:00+08:00",
+    "kind": "clock_tick"
+  }
+]

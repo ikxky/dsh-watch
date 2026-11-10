@@ -1,0 +1,472 @@
+[
+  {
+    "source_id": "deepseek-plugin",
+    "available_at": "2026-11-16T08:00:00+08:00",
+    "revision": "p0",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "p000",
+        "canonical_id": "p000",
+        "revision": 1,
+        "title": "示例plugin基线",
+        "body": "纯合成版本 fixture-plugin-0.7，无真实产品含义。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/p000"
+      }
+    ]
+  },
+  {
+    "source_id": "delivery",
+    "available_at": "2026-11-16T08:00:00+08:00",
+    "revision": "d0",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "delivery-0",
+        "canonical_id": "delivery-0",
+        "revision": 1,
+        "title": "交付状态",
+        "body": "未见正式验收记录。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/delivery-0"
+      }
+    ]
+  },
+  {
+    "source_id": "llm-news",
+    "available_at": "2026-11-16T08:00:00+08:00",
+    "revision": "n0",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "n000",
+        "canonical_id": "n000",
+        "revision": 1,
+        "title": "大模型资料基线",
+        "body": "合成基线，资料源尚无新条目。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n000"
+      }
+    ]
+  },
+  {
+    "source_id": "llm-news",
+    "available_at": "2026-11-16T14:10:00+08:00",
+    "revision": "n1",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "n000",
+        "canonical_id": "n000",
+        "revision": 1,
+        "title": "大模型资料基线",
+        "body": "合成基线，资料源尚无新条目。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n000"
+      },
+      {
+        "item_id": "n101",
+        "canonical_id": "n101",
+        "revision": 1,
+        "title": "多模态输入限制的复现实验",
+        "body": "合成报告：示例工具仅接收静态图，视频需自行抽帧；列出脚本与样本数12，不可泛化为所有模型。",
+        "published_at": "2026-11-16T14:10:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n101"
+      }
+    ]
+  },
+  {
+    "source_id": "llm-news",
+    "available_at": "2026-11-17T13:10:00+08:00",
+    "revision": "n2",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "n000",
+        "canonical_id": "n000",
+        "revision": 1,
+        "title": "大模型资料基线",
+        "body": "合成基线，资料源尚无新条目。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n000"
+      },
+      {
+        "item_id": "n101",
+        "canonical_id": "n101",
+        "revision": 1,
+        "title": "多模态输入限制的复现实验",
+        "body": "合成报告：示例工具仅接收静态图，视频需自行抽帧；列出脚本与样本数12，不可泛化为所有模型。",
+        "published_at": "2026-11-16T14:10:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n101"
+      },
+      {
+        "item_id": "n101-copy",
+        "canonical_id": "n101",
+        "revision": 1,
+        "title": "转载：多模态输入限制",
+        "body": "转载 n101，正文事实无新增。",
+        "published_at": "2026-11-17T13:10:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n101-copy"
+      },
+      {
+        "item_id": "n102",
+        "canonical_id": "n102",
+        "revision": 1,
+        "title": "某团队完成新融资",
+        "body": "合成融资新闻，未提供工具接口、模态限制或成本证据。",
+        "published_at": "2026-11-17T13:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n102"
+      }
+    ]
+  },
+  {
+    "source_id": "deepseek-plugin",
+    "available_at": "2026-11-18T15:55:00+08:00",
+    "revision": "p-error",
+    "status": "error",
+    "error": {
+      "code": 503,
+      "message": "fixture unavailable; content freshness unknown"
+    },
+    "items": []
+  },
+  {
+    "source_id": "deepseek-plugin",
+    "available_at": "2026-11-19T08:50:00+08:00",
+    "revision": "p0",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "p000",
+        "canonical_id": "p000",
+        "revision": 1,
+        "title": "示例plugin基线",
+        "body": "纯合成版本 fixture-plugin-0.7，无真实产品含义。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/p000"
+      }
+    ]
+  },
+  {
+    "source_id": "llm-news",
+    "available_at": "2026-11-20T15:20:00+08:00",
+    "revision": "n3",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "n000",
+        "canonical_id": "n000",
+        "revision": 1,
+        "title": "大模型资料基线",
+        "body": "合成基线，资料源尚无新条目。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n000"
+      },
+      {
+        "item_id": "n101",
+        "canonical_id": "n101",
+        "revision": 1,
+        "title": "多模态输入限制的复现实验",
+        "body": "合成报告：示例工具仅接收静态图，视频需自行抽帧；列出脚本与样本数12，不可泛化为所有模型。",
+        "published_at": "2026-11-16T14:10:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n101"
+      },
+      {
+        "item_id": "n101-copy",
+        "canonical_id": "n101",
+        "revision": 1,
+        "title": "转载：多模态输入限制",
+        "body": "转载 n101，正文事实无新增。",
+        "published_at": "2026-11-17T13:10:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n101-copy"
+      },
+      {
+        "item_id": "n102",
+        "canonical_id": "n102",
+        "revision": 1,
+        "title": "某团队完成新融资",
+        "body": "合成融资新闻，未提供工具接口、模态限制或成本证据。",
+        "published_at": "2026-11-17T13:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n102"
+      },
+      {
+        "item_id": "n103",
+        "canonical_id": "n103",
+        "revision": 1,
+        "title": "输入缓存成本对照",
+        "body": "合成实验：相同100次请求，账单记录 12 元与 8 元；范围仅该设置，不是产品定价承诺。",
+        "published_at": "2026-11-20T15:20:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n103"
+      }
+    ]
+  },
+  {
+    "source_id": "deepseek-plugin",
+    "available_at": "2026-11-23T08:30:00+08:00",
+    "revision": "p1",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "p000",
+        "canonical_id": "p000",
+        "revision": 1,
+        "title": "示例plugin基线",
+        "body": "纯合成版本 fixture-plugin-0.7，无真实产品含义。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/p000"
+      },
+      {
+        "item_id": "p201",
+        "canonical_id": "p201",
+        "revision": 1,
+        "title": "示例plugin接口变更",
+        "body": "纯合成 fixture-plugin-0.8 将 tool_result 更名 tool_output，旧字段不兼容；迁移说明可核对。",
+        "published_at": "2026-11-23T08:30:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/p201"
+      }
+    ]
+  },
+  {
+    "source_id": "llm-news",
+    "available_at": "2026-11-24T08:40:00+08:00",
+    "revision": "n4",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "n000",
+        "canonical_id": "n000",
+        "revision": 1,
+        "title": "大模型资料基线",
+        "body": "合成基线，资料源尚无新条目。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n000"
+      },
+      {
+        "item_id": "n101",
+        "canonical_id": "n101",
+        "revision": 1,
+        "title": "多模态输入限制的复现实验",
+        "body": "合成报告：示例工具仅接收静态图，视频需自行抽帧；列出脚本与样本数12，不可泛化为所有模型。",
+        "published_at": "2026-11-16T14:10:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n101"
+      },
+      {
+        "item_id": "n101-copy",
+        "canonical_id": "n101",
+        "revision": 1,
+        "title": "转载：多模态输入限制",
+        "body": "转载 n101，正文事实无新增。",
+        "published_at": "2026-11-17T13:10:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n101-copy"
+      },
+      {
+        "item_id": "n102",
+        "canonical_id": "n102",
+        "revision": 1,
+        "title": "某团队完成新融资",
+        "body": "合成融资新闻，未提供工具接口、模态限制或成本证据。",
+        "published_at": "2026-11-17T13:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n102"
+      },
+      {
+        "item_id": "n103",
+        "canonical_id": "n103",
+        "revision": 2,
+        "title": "输入缓存成本对照：更正",
+        "body": "合成更正：原8元漏计重试费，修正为11元；12元基线不变。旧节省结论应更正。",
+        "published_at": "2026-11-24T08:40:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n103"
+      }
+    ]
+  },
+  {
+    "source_id": "deepseek-plugin",
+    "available_at": "2026-11-24T15:00:00+08:00",
+    "revision": "p2",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "p000",
+        "canonical_id": "p000",
+        "revision": 1,
+        "title": "示例plugin基线",
+        "body": "纯合成版本 fixture-plugin-0.7，无真实产品含义。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/p000"
+      },
+      {
+        "item_id": "p201",
+        "canonical_id": "p201",
+        "revision": 1,
+        "title": "示例plugin接口变更",
+        "body": "纯合成 fixture-plugin-0.8 将 tool_result 更名 tool_output，旧字段不兼容；迁移说明可核对。",
+        "published_at": "2026-11-23T08:30:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/p201"
+      },
+      {
+        "item_id": "p202",
+        "canonical_id": "p202",
+        "revision": 1,
+        "title": "示例plugin修复",
+        "body": "纯合成 fixture-plugin-0.8.1 修复重试重复回调。",
+        "published_at": "2026-11-24T15:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/p202"
+      }
+    ]
+  },
+  {
+    "source_id": "llm-news",
+    "available_at": "2026-11-25T08:58:00+08:00",
+    "revision": "n-error",
+    "status": "error",
+    "error": {
+      "code": 503,
+      "message": "fixture unavailable; content freshness unknown"
+    },
+    "items": []
+  },
+  {
+    "source_id": "llm-news",
+    "available_at": "2026-11-27T15:50:00+08:00",
+    "revision": "n5",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "n000",
+        "canonical_id": "n000",
+        "revision": 1,
+        "title": "大模型资料基线",
+        "body": "合成基线，资料源尚无新条目。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n000"
+      },
+      {
+        "item_id": "n101",
+        "canonical_id": "n101",
+        "revision": 1,
+        "title": "多模态输入限制的复现实验",
+        "body": "合成报告：示例工具仅接收静态图，视频需自行抽帧；列出脚本与样本数12，不可泛化为所有模型。",
+        "published_at": "2026-11-16T14:10:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n101"
+      },
+      {
+        "item_id": "n101-copy",
+        "canonical_id": "n101",
+        "revision": 1,
+        "title": "转载：多模态输入限制",
+        "body": "转载 n101，正文事实无新增。",
+        "published_at": "2026-11-17T13:10:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n101-copy"
+      },
+      {
+        "item_id": "n102",
+        "canonical_id": "n102",
+        "revision": 1,
+        "title": "某团队完成新融资",
+        "body": "合成融资新闻，未提供工具接口、模态限制或成本证据。",
+        "published_at": "2026-11-17T13:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/n102"
+      },
+      {
+        "item_id": "n103",
+        "canonical_id": "n103",
+        "revision": 3,
+        "title": "输入缓存成本对照：撤回",
+        "body": "合成撤回：样本被混入不同配置，整个成本对照无效，不再支持节省结论。保留本撤回声明用于追溯。",
+        "published_at": "2026-11-27T15:45:00+08:00",
+        "status": "withdrawn",
+        "url": "https://research.example.invalid/n103"
+      }
+    ]
+  },
+  {
+    "source_id": "deepseek-plugin",
+    "available_at": "2026-11-30T08:40:00+08:00",
+    "revision": "p3",
+    "status": "ok",
+    "error": null,
+    "items": [
+      {
+        "item_id": "p000",
+        "canonical_id": "p000",
+        "revision": 1,
+        "title": "示例plugin基线",
+        "body": "纯合成版本 fixture-plugin-0.7，无真实产品含义。",
+        "published_at": "2026-11-16T08:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/p000"
+      },
+      {
+        "item_id": "p201",
+        "canonical_id": "p201",
+        "revision": 1,
+        "title": "示例plugin接口变更",
+        "body": "纯合成 fixture-plugin-0.8 将 tool_result 更名 tool_output，旧字段不兼容；迁移说明可核对。",
+        "published_at": "2026-11-23T08:30:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/p201"
+      },
+      {
+        "item_id": "p202",
+        "canonical_id": "p202",
+        "revision": 1,
+        "title": "示例plugin修复",
+        "body": "纯合成 fixture-plugin-0.8.1 修复重试重复回调。",
+        "published_at": "2026-11-24T15:00:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/p202"
+      },
+      {
+        "item_id": "p203",
+        "canonical_id": "p203",
+        "revision": 1,
+        "title": "示例plugin后续兼容性变化",
+        "body": "纯合成 fixture-plugin-0.9 要求显式 input_schema；需契约回归，不自动安装。",
+        "published_at": "2026-11-30T08:40:00+08:00",
+        "status": "active",
+        "url": "https://research.example.invalid/p203"
+      }
+    ]
+  }
+]

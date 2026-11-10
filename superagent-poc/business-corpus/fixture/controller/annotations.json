@@ -1,0 +1,390 @@
+[
+  {
+    "delivery_id": "d001",
+    "batch": "b01",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d002",
+    "batch": "b01",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d003",
+    "batch": "b01",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d004",
+    "batch": "b01",
+    "cases": [
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d005",
+    "batch": "b01",
+    "cases": [
+      "research"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d006",
+    "batch": "b01",
+    "cases": [
+      "noise"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d007",
+    "batch": "b02",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d008",
+    "batch": "b02",
+    "cases": [
+      "research"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d009",
+    "batch": "b02",
+    "cases": [
+      "ambiguous"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d010",
+    "batch": "b02",
+    "cases": [
+      "procurement",
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d011",
+    "batch": "b03",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d012",
+    "batch": "b03",
+    "cases": [
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d013",
+    "batch": "b03",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d014",
+    "batch": "b04",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d015",
+    "batch": "b04",
+    "cases": [
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d016",
+    "batch": "b04",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": "m014"
+  },
+  {
+    "delivery_id": "d017",
+    "batch": "b04",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d018",
+    "batch": "b05",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d019",
+    "batch": "b05",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d020",
+    "batch": "b05",
+    "cases": [
+      "research"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d021",
+    "batch": "b06",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d022",
+    "batch": "b06",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d023",
+    "batch": "b06",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d024",
+    "batch": "b06",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d025",
+    "batch": "b07",
+    "cases": [
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d026",
+    "batch": "b07",
+    "cases": [
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d027",
+    "batch": "b07",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d028",
+    "batch": "b08",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d029",
+    "batch": "b08",
+    "cases": [
+      "research"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d030",
+    "batch": "b08",
+    "cases": [
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d031",
+    "batch": "b09",
+    "cases": [
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d032",
+    "batch": "b09",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d033",
+    "batch": "b10",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d034",
+    "batch": "b10",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d035",
+    "batch": "b10",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d036",
+    "batch": "b11",
+    "cases": [
+      "research"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d037",
+    "batch": "b12",
+    "cases": [
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d038",
+    "batch": "b12",
+    "cases": [
+      "research"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d039",
+    "batch": "b12",
+    "cases": [
+      "project",
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d040",
+    "batch": "b12",
+    "cases": [
+      "procurement"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d041",
+    "batch": "b13",
+    "cases": [
+      "research"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d042",
+    "batch": "b13",
+    "cases": [
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d043",
+    "batch": "b14",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d044",
+    "batch": "b14",
+    "cases": [
+      "project"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d045",
+    "batch": "b14",
+    "cases": [
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d046",
+    "batch": "b15",
+    "cases": [
+      "research"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d047",
+    "batch": "b15",
+    "cases": [
+      "research"
+    ],
+    "duplicate_of_source_message_id": null
+  },
+  {
+    "delivery_id": "d048",
+    "batch": "b16",
+    "cases": [
+      "procurement",
+      "project",
+      "activity"
+    ],
+    "duplicate_of_source_message_id": null
+  }
+]

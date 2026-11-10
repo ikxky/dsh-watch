@@ -1,0 +1,200 @@
+{
+  "version": "business-mix-v1",
+  "synthetic": true,
+  "timezone": "Asia/Shanghai",
+  "epoch": "2026-11-16T08:00:00+08:00",
+  "end": "2026-11-30T16:01:00+08:00",
+  "delivery_count": 48,
+  "unique_source_messages": 47,
+  "batch_count": 16,
+  "assets": [
+    {
+      "path": "assets/activity-brief.md",
+      "sha256": "e8b1feedbc2cb9c6881c10bdb81c7ea2ad9e15a1e728a4639170f190a2a405b3",
+      "size": 589
+    },
+    {
+      "path": "assets/agenda-damaged.pdf",
+      "sha256": "1aac3bd1928c1e048760f409e623870c300424b081d36d43e670fac3f15abcf6",
+      "size": 29
+    },
+    {
+      "path": "assets/badge-stock.mp4",
+      "sha256": "3332828cd3d0f557fb8b98e76263a793b31ddc3ea5c0130fc253b3b2b1babfe2",
+      "size": 11018
+    },
+    {
+      "path": "assets/corrected-test-report.md",
+      "sha256": "6c143528e0b99d70397a335a3687f76524620dffe2ccec37fba69bb5a1b19825",
+      "size": 328
+    },
+    {
+      "path": "assets/delivery-checklist.csv",
+      "sha256": "5c0efc0e735f8c1516f9ce8edb9f2c9b04488e57986fb19bd8483081d5e1b493",
+      "size": 170
+    },
+    {
+      "path": "assets/demo-change.wav",
+      "sha256": "6500bb5d0a2b9cd41392655f73a69ec7a695d6fd77a5464def06e4246a084092",
+      "size": 216558
+    },
+    {
+      "path": "assets/minutes.md",
+      "sha256": "7b038209d783948492179a613d3c6409a783cec0b5a4a469c7f7b92a00e6361d",
+      "size": 449
+    },
+    {
+      "path": "assets/plugin-migration.md",
+      "sha256": "06f2242a15ce868d64da105db7e20e3e56e4c2ca0bf7a9016fc8610406eae854",
+      "size": 463
+    },
+    {
+      "path": "assets/project-brief.md",
+      "sha256": "1ccd73991d8bfcfb064bf3d5c5cc0852fd10adda0e54c4f4c370ff2e733c6bb6",
+      "size": 566
+    },
+    {
+      "path": "assets/purchase-change.pdf",
+      "sha256": "79ca8b7bc822c165792fec82302173168eb4cfb57ef2665c86e79e9aa4a4fbce",
+      "size": 2669
+    },
+    {
+      "path": "assets/purchase-request.md",
+      "sha256": "018bc021386d310f7ee718ef248bae627ca124a54d461afc1d48931651c40237",
+      "size": 485
+    },
+    {
+      "path": "assets/quote-a.png",
+      "sha256": "ec47615c604895d7d66a780cbc7cb30458d94cb8b0106e50a8cb392e0924b9e0",
+      "size": 39792
+    },
+    {
+      "path": "assets/quote-b.csv",
+      "sha256": "33b6df5668c4da4632c5d15846d899446dc5e174a0ed948bd8fda290fa1efe93",
+      "size": 134
+    },
+    {
+      "path": "assets/quote-c.md",
+      "sha256": "6860e568a868f193eaf4acef69f1185701cd07c2de50666dd13a14e93dff2d73",
+      "size": 319
+    },
+    {
+      "path": "assets/venue-reply.md",
+      "sha256": "5e52c05089c59bb3475e959cb7f90b7b258206ce9d679f17557409b43c8cfbde",
+      "size": 286
+    }
+  ],
+  "files": [
+    {
+      "path": "assets/activity-brief.md",
+      "sha256": "e8b1feedbc2cb9c6881c10bdb81c7ea2ad9e15a1e728a4639170f190a2a405b3",
+      "size": 589
+    },
+    {
+      "path": "assets/agenda-damaged.pdf",
+      "sha256": "1aac3bd1928c1e048760f409e623870c300424b081d36d43e670fac3f15abcf6",
+      "size": 29
+    },
+    {
+      "path": "assets/badge-stock.mp4",
+      "sha256": "3332828cd3d0f557fb8b98e76263a793b31ddc3ea5c0130fc253b3b2b1babfe2",
+      "size": 11018
+    },
+    {
+      "path": "assets/corrected-test-report.md",
+      "sha256": "6c143528e0b99d70397a335a3687f76524620dffe2ccec37fba69bb5a1b19825",
+      "size": 328
+    },
+    {
+      "path": "assets/delivery-checklist.csv",
+      "sha256": "5c0efc0e735f8c1516f9ce8edb9f2c9b04488e57986fb19bd8483081d5e1b493",
+      "size": 170
+    },
+    {
+      "path": "assets/demo-change.wav",
+      "sha256": "6500bb5d0a2b9cd41392655f73a69ec7a695d6fd77a5464def06e4246a084092",
+      "size": 216558
+    },
+    {
+      "path": "assets/minutes.md",
+      "sha256": "7b038209d783948492179a613d3c6409a783cec0b5a4a469c7f7b92a00e6361d",
+      "size": 449
+    },
+    {
+      "path": "assets/plugin-migration.md",
+      "sha256": "06f2242a15ce868d64da105db7e20e3e56e4c2ca0bf7a9016fc8610406eae854",
+      "size": 463
+    },
+    {
+      "path": "assets/project-brief.md",
+      "sha256": "1ccd73991d8bfcfb064bf3d5c5cc0852fd10adda0e54c4f4c370ff2e733c6bb6",
+      "size": 566
+    },
+    {
+      "path": "assets/purchase-change.pdf",
+      "sha256": "79ca8b7bc822c165792fec82302173168eb4cfb57ef2665c86e79e9aa4a4fbce",
+      "size": 2669
+    },
+    {
+      "path": "assets/purchase-request.md",
+      "sha256": "018bc021386d310f7ee718ef248bae627ca124a54d461afc1d48931651c40237",
+      "size": 485
+    },
+    {
+      "path": "assets/quote-a.png",
+      "sha256": "ec47615c604895d7d66a780cbc7cb30458d94cb8b0106e50a8cb392e0924b9e0",
+      "size": 39792
+    },
+    {
+      "path": "assets/quote-b.csv",
+      "sha256": "33b6df5668c4da4632c5d15846d899446dc5e174a0ed948bd8fda290fa1efe93",
+      "size": 134
+    },
+    {
+      "path": "assets/quote-c.md",
+      "sha256": "6860e568a868f193eaf4acef69f1185701cd07c2de50666dd13a14e93dff2d73",
+      "size": 319
+    },
+    {
+      "path": "assets/venue-reply.md",
+      "sha256": "5e52c05089c59bb3475e959cb7f90b7b258206ce9d679f17557409b43c8cfbde",
+      "size": 286
+    },
+    {
+      "path": "controller/annotations.json",
+      "sha256": "a1dab3285552998d851d6a0c06159dcb04050dad09efb611407022305f48565e",
+      "size": 6726
+    },
+    {
+      "path": "controller/clock-plan.json",
+      "sha256": "528df9c288c913115c5499ad76a158121ad2160e4e2b87d6da75719b29c165dd",
+      "size": 7233
+    },
+    {
+      "path": "controller/events.json",
+      "sha256": "c78e6a4e7edbe612210344845c1844ddbfcb0f4f6b290a4db0abfaf815bb7ddb",
+      "size": 34644
+    },
+    {
+      "path": "controller/fault-plan.json",
+      "sha256": "9169fd114f86c535954740d7fc36dbaf0f3293571c557df3643f3145bb56a2fe",
+      "size": 1011
+    },
+    {
+      "path": "controller/identity-map.json",
+      "sha256": "f86faa93c3b3d033b4816ecf3af30428e0af4b222ea0c86cd78277dfa805c338",
+      "size": 133
+    },
+    {
+      "path": "controller/parsed-reference.json",
+      "sha256": "608366a9402e72e76a0a4b283b79794770cd5a18d2df7616906719cd4297a2e1",
+      "size": 6467
+    },
+    {
+      "path": "controller/source-timeline.json",
+      "sha256": "8f743cad286f32cd86b2dd914d1ed40957f06923bb28f072b16547164a2d2ce7",
+      "size": 15468
+    }
+  ],
+  "status": "material_prepared_not_agent_run"
+}

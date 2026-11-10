@@ -1,0 +1,28 @@
+[
+  {
+    "at": "2026-11-18T08:51:05+08:00",
+    "kind": "media_barrier",
+    "target": "demo-change.wav",
+    "release_at": "2026-11-18T08:54:00+08:00",
+    "note": "拟建harness延迟解析回调；本工具不实施解析或伪造回调。"
+  },
+  {
+    "at": "2026-11-18T15:11:00+08:00",
+    "kind": "worker_barrier",
+    "duration_real_seconds": 30,
+    "note": "拟建harness阻塞活动Worker；15:11:04/09消息按原间距继续到达。"
+  },
+  {
+    "at": "2026-11-23T15:53:58+08:00",
+    "kind": "notification_barrier",
+    "target": "deepseek-plugin",
+    "release_at": "2026-11-23T15:54:08+08:00",
+    "note": "只在另行执行竞态分支时保持待发候选；15:54撤回后应抑制，不能制造真实发送。"
+  },
+  {
+    "at": "2026-11-24T08:59:00+08:00",
+    "kind": "runtime_stop",
+    "restart_at": "2026-11-24T09:03:00+08:00",
+    "note": "实际进程操作待接入；恢复仅补一次09:00 due检查，不重发旧通知；健康事件不得成为业务用户指令。"
+  }
+]

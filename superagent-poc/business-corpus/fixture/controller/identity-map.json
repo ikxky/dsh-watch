@@ -1,0 +1,5 @@
+{
+  "office-a/owner": "synthetic-owner",
+  "office-b/owner": "synthetic-owner",
+  "other_actors": "context_only_no_user_authority"
+}

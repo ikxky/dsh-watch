@@ -13,6 +13,8 @@ dsh 提供工作区、会话和工具执行，也能供其他应用调用。当�
 
 新增专项：[Superagent 持续 Router 与业务 PoC](superagent-poc/README.md)（2026-11-10）：两条独立输入/评测工作线、架构与时序图、实施准备和可复用合成多模态语料。尚未运行原型或连接真实渠道，不改变本仓库现有跟踪范围。
 
+专项新增[四业务交错语料](superagent-poc/business-corpus/README.md)：采购、项目例会与交付、部门活动、长期技术资料关注；跨14天非等间隔输入、受控资料源与独立评分预期。仅完成离线材料/准备工具校验，不代表业务watch或原型已运行。
+
 相关平台分析：[MOVO 竞品分析](MOVO-ANALYSIS.md)（2026-10-23）：围绕 DSH 企业封装、网关、插件、权限、隔离与任务恢复，提供固定源码证据、四张架构／时序图及 PoC 验收矩阵；仅静态评估。
 
 能力是否支持、证据强弱与产品成熟度分别表达；未查明的部分保留待评，不计零分，不设数字总分。所有内容直接显示，来源可通过章节与能力锚点定位。
@@ -28,3 +30,4 @@ dsh 提供工作区、会话和工具执行，也能供其他应用调用。当�
 每周跟踪已启用，目标为周一北京时间上午9点附近。有实质变化才更新判断并报告；没有变化只登记检查状态、保持通知静默。完整规则见 [TRACKING](TRACKING.md)。
 
 官方入口：[产品页](https://www.deepseek.com/en/harness/)、[源码仓库](https://github.com/deepseek-ai/deepseek-harness)、[完整 Releases](https://github.com/deepseek-ai/deepseek-harness/releases)、[npm](https://www.npmjs.com/package/@deepseek-ai/dsh)。
+
