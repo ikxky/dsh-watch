@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "event_count": 41,
+  "batch_count": 10,
+  "seed": 0,
+  "assets": [
+    {
+      "path": "media/brief.md",
+      "sha256": "1ac8387f580922ad47cb3a539082715884b0469a82d1ae0cf9cc64791c7c2488",
+      "size": 730
+    },
+    {
+      "path": "media/broken.pdf",
+      "sha256": "9ace901f29deb22a3eaa54044c4cf5f8afa2ef1a1ba082ee542f7ad776493610",
+      "size": 41
+    },
+    {
+      "path": "media/constraints.pdf",
+      "sha256": "0157c2175a0a24b4333e4ad0d40aed73a3cf69e6de5a91064e658bb9f188f835",
+      "size": 2540
+    },
+    {
+      "path": "media/delivery.wav",
+      "sha256": "6bbd7b09f229ce1c4d94602799f113884fd10fc0fbc4fc06a8d3690f6997e414",
+      "size": 125518
+    },
+    {
+      "path": "media/inventory.mp4",
+      "sha256": "6fdfd83d2b1a6a7aaa203ebdbc7edb5dec5ec7d1505ef96876839bd985839845",
+      "size": 7123
+    },
+    {
+      "path": "media/signal.wav",
+      "sha256": "66fedf401c2c116dbf211569515860df598a8d6624bd5192c89424d194a5415a",
+      "size": 32044
+    },
+    {
+      "path": "media/venue.png",
+      "sha256": "f413f455386957b3d9de43915d4223d1c77c918271263fca34d8f12064609f5f",
+      "size": 34780
+    },
+    {
+      "path": "media/venue.svg",
+      "sha256": "edd88658c3e0953c84fc0a19db57598bbb059c242f3de147e1ac60c264ebe2df",
+      "size": 811
+    }
+  ],
+  "identities": {
+    "owner": "verified_owner",
+    "colleague": "verified_member",
+    "vendor": "verified_external",
+    "observer": "fixture_runtime",
+    "impersonator": "unverified"
+  },
+  "note": "Batch times are relative monotonic replay times, not wall-clock dates. No external execution."
+}

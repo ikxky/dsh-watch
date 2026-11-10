@@ -1,0 +1,181 @@
+[
+  {
+    "event_id": "e01",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e02",
+    "scenario_thread": "supplies"
+  },
+  {
+    "event_id": "e03",
+    "scenario_thread": "banter"
+  },
+  {
+    "event_id": "e04",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e05",
+    "scenario_thread": "private"
+  },
+  {
+    "event_id": "e06",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e07",
+    "scenario_thread": "venue",
+    "supersedes": [
+      "e01:people"
+    ]
+  },
+  {
+    "event_id": "e08",
+    "scenario_thread": "venue",
+    "duplicate_of": "e07"
+  },
+  {
+    "event_id": "e09",
+    "scenario_thread": "supplies",
+    "supersedes": [
+      "brief.md:pen_stock"
+    ]
+  },
+  {
+    "event_id": "e10",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e11",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e12",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e13",
+    "scenario_thread": "private"
+  },
+  {
+    "event_id": "e14",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e15",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e16",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e17",
+    "scenario_thread": "supplies"
+  },
+  {
+    "event_id": "e18",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e19",
+    "scenario_thread": "venue",
+    "revokes": [
+      "venue"
+    ]
+  },
+  {
+    "event_id": "e20",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e21",
+    "scenario_thread": "supplies"
+  },
+  {
+    "event_id": "e22",
+    "scenario_thread": "supplies"
+  },
+  {
+    "event_id": "e23",
+    "scenario_thread": "supplies"
+  },
+  {
+    "event_id": "e24",
+    "scenario_thread": "supplies"
+  },
+  {
+    "event_id": "e25",
+    "scenario_thread": "supplies",
+    "duplicate_of": "e24"
+  },
+  {
+    "event_id": "e26",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e27",
+    "scenario_thread": "watch"
+  },
+  {
+    "event_id": "e28",
+    "scenario_thread": "watch"
+  },
+  {
+    "event_id": "e29",
+    "scenario_thread": "watch"
+  },
+  {
+    "event_id": "e30",
+    "scenario_thread": "watch"
+  },
+  {
+    "event_id": "e31",
+    "scenario_thread": "runtime"
+  },
+  {
+    "event_id": "e32",
+    "scenario_thread": "supplies",
+    "duplicate_of": "e24"
+  },
+  {
+    "event_id": "e33",
+    "scenario_thread": "private"
+  },
+  {
+    "event_id": "e34",
+    "scenario_thread": "venue"
+  },
+  {
+    "event_id": "e35",
+    "scenario_thread": "approval"
+  },
+  {
+    "event_id": "e36",
+    "scenario_thread": "approval"
+  },
+  {
+    "event_id": "e37",
+    "scenario_thread": "approval",
+    "denies": [
+      "contacts.read"
+    ]
+  },
+  {
+    "event_id": "e38",
+    "scenario_thread": "approval"
+  },
+  {
+    "event_id": "e39",
+    "scenario_thread": "supplies"
+  },
+  {
+    "event_id": "e40",
+    "scenario_thread": "supplies"
+  },
+  {
+    "event_id": "e41",
+    "scenario_thread": "supplies"
+  }
+]
