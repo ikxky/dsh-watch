@@ -1,5 +1,7 @@
 # 多批次事务语料 v1
 
+[项目入口](../README.md) · [接手执行手册](../HANDOFF.md) · [代码实施细节](../IMPLEMENTATION.md) · [本轮预检](../PRECHECK.md)
+
 完全合成的中文群聊/私聊业务，41条含重复投递的消息与控制事件、10批次、两个并发长任务和一个模板任务；全部离线，没有真实账户、真实渠道、付款或外部消息。业务日期是固定虚构日期，重放不依赖今天。
 
 ## 原型边界
@@ -15,13 +17,16 @@
 - `generated/manifest.json`：SHA256、身份、文件大小和版本。
 - `private/expected.json`：**公开gold**和分轨评分；private是隔离约定而非秘密或安全边界。
 
-重建：Python 3 + Pillow + reportlab + ffmpeg（带flite及libx264）+ Noto CJK字体。当前生成环境Pillow13.0.0、reportlab4.4.9、ffmpeg7.1.5。执行：
+重建：Python 3 + Pillow + reportlab + ffmpeg（带flite及libx264）+ Noto CJK字体。当前生成环境Pillow13.0.0、reportlab4.4.9、ffmpeg7.1.5。以下命令从 `superagent-poc/` 根目录执行。重建只在临时副本进行，不覆盖已提交的 `corpus/generated/`：
 
 ```sh
-python generate.py --out generated
-python validate.py
+# 可选重建：先复制整个corpus，避免生成器触碰已冻结材料
+REBUILD_DIR="$(mktemp -d)"
+cp -R corpus "$REBUILD_DIR/corpus"
+python "$REBUILD_DIR/corpus/generate.py" --out "$REBUILD_DIR/corpus/generated"
+python corpus/validate.py
 # runner读取一条当前已到达的用户消息，输出可投模型字段
-python project_event.py generated/events.raw.jsonl --event e01
+python corpus/project_event.py corpus/generated/events.raw.jsonl --event e01
 ```
 
 固定软件/字体版本下字节确定性已检验；跨版本允许编码字节变化，应重新记录manifest。缺依赖直接失败，不把缺媒体的输出当完整语料。不能联网或调用真实模型/真实渠道；生成器本身不会执行任何事件。
@@ -60,7 +65,7 @@ python project_event.py generated/events.raw.jsonl --event e01
 
 ## 本次语料QA（2026-11-10）
 
-- `python validate.py`通过：41事件/10批次、双轨对应、媒体哈希、WAV可解码、PNG可打开、PDF单页、MP4时长2秒、gold引用完整。
+- 历史在corpus目录执行的 `python validate.py` 通过：41事件/10批次、双轨对应、媒体哈希、WAV可解码、PNG可打开、PDF单页、MP4时长2秒、gold引用完整。
 - 在独立输出目录再次生成，manifest完全一致，验证固定环境可重现。
 - 人工查看报价PNG、PDF渲染图与视频末帧：中文清晰、未裁切；末帧库存为24支。
 - ffprobe验证英文语音3.92秒；flite按指定英文句子实际合成。未进行独立ASR/听辨质量评估，不据此宣称ASR通过。

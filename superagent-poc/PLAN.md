@@ -1,5 +1,7 @@
 # Superagent 持续 Router 与多渠道业务 PoC 实施计划
 
+[交接入口](HANDOFF.md) · [代码实施细节](IMPLEMENTATION.md) · [本轮预检](PRECHECK.md)
+
 > 2026-11-10，计划稿 v0.1。状态：静态核查、文档与合成语料准备。未运行 Superagent，未测试真实渠道，未调用模型进行业务评测。时间和量化门槛均为建议，须在首轮基线后校准。
 
 > 同日业务扩充：新增 [四业务交错实施补充](BUSINESS-REPLAY-PLAN.md)与 [business-corpus](business-corpus/README.md)，不覆盖本计划的既有技术机制语料。业务方向为采购、项目例会与交付、部门活动、持续技术资料搜集（大模型新闻与 DeepSeek plugin 更新，按兴趣整理有价值报告）。补充文档包含新架构/时序、非等间隔时钟、来源变化和通知规则；本地准备工具可运行，Superagent 与业务watch仍未运行。

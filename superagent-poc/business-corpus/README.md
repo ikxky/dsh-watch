@@ -2,7 +2,7 @@
 
 状态：合成材料与本地回放准备工具已校验；**Superagent、模型、业务 watch、真实渠道及通知均未运行**。这里的“可执行”指生成、时点投影、受控来源查询和材料校验，不是已完成的 Agent 注入器。
 
-[专项入口](../README.md) · [业务实施补充与图](../BUSINESS-REPLAY-PLAN.md) · [总计划](../PLAN.md)
+[专项入口](../README.md) · [接手执行手册](../HANDOFF.md) · [代码实施细节](../IMPLEMENTATION.md) · [本轮预检](../PRECHECK.md) · [业务实施补充与图](../BUSINESS-REPLAY-PLAN.md) · [总计划](../PLAN.md)
 
 旧 `../corpus/` 保留为技术机制/冒烟集，不覆盖。新集只使用原创合成人名、报价、项目、群聊与资料源。技术 feed 中大模型与 DeepSeek plugin 版本、功能、日期全部是假资料，URL 使用不可解析的 `example.invalid`，不是实际新闻。
 
@@ -62,22 +62,22 @@
 
 ## 4. 可直接运行的准备命令
 
-在本目录运行，Python 3.12；生成需 Pillow 13.0.0、reportlab 4.4.9、ffmpeg 7.1.5（flite/libx264）、NotoSansCJK-Regular.ttc；校验另需 pypdf 6.21.4、ffprobe。不同依赖版本需记录新 manifest，不承诺字节跨版本一致。现有 fixture 可直接使用，无需先生成。
+以下命令统一从 `superagent-poc/` 根目录运行，Python 3.12；生成需 Pillow 13.0.0、reportlab 4.4.9、ffmpeg 7.1.5（flite/libx264）、NotoSansCJK-Regular.ttc；校验另需 pypdf 6.21.4、ffprobe。不同依赖版本需记录新 manifest，不承诺字节跨版本一致。现有 fixture 可直接使用，无需先生成。
 
 ```sh
-python validate.py
+python business-corpus/validate.py
 # 输出必须新建或为空，不覆盖已冻结材料
-python generate.py --out /tmp/business-mix-rebuilt
-cmp fixture/manifest.json /tmp/business-mix-rebuilt/manifest.json
+python business-corpus/generate.py --out /tmp/business-mix-rebuilt
+cmp business-corpus/fixture/manifest.json /tmp/business-mix-rebuilt/manifest.json
 
 # 首个时点：只准备当时已经到达的输入
-python replay.py stage --until 2026-11-16T09:02:11+08:00 --arm raw --out /tmp/mix-stage-01
+python business-corpus/replay.py stage --until 2026-11-16T09:02:11+08:00 --arm raw --out /tmp/mix-stage-01
 # 增量：(after, until]；保留同一被测会话和之前已接收历史
-python replay.py stage --after 2026-11-16T09:02:11+08:00 --until 2026-11-16T09:02:31+08:00 --arm raw --out /tmp/mix-stage-02
+python business-corpus/replay.py stage --after 2026-11-16T09:02:11+08:00 --until 2026-11-16T09:02:31+08:00 --arm raw --out /tmp/mix-stage-02
 
 # 控制端可复现当时的查询结果，不调用实际网络
-python replay.py source --at 2026-11-18T16:00:00+08:00 --source deepseek-plugin
-python replay.py source --at 2026-11-19T09:00:00+08:00 --source deepseek-plugin
+python business-corpus/replay.py source --at 2026-11-18T16:00:00+08:00 --source deepseek-plugin
+python business-corpus/replay.py source --at 2026-11-19T09:00:00+08:00 --source deepseek-plugin
 # 可加 --if-none-match 上次返回的etag，内容不变返回304
 ```
 
